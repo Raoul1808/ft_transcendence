@@ -1,2 +1,2 @@
 # ft_transcendence
-42 ft_transcendence project
+ 42 ft_transcendence project
