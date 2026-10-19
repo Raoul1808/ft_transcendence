@@ -1,0 +1,24 @@
+services:
+  backend-dev:
+    build:
+      context: backend
+      dockerfile: Dockerfile-dev
+    ports:
+      - "8080:8080"
+    environment:
+      - RUST_LOG=debug
+    networks:
+      - tr-devnet
+    volumes:
+      - ./backend:/app
+      - cargo-cache:/usr/local/cargo/registry
+      - target-cache:/app/target
+    restart: unless-stopped
+
+networks:
+  tr-devnet:
+    driver: bridge
+
+volumes:
+  cargo-cache:
+  target-cache:
