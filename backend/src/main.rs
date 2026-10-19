@@ -46,6 +46,7 @@ impl RoomState {
     }
 }
 
+// entrypoint
 #[tokio::main]
 async fn main() -> io::Result<()> {
     tracing_subscriber::registry()
