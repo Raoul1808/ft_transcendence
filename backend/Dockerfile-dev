@@ -1,0 +1,14 @@
+FROM rust:1.99-alpine AS bacon
+
+RUN apk --no-cache add musl-dev
+RUN cargo install bacon
+
+FROM rust:1.99-alpine AS build
+
+COPY --from=bacon /usr/local/cargo/bin/bacon /usr/local/cargo/bin/bacon
+RUN apk --no-cache add musl-dev ca-certificates
+
+WORKDIR /app
+
+EXPOSE 8080
+ENTRYPOINT ["bacon", "--headless", "webserver"]
