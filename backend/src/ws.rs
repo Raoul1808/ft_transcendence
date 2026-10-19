@@ -47,7 +47,7 @@ async fn handle_socket(socket: WebSocket, state: Arc<AppState>) {
                 let mut rooms = state.rooms.lock().unwrap();
                 channel = connect.channel.clone();
 
-                    let room = rooms.entry(connect.channel).or_insert_with(|| RoomState::new());
+                let room = rooms.entry(connect.channel).or_insert_with(RoomState::new);
                 tx = Some(room.tx.clone());
 
                 if !room.users.lock().unwrap().contains(&connect.username) {
