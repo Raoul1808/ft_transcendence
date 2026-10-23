@@ -14,6 +14,18 @@ services:
       - cargo-cache:/usr/local/cargo/registry
       - target-cache:/app/target
     restart: unless-stopped
+  frontend-dev:
+    build:
+      context: frontend
+      dockerfile: Dockerfile-dev
+    ports:
+      - "5173:5173"
+    networks:
+      - tr-devnet
+    volumes:
+      - ./frontend:/app
+      - node-cache:/app/node_modules
+    restart: unless-stopped
 
 networks:
   tr-devnet:
@@ -22,3 +34,4 @@ networks:
 volumes:
   cargo-cache:
   target-cache:
+  node-cache:
