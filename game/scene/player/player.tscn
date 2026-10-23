@@ -141,5 +141,9 @@ text = "100%"
 label_settings = SubResource("LabelSettings_pisg7")
 vertical_alignment = 1
 
+[node name="Label" type="Label" parent="." unique_id=1152621564]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="healthbar/Timer" to="." method="_on_timer_timeout"]

@@ -5,6 +5,7 @@ extends Node
 var socket = WebSocketPeer.new()
 
 var player_list: Array = []
+var player_ins_list: Array = []
 
 var client_player_ins: CharacterBody2D = null
 
@@ -20,8 +21,9 @@ func _ready():
 		print("connecting to %s..." % websocket_url)
 		await get_tree().create_timer(2).timeout
 		
-		#player_list.insert()
-		socket.send_text(JSON.stringify({"type": "new_connection", "id": 1}))
+		player_list.push_back(client_player_ins.player_id)
+		player_ins_list.push_back(client_player_ins)
+		socket.send_text(JSON.stringify({"type": "new_connection"}))
 	else:
 		print("failed to connect :(")
 		set_process(false)
@@ -53,14 +55,34 @@ func _process(delta: float) -> void:
 					var player_ins : CharacterBody2D = new_player.instantiate()
 					get_tree().current_scene.add_child(player_ins)
 					player_ins.client_player = false
-					player_ins.player_id = data["id"]
-					socket.send_text(JSON.stringify({"type": "new_connection_response", "id": 2}))
-				if (data["type"] == "new_connection_response"):
-					var new_player = load("res://scene/player/player.tscn")
-					var player_ins : CharacterBody2D = new_player.instantiate()
-					get_tree().current_scene.add_child(player_ins)
-					player_ins.client_player = false
-					player_ins.player_id = data["id"]
+					player_ins.player_id = 2
+					player_ins_list.push_back(player_ins)
+					player_list.push_back(player_ins.player_id)
+					socket.send_text(JSON.stringify({"type": "player_list", "list": player_list}))
+				if (data["type"] == "player_list"):
+					client_player_ins.player_id = 2
+					player_list = data["list"]
+					for i : int in player_list.size():
+						if player_list[i] != client_player_ins.player_id:
+							var new_player = load("res://scene/player/player.tscn")
+							var player_ins : CharacterBody2D = new_player.instantiate()
+							player_ins_list.push_back(player_ins)
+							get_tree().current_scene.add_child(player_ins)
+							player_ins.client_player = false
+							player_ins.player_id = int(player_list[i].player_id)
+				
+				#====================================
+				#server
+				#====================================
+				if (data["type"] == "player_disconected"):
+					var size = player_list.size()
+					for i : int in range(size - 1, 0, -1):
+						if player_ins_list[i].player_id != client_player_ins.player_id:
+							player_ins_list[i].free()
+						player_list.clear()
+						player_list.push_back(1)
+						client_player_ins.player_id = 1
+					
 				
 			else:
 				print("< Got binary data from server: %d bytes" % packet.size())
