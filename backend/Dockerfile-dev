@@ -1,14 +1,14 @@
-FROM rust:1.99-alpine AS bacon
+FROM rust:1.99-alpine AS watchexec
 
 RUN apk --no-cache add musl-dev
-RUN cargo install bacon
+RUN cargo install watchexec-cli
 
 FROM rust:1.99-alpine AS build
 
-COPY --from=bacon /usr/local/cargo/bin/bacon /usr/local/cargo/bin/bacon
-RUN apk --no-cache add musl-dev ca-certificates
+COPY --from=watchexec /usr/local/cargo/bin/watchexec /usr/local/cargo/bin/watchexec
+RUN apk --no-cache add musl-dev ca-certificates bash
 
 WORKDIR /app
 
 EXPOSE 8080
-ENTRYPOINT ["bacon", "--headless", "webserver"]
+ENTRYPOINT ["watchexec", "-w", "src", "-w", "static", "-r", "--", "cargo", "run"]
