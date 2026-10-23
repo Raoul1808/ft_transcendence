@@ -11,7 +11,7 @@ RUN cargo build --release
 RUN rm -rf src
 
 # Building
-COPY src ./src
+COPY . .
 RUN touch src/main.rs
 RUN cargo build --release
 
@@ -21,8 +21,11 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 RUN addgroup -S backend && adduser -S backend -G backend
 
-COPY --from=build /app/target/release/tr-back /server
+RUN mkdir /app
+WORKDIR /app
+COPY --from=build /app/target/release/tr-back server
+COPY static ./static
 
 USER backend
 EXPOSE 8080
-ENTRYPOINT ["/server"]
+ENTRYPOINT ["/app/server"]

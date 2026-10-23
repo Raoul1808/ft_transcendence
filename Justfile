@@ -9,7 +9,10 @@ devup *services: (devbuild services)
 dev *args:
     {{ devcmd }} {{ args }}
 
-up *services:
+build *services:
+    docker compose build {{ services }}
+
+up *services: (build services)
     docker compose up {{ services }}
 
 down *services:
