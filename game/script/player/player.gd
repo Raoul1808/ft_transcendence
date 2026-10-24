@@ -47,6 +47,15 @@ func interact_with_loot():
 func equip_weapon(id : int):
 	weapon = id
 	$hand/Sprite2D.texture = load(WeaponData.weapon_data[weapon][3])
+	
+	if client_player:
+		Network.socket.send_text(JSON.stringify(
+			{
+				"type": "player_equip_weapon",
+				"id": player_id,
+				"weapon": weapon
+			}
+		))
 
 func drop_weapon():
 	if (weapon != -1):
@@ -57,6 +66,13 @@ func drop_weapon():
 		get_tree().current_scene.add_child(droped_weapon_ins)
 		weapon = -1
 		$hand/Sprite2D.texture = null
+		if client_player:
+			Network.socket.send_text(JSON.stringify(
+				{
+					"type": "player_drop_weapon",
+					"id": player_id,
+				}
+			))
 
 func use_weapon():
 	if (weapon != -1):
@@ -90,11 +106,9 @@ func _ready() -> void:
 #network function
 #===========================================================================
 func update_player(data: Dictionary):
-	healt = data["healt"]
 	position.x = data["pos"][0]
 	position.y = data["pos"][1]
 	rotation = data["rot"]
-	weapon = data["weapon"]
 
 #===========================================================================
 #player physic proc
@@ -172,8 +186,6 @@ func client_proc(delta):
 			{
 				"type": "player_update",
 				"id": player_id,
-				"healt": healt,
-				"weapon": weapon,
 				"pos": [position.x, position.y],
 				"rot": rotation
 			}
@@ -215,12 +227,14 @@ func get_hit(dmg: int):
 	$healthbar/Sprite2D2.position.x = -192 + (healt * 192 * 2)/100
 	$healthbar/Label.text = type_convert(type_convert(healt, TYPE_INT), TYPE_STRING) + "%"
 	$healthbar/Timer.start()
-	Network.socket.send_text(JSON.stringify(
-		{
-			"type": "player_get_hit",
-			"id": "player_id",
-			"healt": healt
-		}
+	
+	if not client_player:
+		Network.socket.send_text(JSON.stringify(
+			{
+				"type": "player_get_hit",
+				"id": player_id,
+				"dmg": dmg
+			}
 		))
 
 

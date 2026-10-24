@@ -20,3 +20,5 @@ player_id = 1
 [node name="map" parent="." unique_id=1974774773 instance=ExtResource("1_h2yge")]
 position = Vector2(-508, -168)
 scale = Vector2(2, 2)
+
+[node name="not_client_player" type="Node" parent="." unique_id=1609857846]

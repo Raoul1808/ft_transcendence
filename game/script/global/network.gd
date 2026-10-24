@@ -7,10 +7,10 @@ var socket = WebSocketPeer.new()
 var player_list: Array = []
 var player_ins_list: Array = []
 
-var client_player_ins: CharacterBody2D = null
+@onready var client_player_ins: CharacterBody2D = get_tree().current_scene.get_node("player")
 
 func set_client_player(client_player: CharacterBody2D):
-	client_player_ins = client_player
+	pass#client_player_ins = client_player
 
 func socket_send_text(text: String):
 	socket.send_text(text)
@@ -57,7 +57,7 @@ func _process(delta: float) -> void:
 				if (data["type"] == "new_connection"):
 					var new_player = load("res://scene/player/player.tscn")
 					var player_ins : CharacterBody2D = new_player.instantiate()
-					get_tree().current_scene.add_child(player_ins)
+					get_tree().current_scene.get_node("not_client_player").add_child(player_ins)
 					player_ins.client_player = false
 					player_ins.player_id = 2
 					player_ins_list.push_back(player_ins)
@@ -71,29 +71,36 @@ func _process(delta: float) -> void:
 						if player_list[i] != client_player_ins.player_id:
 							var new_player = load("res://scene/player/player.tscn")
 							var player_ins : CharacterBody2D = new_player.instantiate()
-							player_ins_list.push_back(player_ins)
-							get_tree().current_scene.add_child(player_ins)
+							get_tree().current_scene.get_node("not_client_player").add_child(player_ins)
 							player_ins.client_player = false
 							player_ins.player_id = 1
 				
 				#player update
-				if (data["type"] == "player_update"):
-					for i : int in range(player_list.size()):
-						if player_ins_list[i].player_id == data["id"]:
-							player_ins_list[i].update_player(data)
+				if (data["type"] == "player_update" ||
+						data["type"] == "player_equip_weapon" ||
+						data["type"] == "player_drop_weapon" ||
+						data["type"] == "player_get_hit"):
+					for child in get_tree().current_scene.get_node("not_client_player").get_children():
+						if child.player_id == data["id"]:
+							if (data["type"] == "player_update"):
+								child.update_player(data)
+							elif (data["type"] == "player_equip_weapon"):
+								child.equip_weapon(data["weapon"])
+							elif (data["type"] == "player_drop_weapon"):
+								child.drop_weapon()
+							elif (data["type"] == "player_get_hit"):
+								child.get_hit(data["dmg"])
 					
 				
 				#====================================
 				#from server
 				#====================================
 				if (data["type"] == "player_disconected"):
-					var size = player_list.size()
-					for i : int in range(size - 1, 0, -1):
-						if player_ins_list[i].player_id != client_player_ins.player_id:
-							player_ins_list[i].free()
-						player_list.clear()
-						player_list.push_back(1)
-						client_player_ins.player_id = 1
+					for child in get_tree().current_scene.get_node("not_client_player").get_children():
+						child.queue_free()
+					client_player_ins.player_id = 1
+					player_list.clear()
+					player_list.push_back(1)
 					
 				
 			else:
