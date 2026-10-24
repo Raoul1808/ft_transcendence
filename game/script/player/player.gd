@@ -16,6 +16,12 @@ var loot_zone_id = 0
 var loot_id = 0 #incetance id of the entered loot zone
 var health_to_remove = 0
 
+#=======================================================================
+#network val
+#=======================================================================
+var regular_update_timer = 0.0
+var interval = 0.033
+
 func player_enter_loot_zone(w_id : int, id : int):
 	in_loot_zone = true
 	loot_zone_id = w_id
@@ -81,6 +87,16 @@ func _ready() -> void:
 		#player_id = Network.socket.
 
 #===========================================================================
+#network function
+#===========================================================================
+func update_player(data: Dictionary):
+	healt = data["healt"]
+	position.x = data["pos"][0]
+	position.y = data["pos"][1]
+	rotation = data["rot"]
+	weapon = data["weapon"]
+
+#===========================================================================
 #player physic proc
 #===========================================================================
 func client_physic_proc(delta):
@@ -112,9 +128,10 @@ func client_physic_proc(delta):
 	velocity = (vel * speed)
 	move_and_slide()
 
-
+#================================================================================
+#CLIENT PROCESS
+#================================================================================
 func client_proc(delta):
-	$Label.text = str(player_id)
 	#======================================================================================
 	#CAMERA
 	#======================================================================================
@@ -144,6 +161,23 @@ func client_proc(delta):
 	if (Input.is_action_just_pressed("drop_weapon")):
 		drop_weapon()
 	interact_with_loot()
+	
+	#======================================================================================
+	#NETWORK REGULAR UPDATE
+	#======================================================================================
+	regular_update_timer += delta
+	if regular_update_timer >= interval:
+		regular_update_timer = 0.0
+		Network.socket.send_text(JSON.stringify(
+			{
+				"type": "player_update",
+				"id": player_id,
+				"healt": healt,
+				"weapon": weapon,
+				"pos": [position.x, position.y],
+				"rot": rotation
+			}
+		))
 
 func bot_proc(delta: float):
 	use_weapon()
@@ -156,6 +190,7 @@ func _physics_process(delta: float) -> void:
 		client_physic_proc(delta)
 
 func _process(delta: float):
+	$Label.text = "id: " + str(player_id)
 	if bot == true:
 		bot_proc(delta)
 	else:

@@ -50,6 +50,10 @@ func _process(delta: float) -> void:
 				#=====================================================
 				#print("JSON reçu : ", data)
 				#print("Clés reçues : ", data.keys())
+				
+				#=========================================
+				#from other client
+				#=========================================
 				if (data["type"] == "new_connection"):
 					var new_player = load("res://scene/player/player.tscn")
 					var player_ins : CharacterBody2D = new_player.instantiate()
@@ -59,6 +63,7 @@ func _process(delta: float) -> void:
 					player_ins_list.push_back(player_ins)
 					player_list.push_back(player_ins.player_id)
 					socket.send_text(JSON.stringify({"type": "player_list", "list": player_list}))
+					
 				if (data["type"] == "player_list"):
 					client_player_ins.player_id = 2
 					player_list = data["list"]
@@ -69,10 +74,17 @@ func _process(delta: float) -> void:
 							player_ins_list.push_back(player_ins)
 							get_tree().current_scene.add_child(player_ins)
 							player_ins.client_player = false
-							player_ins.player_id = int(player_list[i].player_id)
+							player_ins.player_id = 1
+				
+				#player update
+				if (data["type"] == "player_update"):
+					for i : int in range(player_list.size()):
+						if player_ins_list[i].player_id == data["id"]:
+							player_ins_list[i].update_player(data)
+					
 				
 				#====================================
-				#server
+				#from server
 				#====================================
 				if (data["type"] == "player_disconected"):
 					var size = player_list.size()
