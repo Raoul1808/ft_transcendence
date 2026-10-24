@@ -85,7 +85,7 @@ func _process(delta: float) -> void:
 							if (data["type"] == "player_update"):
 								child.update_player(data)
 							elif (data["type"] == "player_equip_weapon"):
-								child.equip_weapon(data["weapon"])
+								child.interact_with_loot_not_client()
 							elif (data["type"] == "player_drop_weapon"):
 								child.drop_weapon()
 							elif (data["type"] == "player_get_hit"):

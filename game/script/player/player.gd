@@ -41,6 +41,16 @@ func interact_with_loot():
 			var loot_ins = instance_from_id(loot_id)
 			loot_ins.free()
 
+func interact_with_loot_not_client():
+	if (in_loot_zone == true):
+		in_loot_zone = false
+		
+		drop_weapon()
+		equip_weapon(loot_zone_id)
+		
+		var loot_ins = instance_from_id(loot_id)
+		loot_ins.free()
+
 #============================================================================
 #weapon management
 #============================================================================
