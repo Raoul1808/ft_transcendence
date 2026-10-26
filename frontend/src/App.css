@@ -3,6 +3,98 @@
     padding: 0;
 }
 
+.FriendBox {
+    justify-self: center;
+    min-width: 80%;
+    max-width: 80%;
+    background-color: #411f70;
+    border-radius: 10px;
+    
+}
+
+.ListItems {
+    
+    justify-content: center;
+    align-content: center;
+}
+
+.UserCards {
+    margin: 1%;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    justify-self: center;
+    min-width: 60%;
+}
+
+.UserCard {
+    --avatar-size: 60px;
+    --card-item-spacing: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.UserCard-Background {
+    left: 0;
+    top: 0;
+    position: absolute;
+    height: auto;
+    background-color:#000000;
+}
+
+.UserCard-Profile-Background {
+    opacity: 70%;
+    border-radius: 10px;
+    height: auto;
+    object-fit: contain;
+    max-width: 100%;
+}
+
+.UserCard-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    pointer-events: none;
+    position: relative;
+    text-decoration: none;
+}
+
+.UserCard-content {
+    display: grid;
+    grid-template-columns: minmax(min-content, auto) 1fr;
+}
+
+.UserCard-avatar {
+    align-items: center;
+    display: flex;
+    height: var(--avatar-size);
+    min-width: 0;
+}
+
+.UserCard-avatar-img {
+    opacity: 1;
+}
+
+.UserCard-details {
+    display: grid;
+    grid-template-rows: 26px 1fr;
+    height: var(--avatar-size);
+    margin-left: var(--card-item-spacing);
+}
+
+.Usercard-Username {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: 600;
+    min-width: 0;
+}
+
 .signin-button {
     margin-left: auto;
 }
