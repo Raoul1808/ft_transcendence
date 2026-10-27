@@ -26,7 +26,7 @@ const RoutingTable = () => {
 
 function App() {
     return (
-        <div>
+        <div className="MainContainer">
             <Navbar />
             <RoutingTable />
         </div>

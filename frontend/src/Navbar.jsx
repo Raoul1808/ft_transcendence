@@ -9,9 +9,9 @@ const Navbar = () => {
                     <li>
                         <Link to="/"><img src="./src/assets/wizard.svg"/></Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link to="/Game">Game</Link>
-                    </li>
+                    </li> */}
                     <li>
                         <Link to="/Friends">Friends</Link>
                     </li>
