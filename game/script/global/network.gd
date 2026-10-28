@@ -9,6 +9,25 @@ var player_ins_list: Array = []
 
 @onready var client_player_ins: CharacterBody2D = get_tree().current_scene.get_node("player")
 
+func pick_random_child(parent_node):
+	var random_id = randi() % parent_node.get_child_count()
+	return parent_node.get_child(random_id)
+
+func load_player():
+	var spawn1: Marker2D = pick_random_child(get_tree().current_scene.get_node("map_container").get_node("map").get_node("spawns"))
+	var spawn2: Marker2D = pick_random_child(get_tree().current_scene.get_node("map_container").get_node("map").get_node("spawns"))
+	while (spawn1 == spawn2):
+		spawn2 = pick_random_child(get_tree().current_scene.get_node("map_container").get_node("map").get_node("spawns"))
+	for i : int in player_list.size():
+		if player_list[i] != client_player_ins.player_id:
+			var new_player = load("res://scene/player/player.tscn")
+			var player_ins : CharacterBody2D = new_player.instantiate()
+			get_tree().current_scene.get_node("not_client_player").add_child(player_ins)
+			player_ins.client_player = false
+			player_ins.player_id = player_list[i]
+			player_ins.position = spawn2.position
+	client_player_ins.position = spawn1.position
+
 func set_client_player(client_player: CharacterBody2D):
 	pass#client_player_ins = client_player
 
@@ -28,7 +47,7 @@ func _ready():
 		print("failed to connect :(")
 		set_process(false)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	socket.poll()
 	
@@ -55,31 +74,36 @@ func _process(delta: float) -> void:
 				#from other client
 				#=========================================
 				if (data["type"] == "new_connection"):
-					var new_player = load("res://scene/player/player.tscn")
-					var player_ins : CharacterBody2D = new_player.instantiate()
-					get_tree().current_scene.get_node("not_client_player").add_child(player_ins)
-					player_ins.client_player = false
-					player_ins.player_id = 2
-					player_ins_list.push_back(player_ins)
-					player_list.push_back(player_ins.player_id)
+					#var new_player = load("res://scene/player/player.tscn")
+					#var player_ins : CharacterBody2D = new_player.instantiate()
+					#get_tree().current_scene.get_node("not_client_player").add_child(player_ins)
+					#player_ins.client_player = false
+					#player_ins.player_id = 2
+					##player_ins_list.push_back(player_ins)
+					player_list.push_back(2)
 					socket.send_text(JSON.stringify({"type": "player_list", "list": player_list}))
 					
 				if (data["type"] == "player_list"):
 					client_player_ins.player_id = 2
 					player_list = data["list"]
-					for i : int in player_list.size():
-						if player_list[i] != client_player_ins.player_id:
-							var new_player = load("res://scene/player/player.tscn")
-							var player_ins : CharacterBody2D = new_player.instantiate()
-							get_tree().current_scene.get_node("not_client_player").add_child(player_ins)
-							player_ins.client_player = false
-							player_ins.player_id = 1
+				
+				if (data["type"] == "game_start"):
+					Main.game_mode = data["mode"]
+					Main.infinit_time = data["time"]
+					Main.start_game()
+					get_tree().current_scene.get_node("menu").get_node("CanvasLayer").hide()
+					get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").show()
+				
+				if (data["type"] == "start_round"):
+					Main.start_round(false)
+				
+				if (data["type"] == "end_round"):
+					Main.end_round(data["player_point"], false)
 				
 				#player update
 				if (data["type"] == "player_update" ||
 						data["type"] == "player_equip_weapon" ||
-						data["type"] == "player_drop_weapon" ||
-						data["type"] == "player_get_hit"):
+						data["type"] == "player_drop_weapon"):
 					for child in get_tree().current_scene.get_node("not_client_player").get_children():
 						if child.player_id == data["id"]:
 							if (data["type"] == "player_update"):
@@ -88,9 +112,8 @@ func _process(delta: float) -> void:
 								child.interact_with_loot_not_client()
 							elif (data["type"] == "player_drop_weapon"):
 								child.drop_weapon()
-							elif (data["type"] == "player_get_hit"):
-								child.get_hit(data["dmg"])
-					
+				if (data["type"] == "player_get_hit"):
+					client_player_ins.get_hit(data["dmg"], false)
 				
 				#====================================
 				#from server

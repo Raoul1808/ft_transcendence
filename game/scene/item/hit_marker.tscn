@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cv4c6hgqb8j3h"]
 
-[ext_resource type="Script" uid="uid://cg3kwtep3kqj5" path="res://scene/item/hit_marker.gd" id="1_f6h63"]
+[ext_resource type="Script" uid="uid://cg3kwtep3kqj5" path="res://script/item/hit_marker.gd" id="1_f6h63"]
 [ext_resource type="Texture2D" uid="uid://duvabgakifpvx" path="res://assets/img/cross.png" id="1_wp4e3"]
 
 [node name="HitMarker" type="Node2D" unique_id=1501760256]

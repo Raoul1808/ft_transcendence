@@ -67,6 +67,10 @@ func equip_weapon(id : int):
 			}
 		))
 
+func unquip_weapon():
+	weapon = -1
+	$hand/Sprite2D.texture = null
+
 func drop_weapon():
 	if (weapon != -1):
 		var droped_weapon = load("res://scene/item/loot_weapon.tscn")
@@ -123,7 +127,7 @@ func update_player(data: Dictionary):
 #===========================================================================
 #player physic proc
 #===========================================================================
-func client_physic_proc(delta):
+func client_physic_proc(_delta):
 	
 	var vel = Vector2.ZERO
 	look_at(get_global_mouse_position())
@@ -146,7 +150,7 @@ func client_physic_proc(delta):
 		vel.x -= 1
 		$AnimatedSprite2D.play("walk")
 	
-	if vel.length() > 0:
+	if vel.length() >= 1:
 		vel = vel.normalized()
 	
 	velocity = (vel * speed)
@@ -192,19 +196,20 @@ func client_proc(delta):
 	regular_update_timer += delta
 	if regular_update_timer >= interval:
 		regular_update_timer = 0.0
-		Network.socket.send_text(JSON.stringify(
-			{
-				"type": "player_update",
-				"id": player_id,
-				"pos": [position.x, position.y],
-				"rot": rotation
-			}
-		))
+		if (Network.socket.get_ready_state() == WebSocketPeer.STATE_OPEN):
+			Network.socket.send_text(JSON.stringify(
+				{
+					"type": "player_update",
+					"id": player_id,
+					"pos": [position.x, position.y],
+					"rot": rotation
+				}
+			))
 
-func bot_proc(delta: float):
+func bot_proc(_delta: float):
 	use_weapon()
 	
-func not_client_proc(delta):
+func not_client_proc(_delta):
 	pass
 	
 func _physics_process(delta: float) -> void:
@@ -226,19 +231,20 @@ func _process(delta: float):
 	$healthbar/Sprite2D2.scale.x = $healthbar/Timer.time_left * health_to_remove / 100
 	health_to_remove *= $healthbar/Timer.time_left
 
-func get_hit(dmg: int):
+func get_hit(dmg: int, b: bool):
 	$healthbar.show()
 	if (healt > 0):
 		health_to_remove += dmg
 	healt -= dmg
 	if (healt <= 0):
-		healt = 0 
+		healt = 0
+		Main.end_round(player_id, true)
 	$healthbar/Sprite2D.scale.x = healt / 100
 	$healthbar/Sprite2D2.position.x = -192 + (healt * 192 * 2)/100
 	$healthbar/Label.text = type_convert(type_convert(healt, TYPE_INT), TYPE_STRING) + "%"
 	$healthbar/Timer.start()
 	
-	if not client_player:
+	if (b):
 		Network.socket.send_text(JSON.stringify(
 			{
 				"type": "player_get_hit",

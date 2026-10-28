@@ -1,0 +1,279 @@
+[gd_scene format=3 uid="uid://bgis5pwiyjnqa"]
+
+[ext_resource type="Script" uid="uid://dp81q4olovdg7" path="res://script/global/menu.gd" id="1_4n3up"]
+[ext_resource type="FontFile" uid="uid://btrepff1y83ma" path="res://assets/font/KiwiSoda.ttf" id="1_flhli"]
+[ext_resource type="Texture2D" uid="uid://iqmyals4g0lj" path="res://assets/img/wizard.png" id="2_vyxmg"]
+
+[node name="menu" type="Control" unique_id=1183571336]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4n3up")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=657974449]
+
+[node name="not_game_leader" type="Control" parent="CanvasLayer" unique_id=906950895]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 347.0
+offset_right = -322.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/not_game_leader" unique_id=2070293500]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 50
+text = "game start soon..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="game_leader" type="Control" parent="CanvasLayer" unique_id=2124292821]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="map_select" type="Panel" parent="CanvasLayer/game_leader" unique_id=693699736]
+layout_mode = 0
+offset_top = 344.0
+offset_right = 1268.0
+offset_bottom = 1205.0
+
+[node name="map1" type="Button" parent="CanvasLayer/game_leader/map_select" unique_id=1137024177]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -592.0
+offset_top = 26.0
+offset_right = -292.0
+offset_bottom = 126.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 40
+text = "map1"
+
+[node name="map2" type="Button" parent="CanvasLayer/game_leader/map_select" unique_id=643034326]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -592.0
+offset_top = 148.0
+offset_right = -292.0
+offset_bottom = 248.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 40
+text = "map2"
+
+[node name="start" type="Button" parent="CanvasLayer/game_leader" unique_id=1430286076]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.80100006
+anchor_top = 0.90700006
+anchor_right = 0.98800004
+anchor_bottom = 0.99000007
+offset_left = -0.60009766
+offset_top = -0.4000244
+offset_right = 0.19995117
+offset_bottom = -0.00012207031
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 50
+text = "start"
+
+[node name="client_info" type="Control" parent="CanvasLayer" unique_id=1601491251]
+layout_mode = 3
+anchor_right = 0.21200001
+anchor_bottom = 0.282
+offset_right = -0.2000122
+offset_bottom = 0.6000061
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/client_info" unique_id=808981726]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.10164913, 0.00014107123, 0.19816965, 0.53333336)
+
+[node name="player_name" type="Label" parent="CanvasLayer/client_info" unique_id=144303835]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 51.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 50
+text = "player1"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/client_info" unique_id=1410131547]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 75.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_vyxmg")
+
+[node name="skin_selection" type="Control" parent="CanvasLayer/client_info" unique_id=1649379238]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="prev" type="Button" parent="CanvasLayer/client_info/skin_selection" unique_id=1776324719]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 0.99999994
+offset_top = -39.99997
+offset_right = 9.0
+offset_bottom = -31.99997
+grow_vertical = 0
+scale = Vector2(5, 5)
+theme_override_fonts/font = ExtResource("1_flhli")
+
+[node name="next" type="Button" parent="CanvasLayer/client_info/skin_selection" unique_id=2132733045]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -39.99997
+offset_top = -18.5
+offset_right = -31.99997
+offset_bottom = -10.499999
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(5, 5)
+
+[node name="Label" type="Label" parent="CanvasLayer/client_info/skin_selection" unique_id=228129254]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -11.5
+offset_right = 0.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 25
+text = "Purple Wizard"
+
+[node name="not_client_info" type="Control" parent="CanvasLayer" unique_id=222965880]
+layout_mode = 3
+anchor_left = 0.78800005
+anchor_right = 1.0
+anchor_bottom = 0.282
+offset_left = 0.19995117
+offset_bottom = 0.6000061
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/not_client_info" unique_id=1452979867]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.10164913, 0.00014107123, 0.19816965, 0.53333336)
+
+[node name="player_connected" type="Control" parent="CanvasLayer/not_client_info" unique_id=1640124288]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="player_name" type="Label" parent="CanvasLayer/not_client_info/player_connected" unique_id=1052474302]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 51.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 50
+text = "player2"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/not_client_info/player_connected" unique_id=66725914]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 75.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_vyxmg")
+
+[node name="waiting_for_player" type="Control" parent="CanvasLayer/not_client_info" unique_id=348637064]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/not_client_info/waiting_for_player" unique_id=1522307196]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 30
+text = "waiting for player..."
+
+[connection signal="pressed" from="CanvasLayer/game_leader/map_select/map1" to="." method="_on_map_1_pressed"]
+[connection signal="pressed" from="CanvasLayer/game_leader/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="CanvasLayer/client_info/skin_selection/prev" to="." method="_on_prev_pressed"]
