@@ -36,10 +36,12 @@ if [ -d $templates_dir/4.7.2.stable ]; then
 fi
 echo "Symlinking tmp templates directory"
 ln -s $GDDIR/templates $templates_dir/4.7.2.stable
+rm -rf game/game-export
 mkdir game/game-export
 echo "Exporting"
 $GDDIR/godot --headless --export-release "index.html" game/project.godot
-mv game/game-export game-export
+rm -rf game-export/*
+mv game/game-export/* game-export
 echo "Removing symlink"
 rm -f $templates_dir/4.7.2.stable
 if [ $dir_exists = true ]; then
