@@ -103,7 +103,8 @@ func _process(_delta: float) -> void:
 				#player update
 				if (data["type"] == "player_update" ||
 						data["type"] == "player_equip_weapon" ||
-						data["type"] == "player_drop_weapon"):
+						data["type"] == "player_drop_weapon" ||
+						data["type"] == "player_shoot"):
 					for child in get_tree().current_scene.get_node("not_client_player").get_children():
 						if child.player_id == data["id"]:
 							if (data["type"] == "player_update"):
@@ -112,6 +113,8 @@ func _process(_delta: float) -> void:
 								child.interact_with_loot_not_client()
 							elif (data["type"] == "player_drop_weapon"):
 								child.drop_weapon()
+							elif (data["type"] == "player_shoot"):
+								child.shoot_particule_network(data)
 				if (data["type"] == "player_get_hit"):
 					client_player_ins.get_hit(data["dmg"], false)
 				

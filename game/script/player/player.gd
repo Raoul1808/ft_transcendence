@@ -99,9 +99,23 @@ func shoot_particule(pos : Vector2):
 		
 		$GPUParticles2D.emitting = true
 		$GPUParticles2D.process_material.emission_box_extents.x = pos.distance_to(position) / 4 - gap.x
-		#$GPUParticles2D.process_material.emission_box_extents.y - gap.x / 4
 		$GPUParticles2D.process_material.emission_shape_offset.x = pos.distance_to(position) / 4
 		$GPUParticles2D.amount = pos.distance_to(position) / 10
+
+func shoot_particule_network(data: Dictionary):
+	var pos : Vector2
+	pos.x = float(data["pos"][0])
+	pos.y = float(data["pos"][1])
+	var gap = (position.direction_to(pos)) * 75
+		
+	shoot_rotation = rotation
+	shoot_position = position + gap
+	
+	$GPUParticles2D.emitting = true
+	$GPUParticles2D.process_material.emission_box_extents.x = data["pro_mat_emit_box_x"]
+	$GPUParticles2D.process_material.emission_shape_offset.x = data["proc_mat_emit_of_x"]
+	$GPUParticles2D.amount = data["amount"]
+	$GPUParticles2D.texture.current_frame = WeaponData.weapon_data[weapon][5]
 
 func use_weapon():
 	if (weapon != -1):
@@ -120,6 +134,17 @@ func use_weapon():
 		part.look_at(get_global_mouse_position())
 
 		get_tree().current_scene.add_child(shoot_ins)
+		if (client_player):
+			Network.socket.send_text(JSON.stringify(
+				{
+					"type": "player_shoot",
+					"id": player_id,
+					"pos": [ray.target_position.x, ray.target_position.y],
+					"pro_mat_emit_box_x": $GPUParticles2D.process_material.emission_box_extents.x,
+					"proc_mat_emit_of_x": $GPUParticles2D.process_material.emission_shape_offset.x,
+					"amount": $GPUParticles2D.amount
+				}
+			))
 
 #===========================================================================
 # Called when the node enters the scene tree for the first time.
