@@ -95,10 +95,10 @@ func shoot_particule(pos : Vector2):
 		var gap = (position.direction_to(pos)) * 75
 		
 		shoot_rotation = rotation
-		shoot_position = position + gap
+		shoot_position = position# + gap
 		
 		$GPUParticles2D.emitting = true
-		$GPUParticles2D.process_material.emission_box_extents.x = pos.distance_to(position) / 4 - gap.x
+		$GPUParticles2D.process_material.emission_box_extents.x = pos.distance_to(position) / 4# - gap.x
 		$GPUParticles2D.process_material.emission_shape_offset.x = pos.distance_to(position) / 4
 		$GPUParticles2D.amount = pos.distance_to(position) / 10
 
@@ -109,7 +109,7 @@ func shoot_particule_network(data: Dictionary):
 	var gap = (position.direction_to(pos)) * 75
 		
 	shoot_rotation = rotation
-	shoot_position = position + gap
+	shoot_position = position# + gap
 	
 	$GPUParticles2D.emitting = true
 	$GPUParticles2D.process_material.emission_box_extents.x = data["pro_mat_emit_box_x"]
