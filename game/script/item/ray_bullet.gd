@@ -6,8 +6,6 @@ extends Node2D
 
 var ray2D : RayCast2D
 
-# Called when the node enters the scene tree for the first time.
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$point.position = $RayCast2D.target_position
 	$RayCast2D/GPUParticles2D.process_material.emission_box_extents.x = w_range
@@ -27,11 +25,11 @@ func _process(delta: float) -> void:
 			var mark_ins : Node2D = mark.instantiate()
 			mark_ins.global_position = ray2D.get_collision_point()
 			if ("CharacterBody2D" == ray2D.get_collider().get_class()):
-				ray2D.get_collider().get_hit(w_damage)
+				ray2D.get_collider().get_hit(w_damage, true)
 			get_tree().current_scene.add_child(mark_ins)
 			GlobalEvent.shoot_action.emit(ray2D.get_collision_point())
 	else:
 		GlobalEvent.shoot_action.emit($point.global_position)
 	
-	free()
+	self.queue_free()
 	

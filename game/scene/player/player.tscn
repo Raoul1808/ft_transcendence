@@ -168,6 +168,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=301390549]
+position = Vector2(25, 0)
 emitting = false
 amount = 100
 texture = SubResource("AnimatedTexture_2m5q5")

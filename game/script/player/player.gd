@@ -32,14 +32,6 @@ func player_enter_loot_zone(w_id : int, id : int):
 func player_exit_loot_zone():
 	in_loot_zone = false
 
-func shoot_particule(pos : Vector2):
-	shoot_rotation = rotation
-	shoot_position = position
-	$GPUParticles2D.emitting = true
-	$GPUParticles2D.process_material.emission_box_extents.x = pos.distance_to(position) / 4
-	$GPUParticles2D.process_material.emission_shape_offset.x = pos.distance_to(position) / 4
-	$GPUParticles2D.amount = pos.distance_to(position) / 10
-	print($GPUParticles2D.amount)
 func interact_with_loot():
 	if (in_loot_zone == true):
 		if (Input.is_action_just_pressed("loot")):
@@ -97,6 +89,19 @@ func drop_weapon():
 					"id": player_id,
 				}
 			))
+
+func shoot_particule(pos : Vector2):
+	if (client_player):
+		var gap = (position.direction_to(pos)) * 75
+		
+		shoot_rotation = rotation
+		shoot_position = position + gap
+		
+		$GPUParticles2D.emitting = true
+		$GPUParticles2D.process_material.emission_box_extents.x = pos.distance_to(position) / 4 - gap.x
+		#$GPUParticles2D.process_material.emission_box_extents.y - gap.x / 4
+		$GPUParticles2D.process_material.emission_shape_offset.x = pos.distance_to(position) / 4
+		$GPUParticles2D.amount = pos.distance_to(position) / 10
 
 func use_weapon():
 	if (weapon != -1):
@@ -240,6 +245,8 @@ func _process(delta: float):
 		else:
 			not_client_proc(delta)
 	
+	$GPUParticles2D.global_rotation = shoot_rotation
+	$GPUParticles2D.global_position = shoot_position
 	$healthbar.global_rotation = 0
 	$healthbar.global_position = position + Vector2(0, -92)
 	$healthbar/Sprite2D2.scale.x = $healthbar/Timer.time_left * health_to_remove / 100
