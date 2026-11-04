@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://bcihvvby2amxw" path="res://assets/img/heathbar-1.png" id="8_oypl4"]
 [ext_resource type="Texture2D" uid="uid://cmqi0xnubjtp1" path="res://assets/img/heathbar-2.png" id="9_pisg7"]
 [ext_resource type="FontFile" uid="uid://btrepff1y83ma" path="res://assets/font/KiwiSoda.ttf" id="10_oypl4"]
+[ext_resource type="Texture2D" uid="uid://drox8ohbjr1bs" path="res://assets/img/blue_particle2.png" id="11_1wtbu"]
+[ext_resource type="Texture2D" uid="uid://uyr6alvfxdob" path="res://assets/img/purple_particle.png" id="12_p3aiu"]
 
 [sub_resource type="Gradient" id="Gradient_oypl4"]
 offsets = PackedFloat32Array(0, 0.49874055, 1)
@@ -76,6 +78,24 @@ gradient = SubResource("Gradient_pqh06")
 font = ExtResource("10_oypl4")
 font_size = 48
 
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_2m5q5"]
+frames = 2
+pause = true
+speed_scale = 0.0
+frame_0/texture = ExtResource("11_1wtbu")
+frame_1/texture = ExtResource("12_p3aiu")
+frame_1/duration = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pqh06"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_min = -44.99999
+angle_max = 45.00001
+angular_velocity_min = 9.999984
+angular_velocity_max = 9.999984
+gravity = Vector3(0, 0, 0)
+
 [node name="player" type="CharacterBody2D" unique_id=275882780]
 scale = Vector2(2, 2)
 disable_mode = 2
@@ -94,6 +114,7 @@ rotation = 1.5707964
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=607882729]
 light_mask = 2
+z_index = 1
 rotation = 1.5707964
 sprite_frames = SubResource("SpriteFrames_6skho")
 animation = &"walk"
@@ -145,6 +166,14 @@ vertical_alignment = 1
 visible = false
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=301390549]
+emitting = false
+amount = 100
+texture = SubResource("AnimatedTexture_2m5q5")
+lifetime = 0.25
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_pqh06")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="healthbar/Timer" to="." method="_on_timer_timeout"]

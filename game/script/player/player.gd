@@ -15,6 +15,8 @@ var in_loot_zone = false
 var loot_zone_id = 0
 var loot_id = 0 #incetance id of the entered loot zone
 var health_to_remove = 0
+var shoot_rotation = 0
+var shoot_position = Vector2(0, 0)
 
 #=======================================================================
 #network val
@@ -30,6 +32,14 @@ func player_enter_loot_zone(w_id : int, id : int):
 func player_exit_loot_zone():
 	in_loot_zone = false
 
+func shoot_particule(pos : Vector2):
+	shoot_rotation = rotation
+	shoot_position = position
+	$GPUParticles2D.emitting = true
+	$GPUParticles2D.process_material.emission_box_extents.x = pos.distance_to(position) / 4
+	$GPUParticles2D.process_material.emission_shape_offset.x = pos.distance_to(position) / 4
+	$GPUParticles2D.amount = pos.distance_to(position) / 10
+	print($GPUParticles2D.amount)
 func interact_with_loot():
 	if (in_loot_zone == true):
 		if (Input.is_action_just_pressed("loot")):
@@ -95,6 +105,8 @@ func use_weapon():
 		shoot_ins.position = position
 		shoot_ins.w_range = WeaponData.weapon_data[weapon][1]
 		shoot_ins.w_damage = WeaponData.weapon_data[weapon][2]
+		shoot_ins.w_ray_color = WeaponData.weapon_data[weapon][4]
+		$GPUParticles2D.texture.current_frame = WeaponData.weapon_data[weapon][5]
 		var ray: RayCast2D = shoot_ins.get_node("RayCast2D")
 		var dir = (get_global_mouse_position() - ray.global_position).normalized()
 		ray.target_position = ray.to_local(ray.global_position + dir * shoot_ins.w_range)
@@ -110,6 +122,7 @@ func use_weapon():
 func _ready() -> void:
 	GlobalEvent.enter_loot_zone.connect(player_enter_loot_zone)
 	GlobalEvent.exit_loot_zone.connect(player_exit_loot_zone)
+	GlobalEvent.shoot_action.connect(shoot_particule)
 	if (client_player == false):
 		$Camera2D.enabled = false
 	else:
@@ -185,7 +198,8 @@ func client_proc(delta):
 	#======================================================================================
 	if Input.is_action_just_pressed("shoot"):
 		use_weapon()
-	
+	if Input.is_action_just_pressed("loot"):
+		GlobalEvent.map_action.emit(global_position)
 	if (Input.is_action_just_pressed("drop_weapon")):
 		drop_weapon()
 	interact_with_loot()
