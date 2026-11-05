@@ -100,7 +100,7 @@ func shoot_particule(pos : Vector2):
 		$GPUParticles2D.emitting = true
 		$GPUParticles2D.process_material.emission_box_extents.x = pos.distance_to(position) / 4# - gap.x
 		$GPUParticles2D.process_material.emission_shape_offset.x = pos.distance_to(position) / 4
-		$GPUParticles2D.amount = pos.distance_to(position) / 10
+		$GPUParticles2D.amount = pos.distance_to(position) / 5
 
 func shoot_particule_network(data: Dictionary):
 	var pos : Vector2

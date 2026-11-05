@@ -86,15 +86,39 @@ frame_0/texture = ExtResource("11_1wtbu")
 frame_1/texture = ExtResource("12_p3aiu")
 frame_1/duration = 1.0
 
+[sub_resource type="Curve" id="Curve_p3aiu"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1wtbu"]
+curve = SubResource("Curve_p3aiu")
+
+[sub_resource type="Curve" id="Curve_f5r2w"]
+_data = [Vector2(0, 0.17094022), 0.0, 0.0, 0, 0, Vector2(0.49322492, 0.70512825), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_oen5c"]
+curve = SubResource("Curve_f5r2w")
+
+[sub_resource type="Curve" id="Curve_1wtbu"]
+_data = [Vector2(0, 0.22177422), 0.0, 0.0, 0, 0, Vector2(0.501355, 0.7419355), 0.0, 0.0, 0, 0, Vector2(0.99458, 0.25), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_w2y0u"]
+curve = SubResource("Curve_1wtbu")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pqh06"]
 particle_flag_disable_z = true
 emission_shape = 3
-emission_box_extents = Vector3(1, 1, 1)
+emission_box_extents = Vector3(100, 1, 1)
 angle_min = -44.99999
 angle_max = 45.00001
 angular_velocity_min = 9.999984
 angular_velocity_max = 9.999984
 gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_w2y0u")
+alpha_curve = SubResource("CurveTexture_1wtbu")
+emission_curve = SubResource("CurveTexture_oen5c")
 
 [node name="player" type="CharacterBody2D" unique_id=275882780]
 scale = Vector2(2, 2)
