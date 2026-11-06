@@ -13,7 +13,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	$CanvasLayer/Control2/healthbar.show()
 	
-	$CanvasLayer/Label.text = str(Network.client_player_ins.healt)
 	healt = Network.client_player_ins.healt
 	$CanvasLayer/Control/client_point.text = str(Main.p1_point)
 	$CanvasLayer/Control/not_client_point.text = str(Main.p2_point)

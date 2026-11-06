@@ -6,14 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://cmqi0xnubjtp1" path="res://assets/img/heathbar-2.png" id="4_sacm7"]
 
 [sub_resource type="Gradient" id="Gradient_pqh06"]
-colors = PackedColorArray(0.6627451, 0.043137256, 0.18039216, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0.5294118, 0.12941177, 0.22352941, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_xlll8"]
 gradient = SubResource("Gradient_pqh06")
-
-[sub_resource type="LabelSettings" id="LabelSettings_yku6q"]
-font = ExtResource("2_g2gd0")
-font_size = 48
 
 [node name="HUD" type="Control" unique_id=641997604]
 layout_mode = 3
@@ -26,13 +22,6 @@ size_flags_horizontal = 4
 script = ExtResource("1_ngpb7")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=350112355]
-
-[node name="Label" type="Label" parent="CanvasLayer" unique_id=1252722472]
-offset_right = 280.0
-offset_bottom = 110.0
-theme_override_fonts/font = ExtResource("2_g2gd0")
-theme_override_font_sizes/font_size = 50
-text = "life"
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=316781549]
 layout_mode = 3
@@ -134,14 +123,5 @@ z_as_relative = false
 position = Vector2(-192, -64)
 texture = ExtResource("4_sacm7")
 centered = false
-
-[node name="Label" type="Label" parent="CanvasLayer/Control2/healthbar" unique_id=1010294113]
-offset_left = 194.0
-offset_top = -58.0
-offset_right = 348.0
-offset_bottom = 60.0
-text = "100%"
-label_settings = SubResource("LabelSettings_yku6q")
-vertical_alignment = 1
 
 [connection signal="timeout" from="CanvasLayer/Control2/healthbar/Timer" to="." method="_on_timer_timeout"]
