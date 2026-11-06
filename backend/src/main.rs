@@ -72,6 +72,9 @@ async fn main() -> io::Result<()> {
         )
         .with(tracing_subscriber::fmt::layer())
         .init();
+
+    let _ = dotenvy::dotenv();
+
 	let pool = db::init_db().await;
 	db::run_migrations(&pool).await;
 
