@@ -24,7 +24,7 @@ services:
 
   backend-dev:
     build:
-      context: ./backend
+      context: backend
       dockerfile: Dockerfile-dev
     depends_on:
       postgres-dev:
