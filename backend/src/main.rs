@@ -5,18 +5,20 @@ use std::{
 };
 
 use axum::{
-    Router,
-    extract::Path,
-    http::Method,
+    Json, Router,
+    extract::{Path, State, ws::Message},
+    http::{Method, StatusCode},
     response::{Html, IntoResponse},
     routing::get,
 };
-use bytes::Bytes;
+//use bytes::Bytes;
+use sqlx::PgPool;
 use tokio::sync::broadcast;
 use tower_http::{cors::CorsLayer, services::ServeDir};
 use tracing::info;
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
+mod db;
 mod ws;
 
 async fn index() -> impl IntoResponse {
@@ -27,13 +29,25 @@ async fn echo(Path(str): Path<String>) -> impl IntoResponse {
     Html(str)
 }
 
+async fn matches(
+    State(state): State<Arc<AppState>>,
+) -> Result<Json<Vec<db::MatchRow>>, StatusCode> {
+    db::list_matches(&state.db).await.map(Json).map_err(|e| {
+        tracing::error!("list_matches: {e}");
+        StatusCode::INTERNAL_SERVER_ERROR
+    })
+}
+
 pub struct AppState {
     pub rooms: Mutex<HashMap<String, RoomState>>,
+	pub db: PgPool,
 }
 
 pub struct RoomState {
     pub users: Mutex<HashSet<String>>,
-    pub tx: broadcast::Sender<Bytes>,
+	pub results: HashMap<usize, (String, [i32; 2])>,
+	pub saved: bool,
+    pub tx: broadcast::Sender<Message>,
 }
 
 impl RoomState {
@@ -41,6 +55,8 @@ impl RoomState {
     pub fn new() -> Self {
         Self {
             users: Mutex::new(HashSet::new()),
+			results: HashMap::new(),
+			saved: false,
             tx: broadcast::channel(64).0,
         }
     }
@@ -56,9 +72,12 @@ async fn main() -> io::Result<()> {
         )
         .with(tracing_subscriber::fmt::layer())
         .init();
+	let pool = db::init_db().await;
+	db::run_migrations(&pool).await;
 
     let state = Arc::new(AppState {
         rooms: Mutex::new(HashMap::new()),
+		db: pool,
     });
 
     let cors = CorsLayer::new()
@@ -67,6 +86,7 @@ async fn main() -> io::Result<()> {
 
     let app = Router::new()
         .route("/", get(index))
+		.route("/matches", get(matches))
         .route("/{str}", get(echo))
         .route("/ws", get(ws::websocket_handler))
         .nest_service("/public", ServeDir::new("static"))
@@ -89,6 +109,8 @@ async fn shutdown_signal() {
             .await
             .expect("failed to install Ctrl+C handler");
     };
+
+	let _ = dotenvy::dotenv();
 
     tracing::debug!("installing terminate signal handler");
     #[cfg(unix)]

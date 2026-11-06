@@ -1,6 +1,9 @@
+
 services:
   postgres-dev:
     image: postgres:18
+    ports:
+      - "127.0.0.1:5432:5432"
     networks:
       - tr-devnet
     environment:
@@ -8,22 +11,36 @@ services:
       POSTGRES_USER: transcendence
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_pass
     volumes:
-      - dev-db-data:/var/lib/postgres
+      - dev-db-data:/var/lib/postgresql
     secrets:
       - postgres_pass
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U transcendence -d transcendence"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
     restart: unless-stopped
+
   backend-dev:
     build:
-      context: backend
+      context: ./backend
       dockerfile: Dockerfile-dev
     depends_on:
-      - postgres-dev
+      postgres-dev:
+        condition: service_healthy
     ports:
       - "8080:8080"
     environment:
-      - RUST_LOG=debug
+      RUST_LOG: debug
+      DB_HOST: postgres-dev
+      DB_USER: transcendence
+      DB_NAME: transcendence
+      DB_PASSWORD_FILE: /run/secrets/postgres_pass
     networks:
       - tr-devnet
+    secrets:
+      - postgres_pass
     volumes:
       - ./backend:/app
       - cargo-cache:/usr/local/cargo/registry
@@ -41,4 +58,4 @@ volumes:
 
 secrets:
   postgres_pass:
-    file: secrets/postgres_pass.txt
+    file: ./secrets/postgres_pass.txt
