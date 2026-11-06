@@ -2,6 +2,18 @@
 
 [ext_resource type="Script" uid="uid://cyw777nkl7t8l" path="res://script/player/hud.gd" id="1_ngpb7"]
 [ext_resource type="FontFile" uid="uid://btrepff1y83ma" path="res://assets/font/KiwiSoda.ttf" id="2_g2gd0"]
+[ext_resource type="Texture2D" uid="uid://bcihvvby2amxw" path="res://assets/img/heathbar-1.png" id="3_8dco6"]
+[ext_resource type="Texture2D" uid="uid://cmqi0xnubjtp1" path="res://assets/img/heathbar-2.png" id="4_sacm7"]
+
+[sub_resource type="Gradient" id="Gradient_pqh06"]
+colors = PackedColorArray(0.6627451, 0.043137256, 0.18039216, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xlll8"]
+gradient = SubResource("Gradient_pqh06")
+
+[sub_resource type="LabelSettings" id="LabelSettings_yku6q"]
+font = ExtResource("2_g2gd0")
+font_size = 48
 
 [node name="HUD" type="Control" unique_id=641997604]
 layout_mode = 3
@@ -86,3 +98,50 @@ theme_override_font_sizes/font_size = 50
 text = "p2"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="CanvasLayer" unique_id=1741845775]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="healthbar" type="Sprite2D" parent="CanvasLayer/Control2" unique_id=1955548297]
+z_index = 100
+z_as_relative = false
+position = Vector2(100, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_8dco6")
+region_filter_clip_enabled = true
+
+[node name="Timer" type="Timer" parent="CanvasLayer/Control2/healthbar" unique_id=496407286]
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Control2/healthbar" unique_id=645317842]
+z_index = 1
+z_as_relative = false
+position = Vector2(186, -58)
+scale = Vector2(0.6171875, 115.999985)
+texture = SubResource("GradientTexture1D_xlll8")
+centered = false
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/healthbar" unique_id=1611397395]
+z_index = 1
+z_as_relative = false
+position = Vector2(-192, -64)
+texture = ExtResource("4_sacm7")
+centered = false
+
+[node name="Label" type="Label" parent="CanvasLayer/Control2/healthbar" unique_id=1010294113]
+offset_left = 194.0
+offset_top = -58.0
+offset_right = 348.0
+offset_bottom = 60.0
+text = "100%"
+label_settings = SubResource("LabelSettings_yku6q")
+vertical_alignment = 1
+
+[connection signal="timeout" from="CanvasLayer/Control2/healthbar/Timer" to="." method="_on_timer_timeout"]
