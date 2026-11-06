@@ -110,8 +110,6 @@ async fn shutdown_signal() {
             .expect("failed to install Ctrl+C handler");
     };
 
-	let _ = dotenvy::dotenv();
-
     tracing::debug!("installing terminate signal handler");
     #[cfg(unix)]
     let terminate = async {
