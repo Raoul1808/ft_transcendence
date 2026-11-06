@@ -290,10 +290,10 @@ func get_hit(dmg: int, b: bool):
 	$healthbar/Timer.start()
 
 	if (not b):
-		$healthbar.show()
 		get_tree().current_scene.get_node("HUD").healthbar_(dmg)
 
 	if (b):
+		$healthbar.show()
 		Network.socket.send_text(JSON.stringify(
 			{
 				"type": "player_get_hit",

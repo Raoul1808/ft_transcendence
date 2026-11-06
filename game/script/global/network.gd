@@ -100,6 +100,17 @@ func _process(_delta: float) -> void:
 				if (data["type"] == "end_round"):
 					Main.end_round(data["player_point"], false)
 				
+				if (data["type"] == "hitmarker"):
+					var hit = load("res://scene/item/hit_marker.tscn")
+					var hit_ins: Node2D = hit.instantiate()
+					hit_ins.from_client = false
+					hit_ins.global_position.x = int(data["pos"][0])
+					hit_ins.global_position.y = int(data["pos"][1])
+					#var part: GPUParticles2D = hit_ins.get_node("Marker2D").get_node("GPUParticle2D")
+					#var tex: AnimatedTexture = part.texture
+					#tex.current_frame = int(data["tex"])
+					get_tree().current_scene.add_child(hit_ins)
+					
 				#player update
 				if (data["type"] == "player_update" ||
 						data["type"] == "player_equip_weapon" ||

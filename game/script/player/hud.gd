@@ -30,7 +30,7 @@ func healthbar_(dmg: int):
 		healt = 0
 	$CanvasLayer/Control2/healthbar/Sprite2D.scale.x = healt / 100
 	$CanvasLayer/Control2/healthbar/Sprite2D2.position.x = -192 + (healt * 192 * 2)/100
-	$CanvasLayer/Control2/healthbar/Label.text = type_convert(type_convert(healt, TYPE_INT), TYPE_STRING) + "%"
+	#$CanvasLayer/Control2/healthbar/Label.text = type_convert(type_convert(healt, TYPE_INT), TYPE_STRING) + "%"
 	$CanvasLayer/Control2/healthbar/Timer.start()
 	
 
