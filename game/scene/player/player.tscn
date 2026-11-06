@@ -134,11 +134,12 @@ texture_scale = 1.92
 position = Vector2(6, 17.5)
 
 [node name="Sprite2D" type="Sprite2D" parent="hand" unique_id=950505858]
+z_index = 1
 rotation = 1.5707964
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=607882729]
 light_mask = 2
-z_index = 1
+z_index = 2
 rotation = 1.5707964
 sprite_frames = SubResource("SpriteFrames_6skho")
 animation = &"walk"
@@ -192,11 +193,12 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=301390549]
+z_index = 1
 position = Vector2(25, 0)
 emitting = false
 amount = 100
 texture = SubResource("AnimatedTexture_2m5q5")
-lifetime = 0.25
+lifetime = 0.15000000000000002
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_pqh06")
 

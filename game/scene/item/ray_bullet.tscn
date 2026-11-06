@@ -59,6 +59,7 @@ w_ray_color = null
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=2128252311]
 
 [node name="Sprite2D" type="Sprite2D" parent="RayCast2D" unique_id=216833986]
+visible = false
 texture = SubResource("GradientTexture1D_2m5q5")
 centered = false
 
@@ -77,7 +78,9 @@ draw_order = 0
 process_material = SubResource("ParticleProcessMaterial_6skho")
 
 [node name="base" type="Sprite2D" parent="." unique_id=2002608547]
+visible = false
 texture = ExtResource("2_2hdiv")
 
 [node name="point" type="Sprite2D" parent="." unique_id=1590811071]
+visible = false
 texture = ExtResource("3_s6qev")

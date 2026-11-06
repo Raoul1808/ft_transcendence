@@ -97,10 +97,10 @@ func shoot_particule(pos : Vector2):
 		shoot_rotation = rotation
 		shoot_position = position# + gap
 		
-		$GPUParticles2D.emitting = true
 		$GPUParticles2D.process_material.emission_box_extents.x = pos.distance_to(position) / 4# - gap.x
 		$GPUParticles2D.process_material.emission_shape_offset.x = pos.distance_to(position) / 4
 		$GPUParticles2D.amount = pos.distance_to(position) / 5
+		$GPUParticles2D.emitting = true
 
 func shoot_particule_network(data: Dictionary):
 	var pos : Vector2
@@ -111,11 +111,11 @@ func shoot_particule_network(data: Dictionary):
 	shoot_rotation = rotation
 	shoot_position = position# + gap
 	
-	$GPUParticles2D.emitting = true
 	$GPUParticles2D.process_material.emission_box_extents.x = data["pro_mat_emit_box_x"]
 	$GPUParticles2D.process_material.emission_shape_offset.x = data["proc_mat_emit_of_x"]
 	$GPUParticles2D.amount = data["amount"]
 	$GPUParticles2D.texture.current_frame = WeaponData.weapon_data[weapon][5]
+	$GPUParticles2D.emitting = true
 
 func use_weapon():
 	if (weapon != -1):
