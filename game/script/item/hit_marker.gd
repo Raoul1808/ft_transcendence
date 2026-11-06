@@ -1,13 +1,11 @@
 extends Node2D
 
 func _ready() -> void:
-	$GPUParticles2D.emitting = true
+	$Marker2D/GPUParticles2D.emitting = true
 
 func _process(delta: float) -> void:
-	var v : Vector2 = Vector2.ZERO
-	v.x = 0.005
-	v.y = 0.005
-	scale = scale - v
-
+	if ($Marker2D/PointLight2D.energy > 0):
+		$Marker2D/PointLight2D.energy -= 0.1
+	
 func _on_timer_timeout() -> void:
 	queue_free()

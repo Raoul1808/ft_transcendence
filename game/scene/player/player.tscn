@@ -14,14 +14,14 @@
 [ext_resource type="Texture2D" uid="uid://uyr6alvfxdob" path="res://assets/img/purple_particle.png" id="12_p3aiu"]
 
 [sub_resource type="Gradient" id="Gradient_oypl4"]
-offsets = PackedFloat32Array(0, 0.49874055, 1)
+offsets = PackedFloat32Array(0, 0.003787879, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_6skho"]
 gradient = SubResource("Gradient_oypl4")
 fill = 1
 fill_from = Vector2(0.52421653, 0.4985755)
-fill_to = Vector2(1, 0.7236467)
+fill_to = Vector2(0.991453, 0.5940171)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6skho"]
 animations = [{

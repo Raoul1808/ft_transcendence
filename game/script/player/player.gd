@@ -278,7 +278,6 @@ func _process(delta: float):
 	health_to_remove *= $healthbar/Timer.time_left
 
 func get_hit(dmg: int, b: bool):
-	$healthbar.show()
 	if (healt > 0):
 		health_to_remove += dmg
 	healt -= dmg
@@ -291,6 +290,7 @@ func get_hit(dmg: int, b: bool):
 	$healthbar/Timer.start()
 
 	if (not b):
+		$healthbar.show()
 		get_tree().current_scene.get_node("HUD").healthbar_(dmg)
 
 	if (b):
