@@ -1,47 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-.HomeStartButton{
-    background-color: #411f70;
-    border-radius: 10px;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 50px;
-    margin: 40px;
-    cursor: pointer;
-}
-
-.HomePage{
-    border-radius: 10px;
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.GameTitle{
-    font-size: 500%;
-    margin-top: 50px;
-}
-
-.FriendBox {
-    justify-self: center;
-    min-width: 80%;
-    max-width: 80%;
-    background-color: #411f70;
-    border-radius: 10px;
-    
-}
-
-.ListItems {
-    justify-content: center;
-    align-content: center;
-}
+@import "tailwindcss";
 
 .UserCards {
     margin: 1%;
@@ -120,25 +77,6 @@
     min-width: 0;
 }
 
-.signin-button {
-    margin-left: auto;
-}
-
-.signin-button li {
-    list-style: none;
-    padding: 26px 30px;
-}
-
-.signin-button li a {
-    text-decoration: none;
-    font-family: 'KiwiSoda';
-    color: white;
-}
-
-.signin-button li a:hover {
-    color: lightgray;
-}
-
 .signin {
     display: grid;
     justify-content: center;
@@ -161,7 +99,6 @@
 }
 
 .nav-list {
-    width: 70%;
     display: flex;
     align-items: center;
 }
@@ -179,6 +116,9 @@
 
 .nav-list li a:hover {
     color: lightgray;
+}
+.nav-list li.right {
+    margin-left: auto;
 }
 
 .SigninSubmitButton{

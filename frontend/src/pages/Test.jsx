@@ -1,8 +1,6 @@
 import React from "react";
 import { useState,useEffect } from 'react';
 
-import "./Test.css";
-
 class Clock extends React.Component {
   constructor(props) {
     super(props);
@@ -63,7 +61,7 @@ const ApiTest = () => {
     return (
       <div className="Container">
         {items.map((item) => (
-          <div className="item" key={item.id}>
+          <div className="item " key={item.id}>
             <ol>
               <div>
                 User_Name: {item.username},
@@ -83,21 +81,22 @@ const ApiTest = () => {
 
 const Test = () => {
     return (
-        <section className="section">
-            <div className="box-main">
-                <div className="firstHalf">
-                    <h1 className="text-big">
+        <section>
+            <div>
+                <div>
+                    <h1>
                         Transcendance
                     </h1>
                     <Clock />
                     <Counter />
-                    <p className="text-small">
+                    <div className="bg-black hover:bg-white">uwu</div>
+                    <p>
                         This is a test page for the transcendance i know its ugly but i like it :D
                     </p>
                 </div>
             </div>
             <div>
-              <ApiTest/>
+              {/*<ApiTest/> */}
             </div>
         </section>
     )

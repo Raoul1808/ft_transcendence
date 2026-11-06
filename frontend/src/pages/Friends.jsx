@@ -27,15 +27,15 @@ const FriendApiFetch = () => {
                     <a className="UserCard-Background" href="/Profile">
                         <img className="UserCard-Profile-Background" src="https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg"></img>
                     </a>
-                <div className="UserCard-card">
-                    <div className="UserCard-content">
-                        <div className="UserCard-avatar">
-                            <img className="UserCard-avatar-img" src="./src/assets/Wizard.png"></img>
+                    <div className="UserCard-card">
+                        <div className="UserCard-content">
+                            <div className="UserCard-avatar">
+                                <img className="UserCard-avatar-img" src="./src/assets/Wizard.png"></img>
+                            </div>
                         </div>
+                        <div className="UserCard-details">
+                            <div className="UserCard-Username"> {item.username} </div>
                     </div>
-                    <div className="UserCard-details">
-                        <div className="UserCard-Username"> {item.username} </div>
-                </div>
                 </div>
         </div>
             ))}
@@ -46,9 +46,9 @@ const FriendApiFetch = () => {
 const Friends = () => {
     return (
         <div>
-            <h1 className="FriendTitle"> Friends List </h1>
-            <div className="FriendBox">
-                <div className="ListItems">
+            <h1 className="text-8xl"> Friends List </h1>
+            <div className="justify-self-center w-10/13 bg-wizard-purple rounded-lg">
+                <div className="justify-center content-center">
                     <FriendApiFetch/>
                 </div>
             </div>

@@ -9,9 +9,6 @@ const Navbar = () => {
                     <li>
                         <Link to="/"><img src="./src/assets/wizard.svg"/></Link>
                     </li>
-                    {/* <li>
-                        <Link to="/Game">Game</Link>
-                    </li> */}
                     <li>
                         <Link to="/Friends">Friends</Link>
                     </li>
@@ -22,12 +19,14 @@ const Navbar = () => {
                         <Link to="/Profile">Profile</Link>
                     </li>
                     
+                    <li className="ml-auto">
+                            <Link to="/Signin" >Sign in</Link>
+                    </li>
+                    <li>
+                            <Link to="/Signup" >Sign up</Link>
+                    </li>
                 </ul>
-                <ul className="signin-button">
-                        <li>
-                            <Link to="/Signin" >Signin</Link>
-                        </li>
-                </ul>
+                    
             </nav>
         </>
     );
