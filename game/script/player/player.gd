@@ -289,7 +289,10 @@ func get_hit(dmg: int, b: bool):
 	$healthbar/Sprite2D2.position.x = -192 + (healt * 192 * 2)/100
 	$healthbar/Label.text = type_convert(type_convert(healt, TYPE_INT), TYPE_STRING) + "%"
 	$healthbar/Timer.start()
-	
+
+	if (not b):
+		get_tree().current_scene.get_node("HUD").healthbar_(dmg)
+
 	if (b):
 		Network.socket.send_text(JSON.stringify(
 			{

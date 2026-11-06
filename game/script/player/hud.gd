@@ -22,7 +22,7 @@ func _process(_delta: float) -> void:
 	#print(Network.client_player_ins.healt)
 
 
-func healthbar_(dmg: int, b: bool):
+func healthbar_(dmg: int):
 	
 	if (healt > 0):
 		health_to_remove += dmg
@@ -37,4 +37,4 @@ func healthbar_(dmg: int, b: bool):
 
 
 func _on_timer_timeout() -> void:
-	$healthbar/Timer.stop()
+	$CanvasLayer/Control2/healthbar/Timer.stop()
