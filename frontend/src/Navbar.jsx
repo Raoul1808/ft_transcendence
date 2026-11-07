@@ -5,9 +5,9 @@ const Navbar = () => {
     return (
         <>
             <nav className="navbar">
-                <ul className="nav-list">
+                <ul className="nav-list flex">
                     <li>
-                        <Link to="/"><img src="./src/assets/wizard.svg"/></Link>
+                        <Link to="/"><img src="./src/assets/wizard.svg" /></Link>
                     </li>
                     <li>
                         <Link to="/Friends">Friends</Link>

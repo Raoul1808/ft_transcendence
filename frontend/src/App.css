@@ -92,9 +92,7 @@
 .navbar {
     background: #411f70;
     height: 8svh;
-    display: flex;
     align-items: center;
-    justify-content:flex-start;
     top: 0;
 }
 
@@ -105,7 +103,7 @@
 
 .nav-list li {
     list-style: none;
-    padding: 26px 30px;
+    padding: 8px 30px;
 }
 
 .nav-list li a {
@@ -116,9 +114,6 @@
 
 .nav-list li a:hover {
     color: lightgray;
-}
-.nav-list li.right {
-    margin-left: auto;
 }
 
 .SigninSubmitButton{
