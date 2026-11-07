@@ -2,14 +2,13 @@
 
 @theme {
   --color-wizard-purple: #411f70;
-}
-
-:root {
+  --font-kiwi-soda: KiwiSoda;
+  --font-grape-soda: GrapeSoda;
   --text: #000000;
   --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
+  --bg: #e290e8;
+  --border: #f6afe8;
+  --code-bg: #ffe6f9;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
@@ -17,11 +16,11 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+}
 
-  font: 18px/145% var(--sans);
+:root {
+ 
+  font: 18px/145% GrapeSoda;
   letter-spacing: 0.18px;
   color-scheme: light dark;
   color: var(--text);
@@ -43,8 +42,15 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'GrapeSoda';
+  src: url('./assets/fonts/GrapeSoda.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  @theme {
     --text: #9ca3af;
     --text-h: #f3f4f6;
     --bg: #16171d;
@@ -56,6 +62,8 @@
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+  :root {
     background-image: url(./assets/Background.png);
     background-size: 30%;
     background-blend-mode:soft-light;
@@ -97,13 +105,14 @@ h2 {
     font-size: 20px;
   }
 }
-p {
-  margin: 0;
+
+button {
+  font-family: GrapeSoda;
 }
 
 code,
 .counter {
-  font-family: var(--mono);
+  font-family: GrapeSoda;
   display: inline-flex;
   border-radius: 4px;
   color: var(--text-h);

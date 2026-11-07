@@ -62,27 +62,39 @@ function Form () {
                 <SuccessMessage/>
                 <ErrorMessage/>
             </div>
-            <form className="form">
+            <form className="grid justify-center items-center">
                 <input
-                    className="input"
+                    className="m-0.5 p-1.5 text-xl bg-wizard-purple border-amber-300 border rounded-md"
                     type="text"
+                    id="name"
+                    name="name"
+                    required
+                    autoComplete="userName"
                     onChange={handleName}
                     value={name}
                     />
                 <input
-                    className="input"
+                    className="m-0.5 p-1.5 text-xl bg-wizard-purple border-amber-300 border rounded-md"
                     type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autoComplete="email"
                     onChange={handleEmail}
                     value={email}
                     />
                 <input
-                    className="input"
+                    className="m-0.5 p-1.5 text-xl bg-wizard-purple border-amber-300 border rounded-md"
                     type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autoComplete="current-password"
                     onChange={handlePassword}
                     value={password}
                     />
                 <button onClick={handleSubmit}
-                        type="submit" className="SigninSubmitButton">
+                        type="submit" className="bg-wizard-purple rounded-lg text-white p-[15px_32px] text-center inline-block text-3xl m-[20px_40px] cursor-pointer">
                     Submit
                 </button>
             </form>
@@ -92,7 +104,7 @@ function Form () {
 
 function Signin() {
     return (
-        <div className="signin">
+        <div className="grid justify-center items-center">
             <div>
                 <h1>
                     User Sign-in

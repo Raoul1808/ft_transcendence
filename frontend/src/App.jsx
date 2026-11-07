@@ -26,7 +26,7 @@ const RoutingTable = () => {
 
 function App() {
     return (
-        <div className="MainContainer">
+        <div className="flex flex-col border-box min-h-svh">
             <Navbar />
             <RoutingTable />
         </div>
