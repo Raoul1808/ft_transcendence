@@ -15,7 +15,10 @@ func interact_map(pos: Vector2):
 	#======================================================================================
 	#DOOR Interaction
 	#======================================================================================
+	print("patate ", pos)
 	for i in $Wall.get_surrounding_cells(pos / 64):
+		print($Wall.get_surrounding_cells(pos / 64))
+		print($Wall.get_cell_source_id(i))
 		if ($Wall.get_cell_source_id(i) == 0):
 			if ($Wall.get_cell_tile_data(i).get_custom_data("door")):
 				if ($Wall.get_cell_tile_data(i).get_custom_data("open")):
