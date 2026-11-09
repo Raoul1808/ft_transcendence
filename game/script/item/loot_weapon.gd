@@ -16,3 +16,7 @@ func _on_body_exited(body: Node2D) -> void:
 func _ready() -> void:
 	$Sprite2D.texture = load(WeaponData.weapon_data[weapon_id][3])
 	$PointLight2D.texture = load(WeaponData.weapon_data[weapon_id][3])
+
+func _process(delta: float) -> void:
+	$Sprite2D.texture = load(WeaponData.weapon_data[weapon_id][3])
+	$PointLight2D.texture = load(WeaponData.weapon_data[weapon_id][3])

@@ -2,6 +2,7 @@ shader_type canvas_item;
 
 void vertex() {
 		VERTEX.x += cos(TIME) * ((32.0 - float(int(UV.y * 128.0) % 32)) / 4.0);
+
 		
 }
 
