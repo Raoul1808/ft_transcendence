@@ -18,6 +18,6 @@ func _process(_delta: float) -> void:
 		$CanvasLayer/game_leader.show()
 
 func _on_start_pressed() -> void:
-	Main.start_game()
+	Main.start_game(true)
 	$CanvasLayer.hide()
 	get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").show()

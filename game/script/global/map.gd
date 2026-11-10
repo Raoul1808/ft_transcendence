@@ -1,20 +1,23 @@
 extends Node2D
 
 
+func delete():
+	print("map free")
+	self.queue_free()
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	GlobalEvent.map_action.connect(interact_map)
-	pass # Replace with function body.
-	var weapon
-	var weapon_ins : Area2D
 	var rng = RandomNumberGenerator.new()
 	
 	for cell in $Wall/plant.get_used_cells_by_id(0, Vector2(1, 3)):
-		weapon = load("res://scene/item/loot_weapon.tscn")
-		weapon_ins = weapon.instantiate()
+		var weapon = load("res://scene/item/loot_weapon.tscn")
+		var weapon_ins : Area2D = weapon.instantiate()
 		weapon_ins.weapon_id = rng.randi_range(0, 1)
 		weapon_ins.global_position = cell * 64 + Vector2i(32.0, 32.0)
 		get_tree().current_scene.get_node("map_container").get_node("map").get_node("weapons").add_child(weapon_ins)
+
+
 	
 	var player_spawn
 	var player_spawn2

@@ -59,7 +59,7 @@ func _process(_delta: float) -> void:
 			var packet = socket.get_packet()
 			if socket.was_string_packet():
 				var packet_text = packet.get_string_from_utf8()
-				print("< Got text data from server: %s" % packet_text)
+				#print("< Got text data from server: %s" % packet_text)
 				var packet_json = JSON.new()
 				packet_json = JSON.parse_string(packet_text)
 				var data: Dictionary = packet_json
@@ -90,7 +90,7 @@ func _process(_delta: float) -> void:
 				if (data["type"] == "game_start"):
 					Main.game_mode = data["mode"]
 					Main.infinit_time = data["time"]
-					Main.start_game()
+					Main.start_game(false)
 					get_tree().current_scene.get_node("menu").get_node("CanvasLayer").hide()
 					get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").show()
 				

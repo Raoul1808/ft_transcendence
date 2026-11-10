@@ -1,7 +1,7 @@
 extends Control
 
 var health_to_remove = 0
-var healt : float = 100
+@export var healt : float = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
