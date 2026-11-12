@@ -4,6 +4,10 @@
 [ext_resource type="FontFile" uid="uid://btrepff1y83ma" path="res://assets/font/KiwiSoda.ttf" id="1_flhli"]
 [ext_resource type="Texture2D" uid="uid://iqmyals4g0lj" path="res://assets/img/wizard.png" id="2_vyxmg"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_txlge"]
+atlas = ExtResource("2_vyxmg")
+region = Rect2(0, 0, 64, 64)
+
 [node name="menu" type="Control" unique_id=1183571336]
 layout_mode = 3
 anchors_preset = 15
@@ -138,7 +142,7 @@ offset_right = 75.0
 offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_vyxmg")
+texture = SubResource("AtlasTexture_txlge")
 
 [node name="skin_selection" type="Control" parent="CanvasLayer/client_info" unique_id=1649379238]
 layout_mode = 1
