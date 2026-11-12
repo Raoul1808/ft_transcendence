@@ -69,7 +69,7 @@ func equip_weapon(id : int):
 			}
 		))
 
-func unquip_weapon():
+func unequip_weapon():
 	weapon = -1
 	$hand/Sprite2D.texture = null
 
@@ -249,6 +249,11 @@ func client_proc(delta):
 					"rot": rotation
 				}
 			))
+	
+	#game state
+	if (healt <= 0):
+		healt = 100
+		Main.end_round(player_id, true)
 
 func bot_proc(_delta: float):
 	use_weapon()
@@ -283,7 +288,6 @@ func get_hit(dmg: int, b: bool):
 	healt -= dmg
 	if (healt <= 0):
 		healt = 0
-		Main.end_round(player_id, true)
 	$healthbar/Sprite2D.scale.x = healt / 100
 	$healthbar/Sprite2D2.position.x = -192 + (healt * 192 * 2)/100
 	$healthbar/Label.text = type_convert(type_convert(healt, TYPE_INT), TYPE_STRING) + "%"

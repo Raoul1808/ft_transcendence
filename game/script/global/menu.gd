@@ -6,7 +6,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if (Network.player_list.size() > 1):
+	if (Network.lobby_full == true):
 		$CanvasLayer/game_leader/start.disabled = false
 		$CanvasLayer/not_client_info/player_connected.show()
 		$CanvasLayer/not_client_info/waiting_for_player.hide()

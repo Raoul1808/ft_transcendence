@@ -7,6 +7,8 @@ var socket = WebSocketPeer.new()
 var player_list: Array = []
 var player_ins_list: Array = []
 
+var lobby_full = false
+
 @onready var client_player_ins: CharacterBody2D = get_tree().current_scene.get_node("player")
 
 func pick_random_child(parent_node):
@@ -14,19 +16,18 @@ func pick_random_child(parent_node):
 	return parent_node.get_child(random_id)
 
 func load_player():
-	var spawn1: Marker2D = pick_random_child(get_tree().current_scene.get_node("map_container").get_node("map").get_node("spawns"))
-	var spawn2: Marker2D = pick_random_child(get_tree().current_scene.get_node("map_container").get_node("map").get_node("spawns"))
-	while (spawn1 == spawn2):
-		spawn2 = pick_random_child(get_tree().current_scene.get_node("map_container").get_node("map").get_node("spawns"))
-	for i : int in player_list.size():
-		if player_list[i] != client_player_ins.player_id:
-			var new_player = load("res://scene/player/player.tscn")
-			var player_ins : CharacterBody2D = new_player.instantiate()
-			get_tree().current_scene.get_node("not_client_player").add_child(player_ins)
-			player_ins.client_player = false
-			player_ins.player_id = player_list[i]
-			player_ins.position = spawn2.position
-	client_player_ins.position = spawn1.position
+	var new_player = load("res://scene/player/player.tscn")
+	var player_ins : CharacterBody2D = new_player.instantiate()
+	get_tree().current_scene.get_node("not_client_player").add_child(player_ins)
+	player_ins.client_player = false
+	if (client_player_ins.player_id == 1):
+		player_ins.player_id = 2
+	else:
+		player_ins.player_id = 1
+
+func spawn_player():
+	var spawn: Marker2D = pick_random_child(get_tree().current_scene.get_node("map_container").get_node("map").get_node("spawns"))
+	client_player_ins.position = spawn.position
 
 func set_client_player(client_player: CharacterBody2D):
 	pass#client_player_ins = client_player
@@ -80,14 +81,17 @@ func _process(_delta: float) -> void:
 					#player_ins.client_player = false
 					#player_ins.player_id = 2
 					##player_ins_list.push_back(player_ins)
+					lobby_full = true
 					player_list.push_back(2)
+					load_player()
 					socket.send_text(JSON.stringify({"type": "player_list", "list": player_list}))
 					
 				if (data["type"] == "player_list"):
 					client_player_ins.player_id = 2
 					player_list = data["list"]
+					load_player()
 				
-				if (data["type"] == "game_start"):
+				if (data["type"] == "start_game"):
 					Main.game_mode = data["mode"]
 					Main.infinit_time = data["time"]
 					Main.start_game(false)
@@ -112,11 +116,12 @@ func _process(_delta: float) -> void:
 					get_tree().current_scene.add_child(hit_ins)
 					
 				#player update
-				if (data["type"] == "player_update" ||
-						data["type"] == "player_equip_weapon" ||
-						data["type"] == "player_drop_weapon" ||
-						data["type"] == "player_shoot"):
-					for child in get_tree().current_scene.get_node("not_client_player").get_children():
+				if (get_tree().current_scene.get_node("not_client_player").get_child_count() > 0):
+					if (data["type"] == "player_update" ||
+							data["type"] == "player_equip_weapon" ||
+							data["type"] == "player_drop_weapon" ||
+							data["type"] == "player_shoot"):
+						var child = get_tree().current_scene.get_node("not_client_player").get_node("player")
 						if child.player_id == data["id"]:
 							if (data["type"] == "player_update"):
 								child.update_player(data)
