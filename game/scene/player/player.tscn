@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cbp20bsxwbdb6" path="res://script/player/player.gd" id="1_cm2cf"]
 [ext_resource type="Texture2D" uid="uid://iqmyals4g0lj" path="res://assets/img/wizard.png" id="2_cm2cf"]
-[ext_resource type="Material" uid="uid://bqj7dxq4fcw2b" path="res://assets/shader/player_palette.tres" id="2_p3aiu"]
+[ext_resource type="Material" uid="uid://chswoisor8c3c" path="res://assets/shader/player_palettes.tres" id="2_qjg4s"]
 [ext_resource type="Texture2D" uid="uid://f8scinungjxy" path="res://assets/img/saruman_idle.png" id="3_732fb"]
 [ext_resource type="Texture2D" uid="uid://dl7dtrp6ts20v" path="res://assets/img/saruman_walk_1.png" id="4_hfhxk"]
 [ext_resource type="Texture2D" uid="uid://c0glcwu37elul" path="res://assets/img/saruman_walk_2.png" id="5_pisg7"]
@@ -151,7 +151,7 @@ rotation = 1.5707964
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=607882729]
 light_mask = 2
 z_index = 2
-material = ExtResource("2_p3aiu")
+material = ExtResource("2_qjg4s")
 rotation = 1.5707964
 sprite_frames = SubResource("SpriteFrames_6skho")
 animation = &"walk"
