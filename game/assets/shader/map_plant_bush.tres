@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b4d20lmqs6s3x"]
+
+[ext_resource type="Shader" uid="uid://cvkasoxh3nfx8" path="res://assets/shader/map_plant_bush.gdshader" id="1_x7sah"]
+
+[resource]
+shader = ExtResource("1_x7sah")

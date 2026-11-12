@@ -10,7 +10,7 @@ func _ready() -> void:
 	GlobalEvent.map_action.connect(interact_map)
 	var rng = RandomNumberGenerator.new()
 	
-	for cell in $Wall/plant.get_used_cells_by_id(0, Vector2(1, 3)):
+	for cell in $Wall/plant.get_used_cells_by_id(1, Vector2(0, 0)):
 		var weapon = load("res://scene/item/loot_weapon.tscn")
 		var weapon_ins : Area2D = weapon.instantiate()
 		weapon_ins.weapon_id = rng.randi_range(0, 1)
@@ -20,8 +20,7 @@ func _ready() -> void:
 
 	
 	var player_spawn
-	var player_spawn2
-	for cell in $Wall/plant.get_used_cells_by_id(0, Vector2(2, 3)):
+	for cell in $Wall/plant.get_used_cells_by_id(1, Vector2(1, 0)):
 		player_spawn = Marker2D.new()
 		#player_spawn2 = 
 		player_spawn.global_position = cell * 64 + Vector2i(32.0, 32.0)
