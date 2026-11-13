@@ -1,11 +1,10 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://chswoisor8c3c"]
 
 [ext_resource type="Shader" uid="uid://1w2uplbawwk0" path="res://assets/shader/player_palette.tres" id="1_01aov"]
-[ext_resource type="Texture2D" uid="uid://daf2pjh80hn6e" path="res://assets/img/player_palette_red.png" id="2_01aov"]
 [ext_resource type="Texture2D" uid="uid://dduvm1f2ybdxy" path="res://assets/img/player_palette.png" id="3_20uym"]
 
 [resource]
 shader = ExtResource("1_01aov")
 shader_parameter/original_palettes = ExtResource("3_20uym")
-shader_parameter/new_palettes = ExtResource("2_01aov")
+shader_parameter/new_palettes = ExtResource("3_20uym")
 shader_parameter/colors_counts = 8

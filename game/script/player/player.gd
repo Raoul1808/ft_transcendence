@@ -229,11 +229,11 @@ func client_proc(delta):
 	if Input.is_action_just_pressed("shoot"):
 		use_weapon()
 	if Input.is_action_just_pressed("loot"):
-		GlobalEvent.map_action.emit(global_position)
+		GlobalEvent.map_action.emit(global_position, $".")
 	if (Input.is_action_just_pressed("drop_weapon")):
 		drop_weapon()
 	interact_with_loot()
-	
+	#get_node()
 	#======================================================================================
 	#NETWORK REGULAR UPDATE
 	#======================================================================================

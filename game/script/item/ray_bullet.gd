@@ -26,6 +26,8 @@ func _process(delta: float) -> void:
 			mark_ins.global_position = ray2D.get_collision_point()
 			if ("CharacterBody2D" == ray2D.get_collider().get_class()):
 				ray2D.get_collider().get_hit(w_damage, true)
+			if ("TileMapLayer" == ray2D.get_collider().get_class() && w_ray_color[1] == Color(0.214, 0.418, 0.183, 1.0)):
+				GlobalEvent.map_action.emit(ray2D.get_collision_point(), $".")
 			get_tree().current_scene.add_child(mark_ins)
 			GlobalEvent.shoot_action.emit(ray2D.get_collision_point())
 	else:
