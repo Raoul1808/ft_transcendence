@@ -1,4 +1,8 @@
 shader_type canvas_item;
+#include "palette_inc.gdshaderinc"
+uniform sampler2D original_palettes;
+uniform sampler2D new_palettes;
+uniform int colors_counts;
 
 void vertex() {
 	// Called for every vertex the material is visible on.
@@ -14,6 +18,7 @@ void vertex() {
 
 void fragment() {
 	// Called for every pixel the material is visible on.
+	COLOR = sawp(original_palettes, new_palettes, colors_counts, COLOR);
 }
 
 //void light() {

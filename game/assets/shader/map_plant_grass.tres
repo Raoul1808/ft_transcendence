@@ -1,7 +1,13 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://dp13wgui83q7g"]
 
+[ext_resource type="Texture2D" uid="uid://l53dgjtb8j54" path="res://assets/palette/palette_plant.png" id="2_8todn"]
+
 [sub_resource type="Shader" id="Shader_m6bcs"]
 code = "shader_type canvas_item;
+#include \"palette_inc.gdshaderinc\"
+uniform sampler2D original_palettes;
+uniform sampler2D new_palettes;
+uniform int colors_counts;
 
 void vertex() {
 	// Called for every vertex the material is visible on.
@@ -13,6 +19,7 @@ void vertex() {
 
 void fragment() {
 	// Called for every pixel the material is visible on.
+	COLOR = sawp(original_palettes, new_palettes, colors_counts, COLOR);
 }
 
 //void light() {
@@ -23,3 +30,6 @@ void fragment() {
 
 [resource]
 shader = SubResource("Shader_m6bcs")
+shader_parameter/original_palettes = ExtResource("2_8todn")
+shader_parameter/new_palettes = ExtResource("2_8todn")
+shader_parameter/colors_counts = 12
