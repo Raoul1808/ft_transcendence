@@ -64,6 +64,7 @@ func start_round(b: bool):
 	get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").get_node("Control2").get_node("healthbar").get_node("Sprite2D").scale.x = 1
 	
 	#not client
-	Network.not_client_player_ins.healt = 100.0
-	Network.not_client_player_ins.get_node("healthbar").get_node("Sprite2D").scale.x = 1
-	Network.not_client_player_ins.unequip_weapon()
+	if (not Network.not_client_player_ins == null) :
+		Network.not_client_player_ins.healt = 100.0
+		Network.not_client_player_ins.get_node("healthbar").get_node("Sprite2D").scale.x = 1
+		Network.not_client_player_ins.unequip_weapon()
