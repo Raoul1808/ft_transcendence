@@ -94,14 +94,15 @@ func _process(_delta: float) -> void:
 					load_player()
 				
 				if (data["type"] == "start_game"):
+					print("pute")
 					Main.game_mode = data["mode"]
 					Main.infinit_time = data["time"]
 					Main.start_game(false)
 					get_tree().current_scene.get_node("menu").get_node("CanvasLayer").hide()
 					get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").show()
 				
-				if (data["type"] == "start_round"):
-					Main.start_round(false)
+				#if (data["type"] == "start_round"):
+				#	Main.start_round(false)
 				
 				if (data["type"] == "end_round"):
 					Main.end_round(data["player_point"], false)
