@@ -34,7 +34,7 @@ func start_game(b: bool):
 	game_state = "in_game"
 	Network.client_player_ins.unequip_weapon()
 	Network.client_player_ins.healt = 100
-	get_tree().current_scene.get_node("not_client_player").get_node("player").healt = 100
+	get_tree().current_scene.get_node("not_client_player").get_node("player").healt = 100.0
 	get_tree().current_scene.get_node("not_client_player").get_node("player").unequip_weapon()
 	round = 1
 	if (b):
