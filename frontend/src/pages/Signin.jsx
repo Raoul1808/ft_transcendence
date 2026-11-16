@@ -94,7 +94,7 @@ function Form () {
                     value={password}
                     />
                 <button onClick={handleSubmit}
-                        type="submit" className="bg-wizard-purple rounded-lg text-white p-[15px_32px] text-center inline-block text-3xl m-[20px_40px] cursor-pointer">
+                        type="submit" className="bg-wizard-purple rounded-lg text-white p-[15px_32px] text-center inline-block text-3xl m-[20px_40px] cursor-pointer border border-white">
                     Submit
                 </button>
             </form>
@@ -106,7 +106,7 @@ function Signin() {
     return (
         <div className="grid justify-center items-center">
             <div>
-                <h1>
+                <h1 className="text-5xl">
                     User Sign-in
                 </h1>
             </div>

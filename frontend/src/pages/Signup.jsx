@@ -24,16 +24,7 @@ function Form () {
     }
     const handlePassCheck = (e) => {
         setPassCheckStr(e.target.value);
-        if (password == passcheckstr)
-        {
-            setPassCheck(true);
-            setError(false);
-        }
-        else
-        {
-            setPassCheck(false);
-            setError(false);
-        }
+        setSubmitted(false);
     }
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -42,20 +33,23 @@ function Form () {
             setSubmitted(false);
             setError(true);
         }
-        else if (passcheck == false)
-        {
-            setSubmitted(false);
-            setError(false);
-        }
         else
         {
             setSubmitted(true);
             setError(false);
         }
+        if (password == passcheckstr)
+        {
+            setPassCheck(true);
+        }
+        else
+        {
+            setPassCheck(false);
+        }
     }
 
     const SuccessMessage = () => {
-        if (submitted)
+        if (submitted && passcheck)
         {
             return (
             <div>
@@ -149,7 +143,7 @@ function Signup() {
     return (
         <div className="grid justify-center items-center">
             <div>
-                <h1>
+                <h1 className="text-5xl">
                     User Sign-up
                 </h1>
             </div>

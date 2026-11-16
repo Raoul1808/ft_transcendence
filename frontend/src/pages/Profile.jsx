@@ -2,20 +2,34 @@ import React from "react";
 
 const Profile = () => {
     return (
-        <div>
-            <h1>
-                Profile Page
-            </h1>
-            <div className="ppCoreContainer">
-                <a className="ppBackground">
-                    <img src="https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg"></img>
-                </a>
-                <div classname="ppContainer">
-                    <div className="ppPicContainer">
-                        <img src="./src/assets/Wizard.png"></img>
+        <div className="self-center mx-auto max-w-5xl w-1/1 h-full flex-[0_0_auto] bg-[rgba(0,0,0,0.5)]">
+            <div className="h-full relative flex flex-col w-1/1">
+                <div className="ppBackground rounded-2xl bg-[url(https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg)] relative bg-cover h-62.5 bg-position-[50%_center]">
+                    <div className="bottom-2.5 grid justify-center absolute right-2.5 gap-2.5">
+                        <button className="items-center shadow-none inline-flex justify-center relative no-underline cursor-pointer h-8 w-8 bg-wizard-purple border-amber-500 border rounded-full">
+                            <img className="w-5 h-5 object-contain" src="../src/assets/pencil.png"></img>
+                        </button>
+                    </div>
+                </div>
+                <div className="ppMainInfo flex h-20 items-center p-[0_50px] relative">
+                    <div className="bg-wizard-purple border -mt-12 z-10 border-amber-500 self-start rounded-2xl shadow flex-none h-30 w-30 overflow-hidden transform-gpu">
+                        <img className="w-full h-full object-cover" src="./src/assets/Wizard.png"></img>
+                    </div>
+                    <div className="items-start flex flex-1 flex-col ml-5 min-w-0 shadow">
+                        <h1 className="object-contain items-center font-medium relative text-3xl m-[-5px_0_0] max-w-1/1 p-0">Wizard</h1>
+                    </div>
+                </div>
+                <div className="grid relative grid-cols-[minmax(0,1fr)] p-[0_0_10]">
+                    <div>
+                        <div className="bg-wizard-purple rounded-2xl shadow m-[0_10] p[20px_40px] relative transform-gpu">
+                            <div className="relative">
+                                <h1>Friends</h1>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            
         </div>
     );
 };
