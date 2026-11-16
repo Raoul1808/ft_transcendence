@@ -6,7 +6,6 @@ import Home from "./pages/Home.jsx"
 import Test from "./pages/Test.jsx"
 import Game from "./pages/Game.jsx"
 import Friends from "./pages/Friends.jsx"
-import Chat from "./pages/Chat.jsx"
 import Signin from "./pages/Signin.jsx"
 import Signup from "./pages/Signup.jsx"
 import Profile from "./pages/Profile.jsx"
@@ -18,7 +17,6 @@ const RoutingTable = () => {
       <Route exact path='/test' element={<Test />}></Route>
       <Route exact path='/Game' element={<Game />}></Route>
       <Route exact path='/Friends' element={<Friends />}></Route>
-      <Route exact path='/Chat' element={<Chat />}></Route>
       <Route exact path='/Signin' element={<Signin />}></Route>
       <Route exact path='/Signup' element={<Signup />}></Route>
       <Route exact path='/Profile' element={<Profile />}></Route>

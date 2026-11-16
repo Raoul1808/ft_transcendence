@@ -1,8 +1,9 @@
 import React from "react";
+import { FriendApiFetch } from "./Friends";
 
 const Profile = () => {
     return (
-        <div className="self-center mx-auto max-w-5xl w-1/1 h-full flex-[0_0_auto] bg-[rgba(0,0,0,0.5)]">
+        <div className="self-center mx-auto max-w-5xl w-1/1 h-92/100 flex-[0_0_auto] bg-[rgba(0,0,0,0.5)]">
             <div className="h-full relative flex flex-col w-1/1">
                 <div className="ppBackground rounded-2xl bg-[url(https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg)] relative bg-cover h-62.5 bg-position-[50%_center]">
                     <div className="bottom-2.5 grid justify-center absolute right-2.5 gap-2.5">
@@ -19,17 +20,13 @@ const Profile = () => {
                         <h1 className="object-contain items-center font-medium relative text-3xl m-[-5px_0_0] max-w-1/1 p-0">Wizard</h1>
                     </div>
                 </div>
-                <div className="grid relative grid-cols-[minmax(0,1fr)] p-[0_0_10]">
-                    <div>
-                        <div className="bg-wizard-purple rounded-2xl shadow m-[0_10] p[20px_40px] relative transform-gpu">
-                            <div className="relative">
-                                <h1>Friends</h1>
-                            </div>
-                        </div>
+                <div className="bg-wizard-purple rounded-2xl shadow mt-3 p-[10px_20px] h-1/2 relative flex flex-col transform-gpu">
+                    <h2 className="text-4xl my-3">Friends</h2>
+                    <div className="overflow-y-auto h-[initial] mb-[10px_!important]">
+                        <FriendApiFetch/>
                     </div>
                 </div>
             </div>
-            
         </div>
     );
 };

@@ -13,9 +13,6 @@ const Navbar = () => {
                         <Link to="/Friends">Friends</Link>
                     </li>
                     <li className="p-[8px_30px] font-kiwi-soda text-white hover:text-gray-300">
-                        <Link to="/Chat">Chat</Link>
-                    </li>
-                    <li className="p-[8px_30px] font-kiwi-soda text-white hover:text-gray-300">
                         <Link to="/Profile">Profile</Link>
                     </li>
                     

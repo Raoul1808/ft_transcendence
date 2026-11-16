@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 
 
 
-const FriendApiFetch = () => {
+export const FriendApiFetch = () => {
     const [items, setItems] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
