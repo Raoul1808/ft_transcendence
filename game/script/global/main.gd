@@ -14,6 +14,10 @@ func end_game():
 
 func end_round(point: int, b: bool):
 	get_tree().current_scene.get_node("map_container").get_node("map").free()
+	Network.client_player_ins.unequip_weapon()
+	Network.client_player_ins.healt = 100
+	Network.not_client_player_ins.healt = 100.0
+	Network.not_client_player_ins.unequip_weapon()
 	if (point == 1):
 		p1_point += 1
 	else:
@@ -32,10 +36,6 @@ func end_round(point: int, b: bool):
 
 func start_game(b: bool):
 	game_state = "in_game"
-	Network.client_player_ins.unequip_weapon()
-	Network.client_player_ins.healt = 100
-	#get_tree().current_scene.get_node("not_client_player").get_node("player").healt = 100.0
-	#get_tree().current_scene.get_node("not_client_player").get_node("player").unequip_weapon()
 	round = 1
 	if (b):
 		Network.send_text(JSON.stringify(

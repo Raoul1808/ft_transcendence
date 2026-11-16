@@ -10,6 +10,7 @@ var player_ins_list: Array = []
 var lobby_full = false
 
 @onready var client_player_ins: CharacterBody2D = get_tree().current_scene.get_node("player")
+var not_client_player_ins: CharacterBody2D
 
 func pick_random_child(parent_node):
 	var random_id = randi() % parent_node.get_child_count()
@@ -24,6 +25,7 @@ func load_player():
 		player_ins.player_id = 2
 	else:
 		player_ins.player_id = 1
+	not_client_player_ins = player_ins
 
 func spawn_player():
 	var spawn: Marker2D = pick_random_child(get_tree().current_scene.get_node("map_container").get_node("map").get_node("spawns"))
