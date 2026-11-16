@@ -32,8 +32,10 @@ func spawn_player():
 func set_client_player(client_player: CharacterBody2D):
 	pass#client_player_ins = client_player
 
-func socket_send_text(text: String):
-	socket.send_text(text)
+func send_text(text: String):
+	var state = socket.get_ready_state()
+	if (state == WebSocketPeer.STATE_OPEN):
+		socket.send_text(text)
 
 func _ready():
 	var err = socket.connect_to_url(websocket_url)
@@ -43,7 +45,7 @@ func _ready():
 		
 		player_list.push_back(client_player_ins.player_id)
 		player_ins_list.push_back(client_player_ins)
-		socket.send_text(JSON.stringify({"type": "new_connection"}))
+		send_text(JSON.stringify({"type": "new_connection"}))
 	else:
 		print("failed to connect :(")
 		set_process(false)
@@ -84,7 +86,7 @@ func _process(_delta: float) -> void:
 					lobby_full = true
 					player_list.push_back(2)
 					load_player()
-					socket.send_text(JSON.stringify({"type": "player_list", "list": player_list}))
+					send_text(JSON.stringify({"type": "player_list", "list": player_list}))
 					
 				if (data["type"] == "player_list"):
 					client_player_ins.player_id = 2

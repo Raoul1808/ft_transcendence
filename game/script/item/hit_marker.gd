@@ -5,7 +5,7 @@ extends Node2D
 func _ready() -> void:
 	$Marker2D/GPUParticles2D.emitting = true
 	if (from_client):
-		Network.socket.send_text(JSON.stringify(
+		Network.send_text(JSON.stringify(
 			{
 				"type": "hitmarker",
 				"pos": [global_position.x, global_position.y],

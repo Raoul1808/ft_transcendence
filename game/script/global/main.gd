@@ -19,7 +19,7 @@ func end_round(point: int, b: bool):
 	else:
 		p2_point += 1
 	if (b):
-		Network.socket.send_text(JSON.stringify(
+		Network.send_text(JSON.stringify(
 			{
 				"type": "end_round",
 				"player_point": point
@@ -34,11 +34,11 @@ func start_game(b: bool):
 	game_state = "in_game"
 	Network.client_player_ins.unequip_weapon()
 	Network.client_player_ins.healt = 100
-	get_tree().current_scene.get_node("not_client_player").get_node("player").healt = 100.0
-	get_tree().current_scene.get_node("not_client_player").get_node("player").unequip_weapon()
+	#get_tree().current_scene.get_node("not_client_player").get_node("player").healt = 100.0
+	#get_tree().current_scene.get_node("not_client_player").get_node("player").unequip_weapon()
 	round = 1
 	if (b):
-		Network.socket.send_text(JSON.stringify(
+		Network.send_text(JSON.stringify(
 			{
 				"type": "start_game",
 				"mode": game_mode,
@@ -53,7 +53,7 @@ func start_round(b: bool):
 	get_tree().current_scene.get_node("map_container").add_child(map_ins)
 	Network.spawn_player()
 	if (b):
-		Network.socket.send_text(JSON.stringify(
+		Network.send_text(JSON.stringify(
 			{
 				"type": "start_round",
 			}

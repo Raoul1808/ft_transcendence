@@ -61,7 +61,7 @@ func equip_weapon(id : int):
 	$hand/Sprite2D.texture = load(WeaponData.weapon_data[weapon][3])
 	
 	if client_player:
-		Network.socket.send_text(JSON.stringify(
+		Network.send_text(JSON.stringify(
 			{
 				"type": "player_equip_weapon",
 				"id": player_id,
@@ -83,7 +83,7 @@ func drop_weapon():
 		weapon = -1
 		$hand/Sprite2D.texture = null
 		if client_player:
-			Network.socket.send_text(JSON.stringify(
+			Network.send_text(JSON.stringify(
 				{
 					"type": "player_drop_weapon",
 					"id": player_id,
@@ -135,7 +135,7 @@ func use_weapon():
 
 		get_tree().current_scene.add_child(shoot_ins)
 		if (client_player):
-			Network.socket.send_text(JSON.stringify(
+			Network.send_text(JSON.stringify(
 				{
 					"type": "player_shoot",
 					"id": player_id,
@@ -241,7 +241,7 @@ func client_proc(delta):
 	if regular_update_timer >= interval:
 		regular_update_timer = 0.0
 		if (Network.socket.get_ready_state() == WebSocketPeer.STATE_OPEN):
-			Network.socket.send_text(JSON.stringify(
+			Network.send_text(JSON.stringify(
 				{
 					"type": "player_update",
 					"id": player_id,
@@ -298,7 +298,7 @@ func get_hit(dmg: int, b: bool):
 
 	if (b):
 		$healthbar.show()
-		Network.socket.send_text(JSON.stringify(
+		Network.send_text(JSON.stringify(
 			{
 				"type": "player_get_hit",
 				"id": player_id,
