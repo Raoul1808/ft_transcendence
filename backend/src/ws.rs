@@ -5,21 +5,31 @@ use axum::{
         State, WebSocketUpgrade,
         ws::{Message, WebSocket},
     },
-    response::IntoResponse,
+    http::StatusCode,
+    response::{IntoResponse, Response},
 };
 use futures_util::{SinkExt, StreamExt};
 use serde::Deserialize;
 use tokio::sync::broadcast;
-//use bytes::Bytes;
+use tower_sessions::Session;
 
-use crate::{AppState, RoomState, db};
+use crate::{AppState, RoomState, auth, cache, db};
 
 pub async fn websocket_handler(
     ws: WebSocketUpgrade,
     State(state): State<Arc<AppState>>,
-) -> impl IntoResponse {
-    tracing::info!("websocket connection");
-    ws.on_upgrade(|socket| handle_socket(socket, state))
+    session: Session,
+) -> Response {
+    let Some(user) = auth::current_user(&session).await else {
+        return StatusCode::UNAUTHORIZED.into_response();
+    };
+    tracing::info!("websocket connection from {}", user.username);
+    ws.on_upgrade(move |socket| handle_socket(socket, state, user.username))
+}
+
+#[derive(Deserialize)]
+struct Connect {
+    channel: String,
 }
 
 #[derive(Deserialize)]
@@ -29,30 +39,29 @@ enum ClientText {
     GameResult { score: [i32; 2] },
 }
 
-async fn handle_socket(socket: WebSocket, state: Arc<AppState>) {
+async fn handle_socket(socket: WebSocket, state: Arc<AppState>, session_username: String) {
     let (mut sender, mut receiver) = socket.split();
     let mut username = String::new();
     let mut channel = String::new();
     let mut tx = None;
-	let mut slot: usize = 0;
-	
+    let mut slot: usize = 0;
+
     while let Some(Ok(msg)) = receiver.next().await {
         if let Message::Text(name) = msg {
-            #[derive(Deserialize)]
-            struct Connect {
-                username: String,
-                channel: String,
-            }
-
             let connect: Connect = match serde_json::from_str(&name) {
                 Ok(connect) => connect,
                 Err(err) => {
                     tracing::error!("websocket identification failed: {name} {err}");
-                    let _ = sender.send(Message::from("connection failed")).await;
-                    break;
+                    let _ = sender
+                        .send(Message::from(
+                            r#"{"type":"error","reason":"bad_identification"}"#,
+                        ))
+                        .await;
+                    return;
                 }
             };
-			let mut is_full = false;
+
+            let mut full = false;
             {
                 let mut rooms = state.rooms.lock().unwrap();
                 channel = connect.channel.clone();
@@ -60,55 +69,49 @@ async fn handle_socket(socket: WebSocket, state: Arc<AppState>) {
                 let room = rooms.entry(connect.channel).or_insert_with(RoomState::new);
                 tx = Some(room.tx.clone());
 
-				let mut users = room.users.lock().unwrap();
-				if users.len() >= 2{
-					is_full = true;
-				}
-				else if !users.contains(&connect.username) {
-					users.insert(connect.username.to_owned());
-					username = connect.username.clone();
-					slot = users.len() - 1;
-				}
-
-                /*if !room.users.lock().unwrap().contains(&connect.username) {
-                    room.users
-                        .lock()
-                        .unwrap()
-                        .insert(connect.username.to_owned());
-                    username = connect.username.clone();
-                }*/
+                let mut users = room.users.lock().unwrap();
+                if users.len() >= 2 {
+                    full = true;
+                } else if !users.contains(&session_username) {
+                    users.insert(session_username.clone());
+                    username = session_username.clone();
+                    slot = users.len() - 1;
+                }
             }
 
-			if is_full {
-				let _ = sender.send(Message::from(r#"{"type":"error","reason":"lobby_full"}"#)).await;
-				return ;
-			}
+            if full {
+                let _ = sender
+                    .send(Message::from(r#"{"type":"error","reason":"lobby_full"}"#))
+                    .await;
+                return;
+            }
+
             if tx.is_some() && !username.is_empty() {
                 break;
             } else {
                 let _ = sender
-					.send(Message::from(r#"{"type":"error","reason":"username_taken"}"#,))
-					.await;
+                    .send(Message::from(
+                        r#"{"type":"error","reason":"username_taken"}"#,
+                    ))
+                    .await;
                 return;
             }
         }
     }
 
-    let Some(tx) = tx else{
-		return;
-	};
+    let Some(tx) = tx else {
+        return;
+    };
     let mut rx = tx.subscribe();
 
-	if let Err(e) = db::register_player(&state.db, &username).await {
-		tracing::error!("cannot register player {username}: {e}");
-	}
-
-	let _ = sender
-			.send(Message::from(format!(r#"{{"type" : "joined","slot":{slot}}}"#)))
-			.await;
-	if slot == 1 {
-		let _ = tx.send(Message::from(r#"{{"type" : "ready"}"#));
-	}
+    let _ = sender
+        .send(Message::from(format!(
+            r#"{{"type":"joined","slot":{slot}}}"#
+        )))
+        .await;
+    if slot == 1 {
+        let _ = tx.send(Message::from(r#"{"type":"ready"}"#));
+    }
 
     tracing::info!("user {username} has arrived (slot {slot})");
 
@@ -117,7 +120,7 @@ async fn handle_socket(socket: WebSocket, state: Arc<AppState>) {
         tokio::spawn(async move {
             tracing::info!("trying message recv");
             while let Ok(msg) = rx.recv().await {
-                tracing::info!("user {username} received a message");
+                tracing::debug!("user {username} received a message");
                 if let Err(e) = sender.send(msg).await {
                     tracing::error!("error sending message: {e}");
                     break;
@@ -135,24 +138,21 @@ async fn handle_socket(socket: WebSocket, state: Arc<AppState>) {
         tokio::spawn(async move {
             tracing::info!("trying message send");
             while let Some(Ok(msg)) = receiver.next().await {
-				match msg {
-					Message::Binary(bytes) => {
-						tracing::debug!("user {username} sent {} bytes", bytes.len());
-						let _ = tx.send(Message::Binary(bytes));
-					}
-					Message::Text(text) => {
-						handle_text(&state, &channel, &username, slot, &tx, text.as_str())
-							.await;
-					}
-					Message::Close(_) => break,
-					_ => {}
-                //tracing::info!("user {username} sent {} bytes", bytes.len());
-                //let _ = tx.send(bytes);
+                match msg {
+                    Message::Binary(bytes) => {
+                        tracing::debug!("user {username} sent {} bytes", bytes.len());
+                        let _ = tx.send(Message::Binary(bytes));
+                    }
+                    Message::Text(text) => {
+                        handle_text(&state, &channel, &username, slot, &tx, text.as_str()).await
+                    }
+                    Message::Close(_) => break,
+                    _ => {}
+                }
             }
-		}
             tracing::info!("out of message send");
         })
-	};
+    };
 
     tokio::select! {
         _ = (&mut send_messages) => recv_messages.abort(),
@@ -168,6 +168,12 @@ async fn handle_socket(socket: WebSocket, state: Arc<AppState>) {
         .unwrap()
         .remove(&username);
 
+    let _ = rooms
+        .get_mut(&channel)
+        .unwrap()
+        .tx
+        .send(Message::from(r#"{"type":"opponent_left"}"#));
+
     if rooms
         .get_mut(&channel)
         .unwrap()
@@ -181,7 +187,6 @@ async fn handle_socket(socket: WebSocket, state: Arc<AppState>) {
 
     tracing::info!("user {username} left");
 }
-
 
 async fn handle_text(
     state: &Arc<AppState>,
@@ -235,13 +240,14 @@ async fn handle_text(
             match db::save_match(&state.db, &p1, &p2, score[0], score[1]).await {
                 Ok(id) => {
                     tracing::info!("match {id} saved: {p1} {} - {} {p2}", score[0], score[1]);
+                    // Im chaching matches only for the cqche test
+                    cache::invalidate(&state.redis, cache::MATCHES_KEY).await;
                     let _ = tx.send(Message::from(format!(
                         r#"{{"type":"saved","match_id":{id}}}"#
                     )));
                 }
                 Err(e) => {
                     tracing::error!("save_match failed: {e}");
-                    // allow another try
                     if let Some(room) = state.rooms.lock().unwrap().get_mut(channel) {
                         room.saved = false;
                         room.results.clear();

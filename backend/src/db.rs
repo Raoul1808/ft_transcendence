@@ -46,9 +46,32 @@ async fn upsert_player(conn: &mut PgConnection, username: &str) -> Result<i64, s
     Ok(id)
 }
 
-pub async fn register_player(pool: &PgPool, username: &str) -> Result<i64, sqlx::Error> {
-	let mut conn = pool.acquire().await?;
-	upsert_player(&mut conn, username).await
+pub async fn create_account(
+    pool: &PgPool,
+    username: &str,
+    password_hash: &str,
+) -> Result<Option<i64>, sqlx::Error> {
+    let row: Option<(i64,)> = sqlx::query_as(
+        "INSERT INTO players (username, password_hash) VALUES ($1, $2)
+         ON CONFLICT (username) DO UPDATE SET password_hash = EXCLUDED.password_hash
+         WHERE players.password_hash IS NULL
+         RETURNING id",
+    )
+    .bind(username)
+    .bind(password_hash)
+    .fetch_optional(pool)
+    .await?;
+    Ok(row.map(|(id,)| id))
+}
+
+pub async fn find_account(
+    pool: &PgPool,
+    username: &str,
+) -> Result<Option<(i64, String, Option<String>)>, sqlx::Error> {
+    sqlx::query_as("SELECT id, username, password_hash FROM players WHERE username = $1")
+        .bind(username)
+        .fetch_optional(pool)
+        .await
 }
 
 pub async fn save_match(
@@ -59,8 +82,6 @@ pub async fn save_match(
     score2: i32,
 ) -> Result<i64, sqlx::Error> {
     let mut tx = pool.begin().await?;
-
-	eprintln!("test on est avant l'inserte");
 
     let id1 = upsert_player(&mut tx, player1).await?;
     let id2 = upsert_player(&mut tx, player2).await?;

@@ -3,6 +3,7 @@
 Create TABLE players (
 	id			BIGSERIAL PRIMARY KEY,
 	username	TEXT NOT NULL UNIQUE,
+	password_hash	TEXT,
 	created_at	TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 

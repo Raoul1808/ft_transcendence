@@ -19,7 +19,16 @@ services:
       retries: 10
       start_period: 5s
     restart: unless-stopped
-
+  redis:
+    image: redis:7-alpine
+    networks:
+      - tr-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+    restart: unless-stopped
   backend:
     build:
       context: ./backend
@@ -35,6 +44,8 @@ services:
       DB_USER: transcendence
       DB_NAME: transcendence
       DB_PASSWORD_FILE: /run/secrets/postgres_pass
+      REDIS_URL: redis://redis:6379
+      # - COOKIE_SECURE=true   # set it once the site is served over HTTPS
     networks:
       - tr-net
     secrets:
