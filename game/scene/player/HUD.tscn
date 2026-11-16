@@ -2,14 +2,25 @@
 
 [ext_resource type="Script" uid="uid://cyw777nkl7t8l" path="res://script/player/hud.gd" id="1_ngpb7"]
 [ext_resource type="FontFile" uid="uid://btrepff1y83ma" path="res://assets/font/KiwiSoda.ttf" id="2_g2gd0"]
-[ext_resource type="Texture2D" uid="uid://bcihvvby2amxw" path="res://assets/img/heathbar-1.png" id="3_8dco6"]
-[ext_resource type="Texture2D" uid="uid://cmqi0xnubjtp1" path="res://assets/img/heathbar-2.png" id="4_sacm7"]
+[ext_resource type="Texture2D" uid="uid://d35xdmpy61n13" path="res://assets/img/heathbar-1-1.png" id="3_xlll8"]
+[ext_resource type="Shader" uid="uid://cji6b8752byqt" path="res://assets/shader/healthbar.gdshader" id="3_yku6q"]
+[ext_resource type="Texture2D" uid="uid://mfpu7qdvfo40" path="res://assets/palette/palette_healthbar_2.png" id="4_v1hmg"]
+[ext_resource type="Texture2D" uid="uid://dixy2cc2e26he" path="res://assets/img/heathbar-1-2.png" id="4_yku6q"]
+[ext_resource type="Texture2D" uid="uid://dfmmujx1kk1m0" path="res://assets/palette/palette_healthbar.png" id="5_na530"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sacm7"]
+shader = ExtResource("3_yku6q")
+shader_parameter/original_palettes = ExtResource("5_na530")
+shader_parameter/new_palettes = ExtResource("4_v1hmg")
+shader_parameter/colors_counts = 17
+shader_parameter/health = 100.0
 
 [sub_resource type="Gradient" id="Gradient_pqh06"]
-colors = PackedColorArray(0.5294118, 0.12941177, 0.22352941, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0.7529412, 0.16078432, 0.21960784, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_xlll8"]
 gradient = SubResource("Gradient_pqh06")
+width = 128
 
 [node name="HUD" type="Control" unique_id=641997604]
 layout_mode = 3
@@ -102,9 +113,9 @@ size_flags_vertical = 0
 [node name="healthbar" type="Sprite2D" parent="CanvasLayer/Control2" unique_id=1955548297]
 z_index = 100
 z_as_relative = false
-position = Vector2(100, 0)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_8dco6")
+material = SubResource("ShaderMaterial_sacm7")
+position = Vector2(150, 0)
+texture = ExtResource("3_xlll8")
 region_filter_clip_enabled = true
 
 [node name="Timer" type="Timer" parent="CanvasLayer/Control2/healthbar" unique_id=496407286]
@@ -112,16 +123,16 @@ region_filter_clip_enabled = true
 [node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Control2/healthbar" unique_id=645317842]
 z_index = 1
 z_as_relative = false
-position = Vector2(186, -58)
-scale = Vector2(0.6171875, 115.999985)
+position = Vector2(95, -27)
+scale = Vector2(0.6171875, 55.00003)
 texture = SubResource("GradientTexture1D_xlll8")
 centered = false
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/healthbar" unique_id=1611397395]
 z_index = 1
 z_as_relative = false
-position = Vector2(-192, -64)
-texture = ExtResource("4_sacm7")
+position = Vector2(-95, -27)
+texture = ExtResource("4_yku6q")
 centered = false
 
 [connection signal="timeout" from="CanvasLayer/Control2/healthbar/Timer" to="." method="_on_timer_timeout"]

@@ -14,6 +14,7 @@ func _process(_delta: float) -> void:
 	$CanvasLayer/Control2/healthbar.show()
 	
 	healt = Network.client_player_ins.healt
+	$CanvasLayer/Control2/healthbar.material.set_shader_parameter("health", healt)
 	$CanvasLayer/Control/client_point.text = str(Main.p1_point)
 	$CanvasLayer/Control/not_client_point.text = str(Main.p2_point)
 	$CanvasLayer/Control2/healthbar/Sprite2D2.scale.x = $CanvasLayer/Control2/healthbar/Timer.time_left * health_to_remove / 100
@@ -29,9 +30,10 @@ func healthbar_(dmg: int):
 	if (healt <= 0):
 		healt = 0
 	$CanvasLayer/Control2/healthbar/Sprite2D.scale.x = healt / 100
-	$CanvasLayer/Control2/healthbar/Sprite2D2.position.x = -192 + (healt * 192 * 2)/100
+	$CanvasLayer/Control2/healthbar/Sprite2D2.position.x = -95 + (healt * 95 * 2)/100
 	#$CanvasLayer/Control2/healthbar/Label.text = type_convert(type_convert(healt, TYPE_INT), TYPE_STRING) + "%"
 	$CanvasLayer/Control2/healthbar/Timer.start()
+	
 	
 
 
