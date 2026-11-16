@@ -9,15 +9,18 @@ var round = 0
 var infinit_time = 0
 
 
-func end_game():
-	print("end_game")
+func end_game(b: bool):
+	print("pute")
+	p1_point = 0
+	p2_point = 0
+	get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").hide()
+	get_tree().current_scene.get_node("menu").get_node("CanvasLayer").show()
 
 func end_round(point: int, b: bool):
+	#del map
 	get_tree().current_scene.get_node("map_container").get_node("map").free()
-	Network.client_player_ins.unequip_weapon()
-	Network.client_player_ins.healt = 100
-	Network.not_client_player_ins.healt = 100.0
-	Network.not_client_player_ins.unequip_weapon()
+	
+	#check point
 	if (point == 1):
 		p1_point += 1
 	else:
@@ -30,7 +33,7 @@ func end_round(point: int, b: bool):
 			}
 		))
 	if (p1_point == 2 || p2_point == 2):
-		end_game()
+		end_game(b)
 	else:
 		start_round(b)
 
@@ -48,13 +51,19 @@ func start_game(b: bool):
 	start_round(b)
 
 func start_round(b: bool):
+	#load map
 	var map : PackedScene = load("res://scene/map/map_2.tscn")
 	var map_ins = map.instantiate()
 	get_tree().current_scene.get_node("map_container").add_child(map_ins)
+	
+	#setup player
+	#client
 	Network.spawn_player()
-	if (b):
-		Network.send_text(JSON.stringify(
-			{
-				"type": "start_round",
-			}
-		))
+	Network.client_player_ins.unequip_weapon()
+	Network.client_player_ins.healt = 100
+	get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").get_node("Control2").get_node("healthbar").get_node("Sprite2D").scale.x = 1
+	
+	#not client
+	Network.not_client_player_ins.healt = 100.0
+	Network.not_client_player_ins.get_node("healthbar").get_node("Sprite2D").scale.x = 1
+	Network.not_client_player_ins.unequip_weapon()

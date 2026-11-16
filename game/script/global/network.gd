@@ -96,7 +96,6 @@ func _process(_delta: float) -> void:
 					load_player()
 				
 				if (data["type"] == "start_game"):
-					print("pute")
 					Main.game_mode = data["mode"]
 					Main.infinit_time = data["time"]
 					Main.start_game(false)
