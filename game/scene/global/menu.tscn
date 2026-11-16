@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dp81q4olovdg7" path="res://script/global/menu.gd" id="1_4n3up"]
 [ext_resource type="FontFile" uid="uid://btrepff1y83ma" path="res://assets/font/KiwiSoda.ttf" id="1_flhli"]
 [ext_resource type="Texture2D" uid="uid://iqmyals4g0lj" path="res://assets/img/wizard.png" id="2_vyxmg"]
+[ext_resource type="Texture2D" uid="uid://dsky86ep17jm7" path="res://assets/img/button.png" id="3_u82at"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_txlge"]
 atlas = ExtResource("2_vyxmg")
@@ -91,15 +92,21 @@ anchor_left = 0.80100006
 anchor_top = 0.90700006
 anchor_right = 0.98800004
 anchor_bottom = 0.99000007
-offset_left = -0.60009766
 offset_top = -0.4000244
-offset_right = 0.19995117
+offset_right = 0.8000488
 offset_bottom = -0.00012207031
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("1_flhli")
 theme_override_font_sizes/font_size = 50
 text = "start"
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/game_leader/start" unique_id=2005606141]
+z_index = -1
+texture = ExtResource("3_u82at")
+centered = false
+offset = Vector2(-10, -16)
 
 [node name="client_info" type="Control" parent="CanvasLayer" unique_id=1601491251]
 layout_mode = 3
