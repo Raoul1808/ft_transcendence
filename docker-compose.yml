@@ -51,6 +51,13 @@ services:
     secrets:
       - postgres_pass
     restart: unless-stopped
+  frontend:
+    build: frontend
+    ports:
+      - "5173:5173"
+    networks:
+      - tr-net
+    restart: unless-stopped
 
 networks:
   tr-net:

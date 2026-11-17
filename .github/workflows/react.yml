@@ -1,0 +1,39 @@
+name: React CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "backend/**"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "backend/**"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v7
+
+    - run: npm ci
+      working-directory: frontend
+    - run: npm run dryfmt
+      working-directory: frontend
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v7
+
+    - run: npm ci
+      working-directory: frontend
+    - run: npm run lint
+      working-directory: frontend
