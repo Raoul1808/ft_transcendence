@@ -1,14 +1,16 @@
 FROM rust:1.99-alpine AS watchexec
 
-RUN apk --no-cache add musl-dev
-RUN cargo install watchexec-cli
+RUN apk --no-cache add musl-dev \
+    && cargo install watchexec-cli
 
-FROM rust:1.99-alpine AS build
+FROM rust:1.99-alpine
+
+RUN apk --no-cache add musl-dev ca-certificates
 
 COPY --from=watchexec /usr/local/cargo/bin/watchexec /usr/local/cargo/bin/watchexec
-RUN apk --no-cache add musl-dev ca-certificates bash
 
 WORKDIR /app
 
 EXPOSE 8080
-ENTRYPOINT ["watchexec", "-w", "src", "-w", "static", "-r", "--", "cargo", "run"]
+
+ENTRYPOINT ["watchexec", "-w", "src", "-w", "static", "-w", "migrations", "-r", "--", "cargo", "run"]

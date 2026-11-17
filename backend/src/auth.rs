@@ -1,0 +1,110 @@
+use std::sync::Arc;
+
+use argon2::{
+    Argon2, PasswordHash, PasswordHasher, PasswordVerifier,
+    password_hash::{SaltString, rand_core::OsRng},
+};
+use axum::{
+    Json,
+    extract::State,
+    http::StatusCode,
+    response::{IntoResponse, Response},
+};
+use serde::{Deserialize, Serialize};
+use tower_sessions::Session;
+
+use crate::{AppState, db};
+
+const SESSION_USER_KEY: &str = "user";
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct SessionUser {
+    pub id: i64,
+    pub username: String,
+}
+
+#[derive(Deserialize)]
+pub struct Credentials {
+    username: String,
+    password: String,
+}
+
+fn hash_password(password: &str) -> Result<String, argon2::password_hash::Error> {
+    let salt = SaltString::generate(&mut OsRng);
+    Ok(Argon2::default()
+        .hash_password(password.as_bytes(), &salt)?
+        .to_string())
+}
+
+fn verify_password(password: &str, stored_hash: &str) -> bool {
+    match PasswordHash::new(stored_hash) {
+        Ok(parsed) => Argon2::default()
+            .verify_password(password.as_bytes(), &parsed)
+            .is_ok(),
+        Err(_) => false,
+    }
+}
+
+pub async fn current_user(session: &Session) -> Option<SessionUser> {
+    session.get(SESSION_USER_KEY).await.ok().flatten()
+}
+
+pub async fn register(
+    State(state): State<Arc<AppState>>,
+    Json(creds): Json<Credentials>,
+) -> Result<Response, crate::Error> {
+    let username = creds.username.trim().to_string();
+    if username.is_empty() || username.chars().count() > 32 {
+        return Err(crate::Error::InvalidUsernameLength);
+    }
+    let len = creds.password.chars().count();
+    if !(8..=128).contains(&len) {
+        return Err(crate::Error::InvalidPasswordLength);
+    }
+
+    let password = creds.password;
+    let hash = tokio::task::spawn_blocking(move || hash_password(&password)).await??;
+
+    let res = match db::create_account(&state.db, &username, &hash).await? {
+        Some(id) => (StatusCode::CREATED, Json(SessionUser { id, username })).into_response(),
+        None => (StatusCode::CONFLICT, "username already taken").into_response(),
+    };
+    Ok(res)
+}
+
+pub async fn login(
+    State(state): State<Arc<AppState>>,
+    session: Session,
+    Json(creds): Json<Credentials>,
+) -> Result<Response, crate::Error> {
+    let account = db::find_account(&state.db, creds.username.trim()).await?;
+
+    let Some((id, username, Some(stored_hash))) = account else {
+        return Err(crate::Error::Unauthorized);
+    };
+
+    let password = creds.password;
+    let ok = tokio::task::spawn_blocking(move || verify_password(&password, &stored_hash))
+        .await
+        .unwrap_or(false);
+    if !ok {
+        return Err(crate::Error::Unauthorized);
+    }
+
+    session.cycle_id().await?;
+    let user = SessionUser { id, username };
+    session.insert(SESSION_USER_KEY, user.clone()).await?;
+    Ok(Json(user).into_response())
+}
+
+pub async fn logout(session: Session) -> Result<StatusCode, crate::Error> {
+    session.flush().await?;
+    Ok(StatusCode::NO_CONTENT)
+}
+
+pub async fn me(session: Session) -> Result<Response, crate::Error> {
+    match current_user(&session).await {
+        Some(user) => Ok(Json(user).into_response()),
+        None => Err(crate::Error::Unauthorized),
+    }
+}
