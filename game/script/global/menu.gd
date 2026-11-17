@@ -16,8 +16,42 @@ func _process(_delta: float) -> void:
 	else :
 		$CanvasLayer/not_game_leader.hide()
 		$CanvasLayer/game_leader.show()
+	if ($CanvasLayer/game_leader/start/AnimatedSprite2D.frame == 2):
+		$CanvasLayer/game_leader/start/AnimatedSprite2D.pause()
+	if ($CanvasLayer/game_leader/map_select/map1/AnimatedSprite2D.frame == 2):
+		$CanvasLayer/game_leader/map_select/map1/AnimatedSprite2D.pause()
+	if ($CanvasLayer/game_leader/map_select/map2/AnimatedSprite2D.frame == 2):
+		$CanvasLayer/game_leader/map_select/map2/AnimatedSprite2D.pause()
 
 func _on_start_pressed() -> void:
 	Main.start_game(true)
 	$CanvasLayer.hide()
 	get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").show()
+
+func _on_start_mouse_entered() -> void:
+	$CanvasLayer/game_leader/start/AnimatedSprite2D.play("out")
+	$CanvasLayer/game_leader/start/AnimatedSprite2D.frame = 0
+
+func _on_start_mouse_exited() -> void:
+	$CanvasLayer/game_leader/start/AnimatedSprite2D.play("in")
+	$CanvasLayer/game_leader/start/AnimatedSprite2D.frame = 0
+
+
+func _on_map_1_mouse_entered() -> void:
+	$CanvasLayer/game_leader/map_select/map1/AnimatedSprite2D.play("out")
+	$CanvasLayer/game_leader/map_select/map1/AnimatedSprite2D.frame = 0
+
+
+func _on_map_1_mouse_exited() -> void:
+	$CanvasLayer/game_leader/map_select/map1/AnimatedSprite2D.play("in")
+	$CanvasLayer/game_leader/map_select/map1/AnimatedSprite2D.frame = 0
+
+
+func _on_map_2_mouse_entered() -> void:
+	$CanvasLayer/game_leader/map_select/map2/AnimatedSprite2D.play("out")
+	$CanvasLayer/game_leader/map_select/map2/AnimatedSprite2D.frame = 0
+
+
+func _on_map_2_mouse_exited() -> void:
+	$CanvasLayer/game_leader/map_select/map2/AnimatedSprite2D.play("in")
+	$CanvasLayer/game_leader/map_select/map2/AnimatedSprite2D.frame = 0
