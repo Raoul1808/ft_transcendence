@@ -21,10 +21,14 @@ use tower_sessions::{
 use tower_sessions_redis_store::{RedisStore, fred::prelude::Pool as RedisPool};
 use tracing::info;
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
+
 mod auth;
 mod cache;
 mod db;
+mod error;
 mod ws;
+
+pub use error::Error;
 
 async fn index() -> impl IntoResponse {
     Html(include_str!("../static/wstest.html"))

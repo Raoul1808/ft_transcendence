@@ -52,55 +52,35 @@ pub async fn current_user(session: &Session) -> Option<SessionUser> {
 pub async fn register(
     State(state): State<Arc<AppState>>,
     Json(creds): Json<Credentials>,
-) -> Response {
+) -> Result<Response, crate::Error> {
     let username = creds.username.trim().to_string();
     if username.is_empty() || username.chars().count() > 32 {
-        return (
-            StatusCode::BAD_REQUEST,
-            "username must be 1 to 32 characters",
-        )
-            .into_response();
+        return Err(crate::Error::InvalidUsernameLength);
     }
     let len = creds.password.chars().count();
     if !(8..=128).contains(&len) {
-        return (
-            StatusCode::BAD_REQUEST,
-            "password must be 8 to 128 characters",
-        )
-            .into_response();
+        return Err(crate::Error::InvalidPasswordLength);
     }
 
     let password = creds.password;
-    let hash = match tokio::task::spawn_blocking(move || hash_password(&password)).await {
-        Ok(Ok(h)) => h,
-        _ => return StatusCode::INTERNAL_SERVER_ERROR.into_response(),
-    };
+    let hash = tokio::task::spawn_blocking(move || hash_password(&password)).await??;
 
-    match db::create_account(&state.db, &username, &hash).await {
-        Ok(Some(id)) => (StatusCode::CREATED, Json(SessionUser { id, username })).into_response(),
-        Ok(None) => (StatusCode::CONFLICT, "username already taken").into_response(),
-        Err(e) => {
-            tracing::error!("register failed: {e}");
-            StatusCode::INTERNAL_SERVER_ERROR.into_response()
-        }
-    }
+    let res = match db::create_account(&state.db, &username, &hash).await? {
+        Some(id) => (StatusCode::CREATED, Json(SessionUser { id, username })).into_response(),
+        None => (StatusCode::CONFLICT, "username already taken").into_response(),
+    };
+    Ok(res)
 }
 
 pub async fn login(
     State(state): State<Arc<AppState>>,
     session: Session,
     Json(creds): Json<Credentials>,
-) -> Response {
-    let account = match db::find_account(&state.db, creds.username.trim()).await {
-        Ok(a) => a,
-        Err(e) => {
-            tracing::error!("login lookup failed: {e}");
-            return StatusCode::INTERNAL_SERVER_ERROR.into_response();
-        }
-    };
+) -> Result<Response, crate::Error> {
+    let account = db::find_account(&state.db, creds.username.trim()).await?;
 
     let Some((id, username, Some(stored_hash))) = account else {
-        return StatusCode::UNAUTHORIZED.into_response();
+        return Err(crate::Error::Unauthorized);
     };
 
     let password = creds.password;
@@ -108,34 +88,23 @@ pub async fn login(
         .await
         .unwrap_or(false);
     if !ok {
-        return StatusCode::UNAUTHORIZED.into_response();
+        return Err(crate::Error::Unauthorized);
     }
 
-    if let Err(e) = session.cycle_id().await {
-        tracing::error!("cycle_id failed: {e}");
-        return StatusCode::INTERNAL_SERVER_ERROR.into_response();
-    }
+    session.cycle_id().await?;
     let user = SessionUser { id, username };
-    if let Err(e) = session.insert(SESSION_USER_KEY, user.clone()).await {
-        tracing::error!("session insert failed: {e}");
-        return StatusCode::INTERNAL_SERVER_ERROR.into_response();
-    }
-    Json(user).into_response()
+    session.insert(SESSION_USER_KEY, user.clone()).await?;
+    Ok(Json(user).into_response())
 }
 
-pub async fn logout(session: Session) -> StatusCode {
-    match session.flush().await {
-        Ok(()) => StatusCode::NO_CONTENT,
-        Err(e) => {
-            tracing::error!("logout failed: {e}");
-            StatusCode::INTERNAL_SERVER_ERROR
-        }
-    }
+pub async fn logout(session: Session) -> Result<StatusCode, crate::Error> {
+    session.flush().await?;
+    Ok(StatusCode::NO_CONTENT)
 }
 
-pub async fn me(session: Session) -> Response {
+pub async fn me(session: Session) -> Result<Response, crate::Error> {
     match current_user(&session).await {
-        Some(user) => Json(user).into_response(),
-        None => StatusCode::UNAUTHORIZED.into_response(),
+        Some(user) => Ok(Json(user).into_response()),
+        None => Err(crate::Error::Unauthorized),
     }
 }
