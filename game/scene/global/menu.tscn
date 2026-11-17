@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bjv6akd1mcnil" path="res://assets/palette/UI/palette_button.png" id="4_frf2m"]
 [ext_resource type="Texture2D" uid="uid://bvgnq1603bey8" path="res://assets/palette/UI/palette_button_2.png" id="4_pdutf"]
 [ext_resource type="Texture2D" uid="uid://dwsiktkipyu5m" path="res://assets/palette/player/wizard_palette.png" id="7_pdutf"]
+[ext_resource type="Texture2D" uid="uid://b1jhhmd85otsd" path="res://assets/img/arrow_button.png" id="9_tp5ri"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u82at"]
 shader = ExtResource("3_t8b78")
@@ -73,6 +74,67 @@ shader_parameter/colors_counts = 8
 [sub_resource type="AtlasTexture" id="AtlasTexture_txlge"]
 atlas = ExtResource("2_vyxmg")
 region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wiykp"]
+shader = ExtResource("3_t8b78")
+shader_parameter/original_palettes = ExtResource("4_frf2m")
+shader_parameter/new_palettes = ExtResource("4_pdutf")
+shader_parameter/colors_counts = 12
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wiykp"]
+atlas = ExtResource("9_tp5ri")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5xf3"]
+atlas = ExtResource("9_tp5ri")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryan0"]
+atlas = ExtResource("9_tp5ri")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qjki"]
+atlas = ExtResource("9_tp5ri")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3j6gw"]
+atlas = ExtResource("9_tp5ri")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ksf5"]
+atlas = ExtResource("9_tp5ri")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pqh06"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wiykp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5xf3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryan0")
+}],
+"loop": 1,
+"name": &"in",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0qjki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3j6gw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ksf5")
+}],
+"loop": 1,
+"name": &"out",
+"speed": 5.0
+}]
 
 [node name="menu" type="Control" unique_id=1183571336]
 layout_mode = 3
@@ -244,12 +306,18 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -4.0
-offset_right = 8.0
-offset_bottom = 4.0
+offset_top = -24.0
+offset_right = 48.0
+offset_bottom = 24.0
 grow_vertical = 2
-scale = Vector2(5, 5)
 theme_override_fonts/font = ExtResource("1_flhli")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/client_info/prev" unique_id=1218348214]
+material = SubResource("ShaderMaterial_wiykp")
+sprite_frames = SubResource("SpriteFrames_pqh06")
+animation = &"out"
+centered = false
+flip_h = true
 
 [node name="next" type="Button" parent="CanvasLayer/client_info" unique_id=655830183]
 layout_mode = 1
@@ -258,13 +326,17 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -41.0
-offset_top = -4.0
-offset_right = -33.0
-offset_bottom = 4.0
+offset_left = -48.0
+offset_top = -24.0
+offset_bottom = 24.0
 grow_horizontal = 0
 grow_vertical = 2
-scale = Vector2(5, 5)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/client_info/next" unique_id=1593088662]
+material = SubResource("ShaderMaterial_wiykp")
+sprite_frames = SubResource("SpriteFrames_pqh06")
+animation = &"out"
+centered = false
 
 [node name="skin_selection" type="Control" parent="CanvasLayer/client_info" unique_id=1649379238]
 layout_mode = 1
@@ -281,28 +353,33 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 0.99999994
-offset_top = -39.99997
-offset_right = 9.0
-offset_bottom = -31.99997
+offset_top = -48.0
+offset_right = 48.0
 grow_vertical = 0
-scale = Vector2(5, 5)
 theme_override_fonts/font = ExtResource("1_flhli")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/client_info/skin_selection/prev_pal" unique_id=1565419167]
+sprite_frames = SubResource("SpriteFrames_pqh06")
+animation = &"out"
+centered = false
+flip_h = true
 
 [node name="next_pal" type="Button" parent="CanvasLayer/client_info/skin_selection" unique_id=2132733045]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = 3
 anchor_left = 1.0
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -20.5
-offset_right = -32.0
-offset_bottom = -12.499999
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -48.0
 grow_horizontal = 0
-grow_vertical = 2
-scale = Vector2(5, 5)
+grow_vertical = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/client_info/skin_selection/next_pal" unique_id=1985744282]
+sprite_frames = SubResource("SpriteFrames_pqh06")
+animation = &"out"
+centered = false
 
 [node name="Label" type="Label" parent="CanvasLayer/client_info/skin_selection" unique_id=228129254]
 layout_mode = 1
@@ -408,7 +485,15 @@ text = "waiting for player..."
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/start" to="." method="_on_start_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/client_info/prev" to="." method="_on_prev_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/client_info/prev" to="." method="_on_prev_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/client_info/prev" to="." method="_on_prev_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/client_info/next" to="." method="_on_next_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/client_info/next" to="." method="_on_next_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/client_info/next" to="." method="_on_next_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/client_info/skin_selection/prev_pal" to="." method="_on_prev_pal_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/client_info/skin_selection/prev_pal" to="." method="_on_prev_pal_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/client_info/skin_selection/prev_pal" to="." method="_on_prev_pal_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/client_info/skin_selection/next_pal" to="." method="_on_next_pal_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/client_info/skin_selection/next_pal" to="." method="_on_next_pal_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/client_info/skin_selection/next_pal" to="." method="_on_next_pal_pressed"]

@@ -32,6 +32,15 @@ func _process(_delta: float) -> void:
 		$CanvasLayer/game_leader/map_select/map1/AnimatedSprite2D.pause()
 	if ($CanvasLayer/game_leader/map_select/map2/AnimatedSprite2D.frame == 2):
 		$CanvasLayer/game_leader/map_select/map2/AnimatedSprite2D.pause()
+	
+	if ($CanvasLayer/client_info/skin_selection/next_pal/AnimatedSprite2D.frame == 2):
+		$CanvasLayer/client_info/skin_selection/next_pal/AnimatedSprite2D.pause()
+	if ($CanvasLayer/client_info/skin_selection/prev_pal/AnimatedSprite2D.frame == 2):
+		$CanvasLayer/client_info/skin_selection/prev_pal/AnimatedSprite2D.pause()
+	if ($CanvasLayer/client_info/next/AnimatedSprite2D.frame == 2):
+		$CanvasLayer/client_info/next/AnimatedSprite2D.pause()
+	if ($CanvasLayer/client_info/prev/AnimatedSprite2D.frame == 2):
+		$CanvasLayer/client_info/prev/AnimatedSprite2D.pause()
 
 func _on_start_pressed() -> void:
 	Main.start_game(true)
@@ -106,3 +115,43 @@ func _on_prev_pressed() -> void:
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][1]))
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][2]))
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
+
+
+func _on_next_pal_mouse_entered() -> void:
+	$CanvasLayer/client_info/skin_selection/next_pal/AnimatedSprite2D.play("out")
+	$CanvasLayer/client_info/skin_selection/next_pal/AnimatedSprite2D.frame = 0
+
+
+func _on_next_pal_mouse_exited() -> void:
+	$CanvasLayer/client_info/skin_selection/next_pal/AnimatedSprite2D.play("in")
+	$CanvasLayer/client_info/skin_selection/next_pal/AnimatedSprite2D.frame = 0
+
+
+func _on_prev_pal_mouse_entered() -> void:
+	$CanvasLayer/client_info/skin_selection/prev_pal/AnimatedSprite2D.play("out")
+	$CanvasLayer/client_info/skin_selection/prev_pal/AnimatedSprite2D.frame = 0
+
+
+func _on_prev_pal_mouse_exited() -> void:
+	$CanvasLayer/client_info/skin_selection/prev_pal/AnimatedSprite2D.play("in")
+	$CanvasLayer/client_info/skin_selection/prev_pal/AnimatedSprite2D.frame = 0
+
+
+func _on_next_mouse_entered() -> void:
+	$CanvasLayer/client_info/next/AnimatedSprite2D.play("out")
+	$CanvasLayer/client_info/next/AnimatedSprite2D.frame = 0
+
+
+func _on_next_mouse_exited() -> void:
+	$CanvasLayer/client_info/next/AnimatedSprite2D.play("in")
+	$CanvasLayer/client_info/next/AnimatedSprite2D.frame = 0
+
+
+func _on_prev_mouse_entered() -> void:
+	$CanvasLayer/client_info/prev/AnimatedSprite2D.play("out")
+	$CanvasLayer/client_info/prev/AnimatedSprite2D.frame = 0
+
+
+func _on_prev_mouse_exited() -> void:
+	$CanvasLayer/client_info/prev/AnimatedSprite2D.play("in")
+	$CanvasLayer/client_info/prev/AnimatedSprite2D.frame = 0
