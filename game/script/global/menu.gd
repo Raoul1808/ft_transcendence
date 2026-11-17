@@ -6,6 +6,7 @@ var player_palette_id : int = 0;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -19,9 +20,6 @@ func _process(_delta: float) -> void:
 	else :
 		$CanvasLayer/not_game_leader.hide()
 		$CanvasLayer/game_leader.show()
-	
-	
-	
 	
 	#======================================================================================
 	#button animation
@@ -155,3 +153,43 @@ func _on_prev_mouse_entered() -> void:
 func _on_prev_mouse_exited() -> void:
 	$CanvasLayer/client_info/prev/AnimatedSprite2D.play("in")
 	$CanvasLayer/client_info/prev/AnimatedSprite2D.frame = 0
+
+
+func _on_map_1_pressed() -> void:
+	var map_p : PackedScene;
+	map_p = load("res://scene/map/map.tscn")
+
+	#print(map_p.get_state().get_node_property_name(2, i), " = ", map_p.get_state().get_node_property_value(2, i))
+	var cell;
+	var i = 2
+	for clear in get_tree().current_scene.get_node("menu").get_node("CanvasLayer").get_node("game_leader").get_node("map_select").get_node("map_preview").get_children():
+		clear.free()
+	for t in range(2, map_p.get_state().get_node_property_value(2, i).size(), 12):
+		cell = ColorRect.new()
+		cell.size = Vector2(10, 10)
+		cell.color = Color(0.155, 0.377, 0.092, 1.0)
+		if (map_p.get_state().get_node_property_value(2, i)[t + 4] == 0):
+			cell.color = Color(0.04, 0.054, 0.022, 1.0)
+		cell.position = Vector2(10 * map_p.get_state().get_node_property_value(2, i)[t], 10 * map_p.get_state().get_node_property_value(2, i)[t + 2])
+		get_tree().current_scene.get_node("menu").get_node("CanvasLayer").get_node("game_leader").get_node("map_select").get_node("map_preview").add_child(cell)
+	
+
+
+func _on_map_2_pressed() -> void:
+	var map_p : PackedScene;
+	map_p = load("res://scene/map/map_2.tscn")
+
+	#print(map_p.get_state().get_node_property_name(2, i), " = ", map_p.get_state().get_node_property_value(2, i))
+	var cell;
+	var i = 2
+	for clear in get_tree().current_scene.get_node("menu").get_node("CanvasLayer").get_node("game_leader").get_node("map_select").get_node("map_preview").get_children():
+		clear.free()
+	for t in range(2, map_p.get_state().get_node_property_value(2, i).size(), 12):
+		cell = ColorRect.new()
+		cell.size = Vector2(10, 10)
+		cell.color = Color(0.155, 0.377, 0.092, 1.0)
+		if (map_p.get_state().get_node_property_value(2, i)[t + 4] == 0):
+			cell.color = Color(0.04, 0.054, 0.022, 1.0)
+		cell.position = Vector2(10 * map_p.get_state().get_node_property_value(2, i)[t], 10 * map_p.get_state().get_node_property_value(2, i)[t + 2])
+		get_tree().current_scene.get_node("menu").get_node("CanvasLayer").get_node("game_leader").get_node("map_select").get_node("map_preview").add_child(cell)
+	

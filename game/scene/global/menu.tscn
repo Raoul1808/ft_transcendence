@@ -232,6 +232,19 @@ animation = &"out"
 centered = false
 offset = Vector2(-10, -16)
 
+[node name="map_preview" type="Control" parent="CanvasLayer/game_leader/map_select" unique_id=344871620]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -250.0
+offset_bottom = 250.0
+grow_horizontal = 0
+grow_vertical = 2
+
 [node name="start" type="Button" parent="CanvasLayer/game_leader" unique_id=1430286076]
 layout_mode = 1
 anchors_preset = -1
@@ -482,6 +495,7 @@ text = "waiting for player..."
 [connection signal="pressed" from="CanvasLayer/game_leader/map_select/map1" to="." method="_on_map_1_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/start" to="." method="_on_start_pressed"]
