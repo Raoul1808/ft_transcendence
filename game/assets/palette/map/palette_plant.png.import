@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q714cublkjti"
-path="res://.godot/imported/palette_bush_red.png-e6ec4804d940372b119dcdb38be60059.ctex"
+uid="uid://l53dgjtb8j54"
+path="res://.godot/imported/palette_plant.png-92cb81572abadf2e1cb049cf6bbe04d4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/palette/palette_bush_red.png"
-dest_files=["res://.godot/imported/palette_bush_red.png-e6ec4804d940372b119dcdb38be60059.ctex"]
+source_file="res://assets/palette/map/palette_plant.png"
+dest_files=["res://.godot/imported/palette_plant.png-92cb81572abadf2e1cb049cf6bbe04d4.ctex"]
 
 [params]
 

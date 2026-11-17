@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfmmujx1kk1m0"
-path="res://.godot/imported/palette_healthbar.png-e651eda4bdc88af7c9ab360353500570.ctex"
+uid="uid://dru4sob64pkv6"
+path="res://.godot/imported/wizard_palette_grey.png-c05c48150378a5b1fb70fd4076d2b520.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/palette/palette_healthbar.png"
-dest_files=["res://.godot/imported/palette_healthbar.png-e651eda4bdc88af7c9ab360353500570.ctex"]
+source_file="res://assets/palette/player/wizard_palette_grey.png"
+dest_files=["res://.godot/imported/wizard_palette_grey.png-c05c48150378a5b1fb70fd4076d2b520.ctex"]
 
 [params]
 

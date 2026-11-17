@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://dp13wgui83q7g"]
 
-[ext_resource type="Texture2D" uid="uid://l53dgjtb8j54" path="res://assets/palette/palette_plant.png" id="2_8todn"]
+[ext_resource type="Texture2D" uid="uid://l53dgjtb8j54" path="res://assets/palette/map/palette_plant.png" id="2_8todn"]
 
 [sub_resource type="Shader" id="Shader_m6bcs"]
 code = "shader_type canvas_item;

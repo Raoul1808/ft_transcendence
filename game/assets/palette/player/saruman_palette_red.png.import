@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cn4ytm4xms1q"
-path="res://.godot/imported/player_palette_blue.png-8df4ad6ed9d52b9f250789557164e915.ctex"
+uid="uid://ctffb2uiv0cmc"
+path="res://.godot/imported/saruman_palette_red.png-eeb3dcd95c7f4d4c8c3835c5c0499721.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/palette/player_palette_blue.png"
-dest_files=["res://.godot/imported/player_palette_blue.png-8df4ad6ed9d52b9f250789557164e915.ctex"]
+source_file="res://assets/palette/player/saruman_palette_red.png"
+dest_files=["res://.godot/imported/saruman_palette_red.png-eeb3dcd95c7f4d4c8c3835c5c0499721.ctex"]
 
 [params]
 

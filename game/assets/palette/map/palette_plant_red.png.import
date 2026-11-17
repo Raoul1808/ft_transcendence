@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f8scinungjxy"
-path="res://.godot/imported/saruman_idle.png-efd5bef223a17c5dc12c3da29bb0dabc.ctex"
+uid="uid://dgvswy83k1bbd"
+path="res://.godot/imported/palette_plant_red.png-36e4788fcb21873c65ddf19ee2e65636.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/saruman_idle.png"
-dest_files=["res://.godot/imported/saruman_idle.png-efd5bef223a17c5dc12c3da29bb0dabc.ctex"]
+source_file="res://assets/palette/map/palette_plant_red.png"
+dest_files=["res://.godot/imported/palette_plant_red.png-36e4788fcb21873c65ddf19ee2e65636.ctex"]
 
 [params]
 

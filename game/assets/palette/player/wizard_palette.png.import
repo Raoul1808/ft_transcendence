@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0glcwu37elul"
-path="res://.godot/imported/saruman_walk_2.png-245d85dde08087a920e06bafbccefad6.ctex"
+uid="uid://dwsiktkipyu5m"
+path="res://.godot/imported/wizard_palette.png-28d6b76ad831c87b5b4b43a1927a8f59.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/saruman_walk_2.png"
-dest_files=["res://.godot/imported/saruman_walk_2.png-245d85dde08087a920e06bafbccefad6.ctex"]
+source_file="res://assets/palette/player/wizard_palette.png"
+dest_files=["res://.godot/imported/wizard_palette.png-28d6b76ad831c87b5b4b43a1927a8f59.ctex"]
 
 [params]
 

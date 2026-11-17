@@ -3,9 +3,7 @@
 [ext_resource type="Script" uid="uid://cbp20bsxwbdb6" path="res://script/player/player.gd" id="1_cm2cf"]
 [ext_resource type="Texture2D" uid="uid://iqmyals4g0lj" path="res://assets/img/wizard.png" id="2_cm2cf"]
 [ext_resource type="Material" uid="uid://chswoisor8c3c" path="res://assets/shader/player_palettes.tres" id="2_qjg4s"]
-[ext_resource type="Texture2D" uid="uid://f8scinungjxy" path="res://assets/img/saruman_idle.png" id="3_732fb"]
-[ext_resource type="Texture2D" uid="uid://dl7dtrp6ts20v" path="res://assets/img/saruman_walk_1.png" id="4_hfhxk"]
-[ext_resource type="Texture2D" uid="uid://c0glcwu37elul" path="res://assets/img/saruman_walk_2.png" id="5_pisg7"]
+[ext_resource type="Texture2D" uid="uid://bgh74xiwh7jdg" path="res://assets/img/saruman.png" id="4_oypl4"]
 [ext_resource type="Texture2D" uid="uid://bcihvvby2amxw" path="res://assets/img/heathbar-1.png" id="8_oypl4"]
 [ext_resource type="Texture2D" uid="uid://cmqi0xnubjtp1" path="res://assets/img/heathbar-2.png" id="9_pisg7"]
 [ext_resource type="FontFile" uid="uid://btrepff1y83ma" path="res://assets/font/KiwiSoda.ttf" id="10_oypl4"]
@@ -27,6 +25,18 @@ fill_to = Vector2(0.991453, 0.5940171)
 atlas = ExtResource("2_cm2cf")
 region = Rect2(0, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjg4s"]
+atlas = ExtResource("4_oypl4")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wtbu"]
+atlas = ExtResource("4_oypl4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5g408"]
+atlas = ExtResource("4_oypl4")
+region = Rect2(128, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_f5r2w"]
 atlas = ExtResource("2_cm2cf")
 region = Rect2(64, 0, 64, 64)
@@ -47,7 +57,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_732fb")
+"texture": SubResource("AtlasTexture_qjg4s")
 }],
 "loop": 1,
 "name": &"s_idle",
@@ -55,10 +65,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_hfhxk")
+"texture": SubResource("AtlasTexture_1wtbu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_pisg7")
+"texture": SubResource("AtlasTexture_5g408")
 }],
 "loop": 1,
 "name": &"s_walk",
@@ -157,7 +167,7 @@ z_index = 2
 material = ExtResource("2_qjg4s")
 rotation = 1.5707964
 sprite_frames = SubResource("SpriteFrames_6skho")
-animation = &"walk"
+animation = &"s_walk"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1968293382]
 scale = Vector2(2, 2)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5iqa5xvafkn"
-path="res://.godot/imported/player_palette.png-77ab7558c95997e73d826b6005a70f9b.ctex"
+uid="uid://c1l8rscdyudko"
+path="res://.godot/imported/wizard_palette_blue.png-87d488373e1af1c0d6aa84d2f19f38f0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/palette/player_palette.png"
-dest_files=["res://.godot/imported/player_palette.png-77ab7558c95997e73d826b6005a70f9b.ctex"]
+source_file="res://assets/palette/player/wizard_palette_blue.png"
+dest_files=["res://.godot/imported/wizard_palette_blue.png-87d488373e1af1c0d6aa84d2f19f38f0.ctex"]
 
 [params]
 
