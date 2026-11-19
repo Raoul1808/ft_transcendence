@@ -8,6 +8,9 @@ extends CharacterBody2D
 @export var bot : bool = false
 @export var player_id: int = 0
 
+@export var player_skin_id : int = 0
+@export var player_palette_id : int = 0
+
 #=======================================================================
 #weapon loot
 #=======================================================================
