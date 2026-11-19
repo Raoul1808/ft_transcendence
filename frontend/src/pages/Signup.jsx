@@ -27,7 +27,12 @@ function Form() {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (name === "" || email === "" || password === "" || passcheckstr === "") {
+        if (
+            name === "" ||
+            email === "" ||
+            password === "" ||
+            passcheckstr === ""
+        ) {
             setSubmitted(false)
             setError(true)
         } else {

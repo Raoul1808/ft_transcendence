@@ -33,7 +33,8 @@ export const FriendApiFetch = () => {
                     >
                         <img
                             className="opacity-70 rounded-lg h-auto object-contain max-w-1/1"
-                            src="https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg" alt=""
+                            src="https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg"
+                            alt=""
                         ></img>
                     </a>
                     <div className="flex flex-col h-1/1 justify-between pointer-events-none relative no-underline">

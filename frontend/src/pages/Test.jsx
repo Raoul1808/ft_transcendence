@@ -1,5 +1,5 @@
 import React from "react"
-import {useState} from "react"
+import { useState } from "react"
 
 class Clock extends React.Component {
     constructor(props) {
@@ -28,7 +28,9 @@ function Counter() {
     return (
         <>
             <h2>{count}</h2>
-            <button type="submit" onClick={handleClick}>UwU</button>
+            <button type="submit" onClick={handleClick}>
+                UwU
+            </button>
         </>
     )
 }
