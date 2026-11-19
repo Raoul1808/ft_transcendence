@@ -49,3 +49,10 @@ if [ $dir_exists = true ]; then
     mv $templates_dir/4.7.2.stable.bak $templates_dir/4.7.2.stable
 fi
 echo "Export done!"
+
+echo "Moving export to frontend directory"
+
+mv game-export/index.html game-export/game.html
+mv game-export frontend/public/game-export
+
+echo "All done!"
