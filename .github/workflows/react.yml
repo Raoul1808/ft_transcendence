@@ -11,7 +11,7 @@ on:
       - "frontend/**"
 
 jobs:
-  lint:
+  fmt:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -23,7 +23,7 @@ jobs:
     - run: npm run dryfmt
       working-directory: frontend
 
-  fmt:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
