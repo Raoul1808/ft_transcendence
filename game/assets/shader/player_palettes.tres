@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://chswoisor8c3c"]
+
+[ext_resource type="Shader" uid="uid://1w2uplbawwk0" path="res://assets/shader/player_palette.tres" id="1_01aov"]
+[ext_resource type="Texture2D" uid="uid://dwsiktkipyu5m" path="res://assets/palette/player/wizard_palette.png" id="2_gmul0"]
+
+[resource]
+shader = ExtResource("1_01aov")
+shader_parameter/original_palettes = ExtResource("2_gmul0")
+shader_parameter/new_palettes = ExtResource("2_gmul0")
+shader_parameter/colors_counts = 8

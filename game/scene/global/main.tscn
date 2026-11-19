@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://qu7mul8g7y0l"]
+
+[ext_resource type="PackedScene" uid="uid://bdhf3giuh3ys0" path="res://scene/player/player.tscn" id="2_j12s5"]
+[ext_resource type="PackedScene" uid="uid://ccxg7sbdrbsox" path="res://scene/player/HUD.tscn" id="4_l7ffl"]
+[ext_resource type="PackedScene" uid="uid://bgis5pwiyjnqa" path="res://scene/global/menu.tscn" id="5_132e1"]
+
+[node name="main" type="Node" unique_id=2013266672]
+
+[node name="player" parent="." unique_id=1765459457 instance=ExtResource("2_j12s5")]
+position = Vector2(193, 127)
+player_id = 1
+
+[node name="map_container" type="Node" parent="." unique_id=720718623]
+
+[node name="not_client_player" type="Node" parent="." unique_id=1609857846]
+
+[node name="HUD" parent="." unique_id=888772131 instance=ExtResource("4_l7ffl")]
+
+[node name="menu" parent="." unique_id=1183571336 instance=ExtResource("5_132e1")]
+visible = false

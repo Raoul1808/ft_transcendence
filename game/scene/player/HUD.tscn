@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://ccxg7sbdrbsox"]
+
+[ext_resource type="Script" uid="uid://cyw777nkl7t8l" path="res://script/player/hud.gd" id="1_ngpb7"]
+[ext_resource type="FontFile" uid="uid://btrepff1y83ma" path="res://assets/font/KiwiSoda.ttf" id="2_g2gd0"]
+[ext_resource type="Texture2D" uid="uid://d35xdmpy61n13" path="res://assets/img/heathbar-1-1.png" id="3_xlll8"]
+[ext_resource type="Shader" uid="uid://cji6b8752byqt" path="res://assets/shader/healthbar.gdshader" id="3_yku6q"]
+[ext_resource type="Texture2D" uid="uid://mfpu7qdvfo40" path="res://assets/palette/palette_healthbar_2.png" id="4_v1hmg"]
+[ext_resource type="Texture2D" uid="uid://dixy2cc2e26he" path="res://assets/img/heathbar-1-2.png" id="4_yku6q"]
+[ext_resource type="Texture2D" uid="uid://dfmmujx1kk1m0" path="res://assets/palette/palette_healthbar.png" id="5_na530"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sacm7"]
+shader = ExtResource("3_yku6q")
+shader_parameter/original_palettes = ExtResource("5_na530")
+shader_parameter/new_palettes = ExtResource("4_v1hmg")
+shader_parameter/colors_counts = 17
+shader_parameter/health = 100.0
+
+[sub_resource type="Gradient" id="Gradient_pqh06"]
+colors = PackedColorArray(0.7529412, 0.16078432, 0.21960784, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xlll8"]
+gradient = SubResource("Gradient_pqh06")
+width = 128
+
+[node name="HUD" type="Control" unique_id=641997604]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("1_ngpb7")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=350112355]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=316781549]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.5
+offset_right = 64.5
+offset_bottom = 96.0
+grow_horizontal = 2
+
+[node name="not_client_point" type="Label" parent="CanvasLayer/Control" unique_id=1420465526]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 51.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_g2gd0")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="client_point" type="Label" parent="CanvasLayer/Control" unique_id=1268419569]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 51.0
+theme_override_fonts/font = ExtResource("2_g2gd0")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="p1" type="Label" parent="CanvasLayer/Control" unique_id=1916998299]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -51.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_g2gd0")
+theme_override_font_sizes/font_size = 50
+text = "p1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="p2" type="Label" parent="CanvasLayer/Control" unique_id=1479800644]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -51.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_g2gd0")
+theme_override_font_sizes/font_size = 50
+text = "p2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="CanvasLayer" unique_id=1741845775]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 67.0
+offset_top = -84.0
+offset_right = 107.0
+offset_bottom = -44.0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="healthbar" type="Sprite2D" parent="CanvasLayer/Control2" unique_id=1955548297]
+z_index = 100
+z_as_relative = false
+material = SubResource("ShaderMaterial_sacm7")
+position = Vector2(150, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("3_xlll8")
+region_filter_clip_enabled = true
+
+[node name="Timer" type="Timer" parent="CanvasLayer/Control2/healthbar" unique_id=496407286]
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Control2/healthbar" unique_id=645317842]
+z_index = 1
+z_as_relative = false
+position = Vector2(95, -27)
+scale = Vector2(0.6171875, 55.00003)
+texture = SubResource("GradientTexture1D_xlll8")
+centered = false
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/healthbar" unique_id=1611397395]
+z_index = 1
+z_as_relative = false
+position = Vector2(-95, -27)
+texture = ExtResource("4_yku6q")
+centered = false
+
+[connection signal="timeout" from="CanvasLayer/Control2/healthbar/Timer" to="." method="_on_timer_timeout"]
