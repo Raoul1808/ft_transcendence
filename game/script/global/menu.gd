@@ -91,6 +91,8 @@ func _on_next_pal_pressed() -> void:
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][1]))
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][2]))
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
+	Network.client_player_ins.player_palette_id = player_palette_id
+	Network.client_player_ins.update_skin()
 
 func _on_prev_pal_pressed() -> void:
 	player_palette_id -= 1
@@ -100,7 +102,8 @@ func _on_prev_pal_pressed() -> void:
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][1]))
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][2]))
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
-
+	Network.client_player_ins.player_palette_id = player_palette_id
+	Network.client_player_ins.update_skin()
 
 func _on_next_pressed() -> void:
 	#print($CanvasLayer/client_info/TextureRect.texture.atlas)
@@ -115,6 +118,9 @@ func _on_next_pressed() -> void:
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][1]))
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][2]))
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
+	Network.client_player_ins.player_palette_id = player_palette_id
+	Network.client_player_ins.player_skin_id = player_skin_id
+	Network.client_player_ins.update_skin()
 
 func _on_prev_pressed() -> void:
 	player_palette_id = 0
@@ -126,6 +132,9 @@ func _on_prev_pressed() -> void:
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][1]))
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][2]))
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
+	Network.client_player_ins.player_palette_id = player_palette_id
+	Network.client_player_ins.player_skin_id = player_skin_id
+	Network.client_player_ins.update_skin()
 
 
 func _on_next_pal_mouse_entered() -> void:

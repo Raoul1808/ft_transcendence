@@ -55,6 +55,17 @@ func interact_with_loot_not_client():
 		
 		var loot_ins = instance_from_id(loot_id)
 		loot_ins.free()
+		
+
+#============================================================================
+#skin update
+#============================================================================
+
+func update_skin():
+	#Network.client_player_ins.get_node("AnimatedSprite2D").
+	Network.client_player_ins.get_node("AnimatedSprite2D").material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][1]))
+	Network.client_player_ins.get_node("AnimatedSprite2D").material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][2]))
+	Network.client_player_ins.get_node("AnimatedSprite2D").material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
 
 #============================================================================
 #weapon management
@@ -182,19 +193,19 @@ func client_physic_proc(_delta):
 	#MOVEMENT
 	#======================================================================================
 	if not Input.is_action_pressed("move"):
-		$AnimatedSprite2D.play("idle")
+		$AnimatedSprite2D.play(str(1 + player_skin_id * 2))
 	if Input.is_action_pressed("up"):
 		vel.y -= 1
-		$AnimatedSprite2D.play("walk")
+		$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
 	if Input.is_action_pressed("down"):
 		vel.y += 1
-		$AnimatedSprite2D.play("walk")
+		$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
 	if Input.is_action_pressed("right"):
 		vel.x += 1
-		$AnimatedSprite2D.play("walk")
+		$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
 	if Input.is_action_pressed("left"):
 		vel.x -= 1
-		$AnimatedSprite2D.play("walk")
+		$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
 	
 	if vel.length() >= 1:
 		vel = vel.normalized()
