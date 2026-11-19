@@ -1,66 +1,53 @@
-import React from "react";
-import { useState } from "react";
+import React from "react"
+import { useState } from "react"
 
-function Form () {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [submitted, setSubmitted] = useState(false);
-    const [error, setError] = useState(false);
+function Form() {
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [submitted, setSubmitted] = useState(false)
+    const [error, setError] = useState(false)
 
     const handleName = (e) => {
-        setName(e.target.value);
-        setSubmitted(false);
+        setName(e.target.value)
+        setSubmitted(false)
     }
     const handleEmail = (e) => {
-        setEmail(e.target.value);
-        setSubmitted(false);
+        setEmail(e.target.value)
+        setSubmitted(false)
     }
     const handlePassword = (e) => {
-        setPassword(e.target.value);
-        setSubmitted(false);
+        setPassword(e.target.value)
+        setSubmitted(false)
     }
     const handleSubmit = (e) => {
-        e.preventDefault();
-        if (name == "" || email == "" || password == "")
-        {
-            setSubmitted(false);
-            setError(true);
-        }
-        else
-        {
-            setSubmitted(true);
-            setError(false);
+        e.preventDefault()
+        if (name == "" || email == "" || password == "") {
+            setSubmitted(false)
+            setError(true)
+        } else {
+            setSubmitted(true)
+            setError(false)
         }
     }
 
     const SuccessMessage = () => {
-        if (submitted)
-        {
-            return (
-            <div>
-                Success!
-            </div>
-            )
+        if (submitted) {
+            return <div>Success!</div>
         }
     }
 
     const ErrorMessage = () => {
-        if (error)
-        {
-            return (
-            <div>
-                Please fill all the fields!
-            </div>
-            )
+        if (error) {
+            return <div>Please fill all the fields!</div>
         }
     }
 
     return (
         <>
             <div>
-                <SuccessMessage/>
-                <ErrorMessage/>
+                <SuccessMessage />
+                <ErrorMessage />
             </div>
             <form className="grid justify-center items-center">
                 <input
@@ -72,7 +59,7 @@ function Form () {
                     autoComplete="userName"
                     onChange={handleName}
                     value={name}
-                    />
+                />
                 <input
                     className="m-0.5 p-1.5 text-xl bg-wizard-purple border-amber-300 border rounded-md"
                     type="email"
@@ -82,7 +69,7 @@ function Form () {
                     autoComplete="email"
                     onChange={handleEmail}
                     value={email}
-                    />
+                />
                 <input
                     className="m-0.5 p-1.5 text-xl bg-wizard-purple border-amber-300 border rounded-md"
                     type="password"
@@ -92,9 +79,12 @@ function Form () {
                     autoComplete="current-password"
                     onChange={handlePassword}
                     value={password}
-                    />
-                <button onClick={handleSubmit}
-                        type="submit" className="bg-wizard-purple rounded-lg text-white p-[15px_32px] text-center inline-block text-3xl m-[20px_40px] cursor-pointer border border-white">
+                />
+                <button
+                    onClick={handleSubmit}
+                    type="submit"
+                    className="bg-wizard-purple rounded-lg text-white p-[15px_32px] text-center inline-block text-3xl m-[20px_40px] cursor-pointer border border-white"
+                >
                     Submit
                 </button>
             </form>
@@ -106,14 +96,11 @@ function Signin() {
     return (
         <div className="grid justify-center items-center">
             <div>
-                <h1 className="text-5xl">
-                    User Sign-in
-                </h1>
+                <h1 className="text-5xl">User Sign-in</h1>
             </div>
-            <Form/>
+            <Form />
         </div>
-        
-    );
-};
+    )
+}
 
-export default Signin;
+export default Signin
