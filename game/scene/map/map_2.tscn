@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://da3cjlx1gxw1"]
+[gd_scene format=4 uid="uid://bqy7holwpkpnb"]
 
 [ext_resource type="Texture2D" uid="uid://bkdlqgqxbmxoa" path="res://assets/img/door.png" id="1_2buko"]
 [ext_resource type="Script" uid="uid://crr6vcvp7r5jo" path="res://script/global/map.gd" id="1_lobjl"]

@@ -8,6 +8,8 @@ var round = 0
 
 var infinit_time = 0
 
+var map: PackedScene = load("res://scene/map/map.tscn")
+
 
 func end_game(b: bool):
 	print("pute")
@@ -52,7 +54,6 @@ func start_game(b: bool):
 
 func start_round(b: bool):
 	#load map
-	var map : PackedScene = load("res://scene/map/map_2.tscn")
 	var map_ins = map.instantiate()
 	get_tree().current_scene.get_node("map_container").add_child(map_ins)
 	

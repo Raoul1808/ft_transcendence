@@ -197,7 +197,7 @@ offset_bottom = 126.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_flhli")
 theme_override_font_sizes/font_size = 40
-text = "map1"
+text = "sus"
 flat = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/game_leader/map_select/map1" unique_id=145766097]
@@ -214,14 +214,14 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -592.0
+offset_left = -593.0
 offset_top = 148.0
-offset_right = -292.0
+offset_right = -293.0
 offset_bottom = 248.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_flhli")
 theme_override_font_sizes/font_size = 40
-text = "map2"
+text = "garden"
 flat = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/game_leader/map_select/map2" unique_id=257803378]
@@ -244,6 +244,30 @@ offset_top = -250.0
 offset_bottom = 250.0
 grow_horizontal = 0
 grow_vertical = 2
+
+[node name="forest2" type="Button" parent="CanvasLayer/game_leader/map_select" unique_id=1282396308]
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -592.0
+offset_top = 269.0
+offset_right = -292.0
+offset_bottom = 369.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 40
+text = "forest2"
+flat = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/game_leader/map_select/forest2" unique_id=582655648]
+z_index = -1
+material = SubResource("ShaderMaterial_u82at")
+sprite_frames = SubResource("SpriteFrames_2m5q5")
+animation = &"out"
+centered = false
+offset = Vector2(-10, -16)
 
 [node name="start" type="Button" parent="CanvasLayer/game_leader" unique_id=1430286076]
 layout_mode = 1
@@ -496,6 +520,7 @@ text = "waiting for player..."
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/game_leader/map_select/forest2" to="." method="_on_forest_2_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/start" to="." method="_on_start_pressed"]
