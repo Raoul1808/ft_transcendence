@@ -4,6 +4,7 @@ const Game = () => {
             <iframe
                 className="absolute h-1/1 w-1/1"
                 src="game-export/game.html"
+                title="game"
             />
         </div>
     )

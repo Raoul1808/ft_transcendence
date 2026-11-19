@@ -1,6 +1,3 @@
-import React from "react"
-import { useState } from "react"
-
 //faire une class game button qui prends le user pour savoir si il est co ou pas, car si il n'est pas co
 //il faut rediriger vers signin et pas game
 
@@ -11,6 +8,7 @@ function GameButton() {
     return (
         <button
             onClick={handleClick}
+            type="button"
             className="px-2 self-center justify-center border align-middle bg-wizard-purple rounded-lg text-white py-2 text-center inline-block text-4xl m-4 cursor-pointer shadow-sm"
         >
             {" "}

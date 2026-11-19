@@ -18,7 +18,7 @@
 }
 
 :root {
-    font: 18px / 145% GrapeSoda;
+    font: 18px / 145% GrapeSoda, serif;
     letter-spacing: 0.18px;
     color-scheme: light dark;
     color: var(--text);
@@ -82,7 +82,7 @@ body {
 
 h1,
 h2 {
-    font-family: KiwiSoda;
+    font-family: KiwiSoda serif;
     font-weight: 500;
     color: var(--text-h);
 }
@@ -105,12 +105,12 @@ h2 {
 }
 
 button {
-    font-family: GrapeSoda;
+    font-family: GrapeSoda serif;
 }
 
 code,
 .counter {
-    font-family: GrapeSoda;
+    font-family: GrapeSoda serif;
     display: inline-flex;
     border-radius: 4px;
     color: var(--text-h);

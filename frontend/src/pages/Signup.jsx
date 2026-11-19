@@ -1,4 +1,3 @@
-import React from "react"
 import { useState } from "react"
 
 function Form() {
@@ -28,14 +27,14 @@ function Form() {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (name == "" || email == "" || password == "" || passcheckstr == "") {
+        if (name === "" || email === "" || password === "" || passcheckstr === "") {
             setSubmitted(false)
             setError(true)
         } else {
             setSubmitted(true)
             setError(false)
         }
-        if (password == passcheckstr) {
+        if (password === passcheckstr) {
             setPassCheck(true)
         } else {
             setPassCheck(false)
@@ -74,7 +73,7 @@ function Form() {
                     id="name"
                     name="name"
                     required
-                    autoComplete="userName"
+                    autoComplete="username"
                     onChange={handleName}
                     value={name}
                 />

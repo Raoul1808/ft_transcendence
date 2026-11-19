@@ -1,4 +1,3 @@
-import React from "react"
 import { useState, useEffect } from "react"
 
 export const FriendApiFetch = () => {
@@ -34,13 +33,13 @@ export const FriendApiFetch = () => {
                     >
                         <img
                             className="opacity-70 rounded-lg h-auto object-contain max-w-1/1"
-                            src="https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg"
+                            src="https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg" alt=""
                         ></img>
                     </a>
                     <div className="flex flex-col h-1/1 justify-between pointer-events-none relative no-underline">
                         <div className="grid grid-cols-[minmax(min-content,auto)_1fr]">
                             <div className="items-center flex h-(--avatar-size)">
-                                <img src="./src/assets/Wizard.png"></img>
+                                <img src="./src/assets/Wizard.png" alt=""></img>
                             </div>
                         </div>
                         <div className="flex items-center justify-center h-(--avatar-size) bg-[rgba(0,0,0,0.5)]">

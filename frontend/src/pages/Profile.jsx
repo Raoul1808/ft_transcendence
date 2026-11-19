@@ -1,4 +1,3 @@
-import React from "react"
 import { FriendApiFetch } from "./Friends"
 
 const Profile = () => {
@@ -7,10 +6,11 @@ const Profile = () => {
             <div className="h-full relative flex flex-col w-1/1">
                 <div className="ppBackground rounded-2xl bg-[url(https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg)] relative bg-cover h-62.5 bg-position-[50%_center]">
                     <div className="bottom-2.5 grid justify-center absolute right-2.5 gap-2.5">
-                        <button className="items-center shadow-none inline-flex justify-center relative no-underline cursor-pointer h-8 w-8 bg-wizard-purple border-amber-500 border rounded-full">
+                        <button type="button" className="items-center shadow-none inline-flex justify-center relative no-underline cursor-pointer h-8 w-8 bg-wizard-purple border-amber-500 border rounded-full">
                             <img
                                 className="w-5 h-5 object-contain"
                                 src="../src/assets/pencil.png"
+                                alt=""
                             ></img>
                         </button>
                     </div>
@@ -20,6 +20,7 @@ const Profile = () => {
                         <img
                             className="w-full h-full object-cover"
                             src="./src/assets/Wizard.png"
+                            alt=""
                         ></img>
                     </div>
                     <div className="items-start flex flex-1 flex-col ml-5 min-w-0 shadow">
