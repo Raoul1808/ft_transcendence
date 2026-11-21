@@ -20,7 +20,7 @@ services:
       start_period: 5s
     restart: unless-stopped
   redis:
-    image: redis:7-alpine
+    image: redis:8-alpine
     networks:
       - tr-net
     healthcheck:

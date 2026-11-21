@@ -31,7 +31,7 @@ mod ws;
 
 pub use error::Error;
 
-async fn index() -> impl IntoResponse {
+async fn test_ws() -> impl IntoResponse {
     Html(include_str!("../static/wstest.html"))
 }
 
@@ -96,10 +96,10 @@ async fn main() -> io::Result<()> {
         .allow_methods(vec![Method::GET]);
 
     let app = Router::new()
-        .route("/", get(index))
+        .route("/test-ws", get(test_ws))
         .route("/ws", get(ws::websocket_handler))
         .nest("/api", api::build_router())
-        .nest_service("/public", ServeDir::new("static"))
+        .fallback_service(ServeDir::new("static"))
         .with_state(state)
         .layer(session_layer)
         .layer(cors)
