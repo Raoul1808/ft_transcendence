@@ -2,17 +2,12 @@ import { useState } from "react"
 
 function Form() {
     const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [submitted, setSubmitted] = useState(false)
     const [error, setError] = useState(false)
 
     const handleName = (e) => {
         setName(e.target.value)
-        setSubmitted(false)
-    }
-    const handleEmail = (e) => {
-        setEmail(e.target.value)
         setSubmitted(false)
     }
     const handlePassword = (e) => {
@@ -58,16 +53,6 @@ function Form() {
                     autoComplete="username"
                     onChange={handleName}
                     value={name}
-                />
-                <input
-                    className="m-0.5 p-1.5 text-xl bg-wizard-purple border-amber-300 border rounded-md"
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    autoComplete="email"
-                    onChange={handleEmail}
-                    value={email}
                 />
                 <input
                     className="m-0.5 p-1.5 text-xl bg-wizard-purple border-amber-300 border rounded-md"
