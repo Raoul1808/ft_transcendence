@@ -199,7 +199,7 @@ z_index = 2
 material = ExtResource("2_qjg4s")
 rotation = 1.5707964
 sprite_frames = SubResource("SpriteFrames_6skho")
-animation = &"6"
+animation = &"1"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1968293382]
 scale = Vector2(2, 2)

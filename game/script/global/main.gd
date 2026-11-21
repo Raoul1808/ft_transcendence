@@ -12,7 +12,7 @@ var map: PackedScene = load("res://scene/map/map.tscn")
 
 
 func end_game(b: bool):
-	print("pute")
+	game_state = "lobby"
 	p1_point = 0
 	p2_point = 0
 	get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").hide()

@@ -20,6 +20,8 @@ func display_map_prev():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	display_map_prev()
+	$CanvasLayer/not_client_info/player_connected/TextureRect.material = $CanvasLayer/not_client_info/player_connected/TextureRect.material.duplicate()
+	$CanvasLayer/not_client_info/player_connected/TextureRect.texture = $CanvasLayer/not_client_info/player_connected/TextureRect.texture.duplicate()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -29,6 +31,7 @@ func _process(_delta: float) -> void:
 		$CanvasLayer/not_client_info/waiting_for_player.hide()
 	if (Network.client_player_ins.player_id == 2):
 		$CanvasLayer/not_game_leader.show()
+		$CanvasLayer/not_client_info/player_connected.show()
 		$CanvasLayer/game_leader.hide()
 	else :
 		$CanvasLayer/not_game_leader.hide()
@@ -93,6 +96,13 @@ func _on_next_pal_pressed() -> void:
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
 	Network.client_player_ins.player_palette_id = player_palette_id
 	Network.client_player_ins.update_skin()
+	Network.send_text(JSON.stringify(
+				{
+					"type": "player_skin_update",
+					"pal": player_palette_id,
+					"skin_id": player_skin_id
+				}
+			))
 
 func _on_prev_pal_pressed() -> void:
 	player_palette_id -= 1
@@ -104,6 +114,13 @@ func _on_prev_pal_pressed() -> void:
 	$CanvasLayer/client_info/TextureRect.material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
 	Network.client_player_ins.player_palette_id = player_palette_id
 	Network.client_player_ins.update_skin()
+	Network.send_text(JSON.stringify(
+				{
+					"type": "player_skin_update",
+					"pal": player_palette_id,
+					"skin_id": player_skin_id
+				}
+			))
 
 func _on_next_pressed() -> void:
 	#print($CanvasLayer/client_info/TextureRect.texture.atlas)
@@ -121,6 +138,13 @@ func _on_next_pressed() -> void:
 	Network.client_player_ins.player_palette_id = player_palette_id
 	Network.client_player_ins.player_skin_id = player_skin_id
 	Network.client_player_ins.update_skin()
+	Network.send_text(JSON.stringify(
+				{
+					"type": "player_skin_update",
+					"pal": player_palette_id,
+					"skin_id": player_skin_id
+				}
+			))
 
 func _on_prev_pressed() -> void:
 	player_palette_id = 0
@@ -135,6 +159,13 @@ func _on_prev_pressed() -> void:
 	Network.client_player_ins.player_palette_id = player_palette_id
 	Network.client_player_ins.player_skin_id = player_skin_id
 	Network.client_player_ins.update_skin()
+	Network.send_text(JSON.stringify(
+				{
+					"type": "player_skin_update",
+					"pal": player_palette_id,
+					"skin_id": player_skin_id
+				}
+			))
 
 
 func _on_next_pal_mouse_entered() -> void:

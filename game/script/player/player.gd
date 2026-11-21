@@ -8,8 +8,8 @@ extends CharacterBody2D
 @export var bot : bool = false
 @export var player_id: int = 0
 
-@export var player_skin_id : int = 0
-@export var player_palette_id : int = 0
+var player_skin_id : int = 0
+var player_palette_id : int = 0
 
 #=======================================================================
 #weapon loot
@@ -62,10 +62,11 @@ func interact_with_loot_not_client():
 #============================================================================
 
 func update_skin():
+	print("update_skin")
 	#Network.client_player_ins.get_node("AnimatedSprite2D").
-	Network.client_player_ins.get_node("AnimatedSprite2D").material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][1]))
-	Network.client_player_ins.get_node("AnimatedSprite2D").material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][2]))
-	Network.client_player_ins.get_node("AnimatedSprite2D").material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
+	self.get_node("AnimatedSprite2D").material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][1]))
+	self.get_node("AnimatedSprite2D").material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][2]))
+	self.get_node("AnimatedSprite2D").material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
 
 #============================================================================
 #weapon management
@@ -172,6 +173,8 @@ func _ready() -> void:
 	else:
 		Network.set_client_player(self)
 		#player_id = Network.socket.
+	$AnimatedSprite2D.material = $AnimatedSprite2D.material.duplicate()
+	update_skin()
 
 #===========================================================================
 #network function
@@ -273,7 +276,7 @@ func bot_proc(_delta: float):
 	use_weapon()
 	
 func not_client_proc(_delta):
-	pass
+	$AnimatedSprite2D.play(str(1 + player_skin_id * 2))
 	
 func _physics_process(delta: float) -> void:
 	if client_player == true:
