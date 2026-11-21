@@ -1,9 +1,7 @@
 @import "tailwindcss";
 
-
 .UserCard {
     --avatar-size: 60px;
     --card-item-spacing: 10px;
     overflow: hidden;
 }
-

@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use axum::{http::StatusCode, response::IntoResponse};
 use thiserror::Error;
 
@@ -29,7 +31,7 @@ pub enum Error {
 }
 
 impl Error {
-    fn status_code(&self) -> StatusCode {
+    pub fn status_code(&self) -> StatusCode {
         match self {
             Self::NotFound => StatusCode::NOT_FOUND,
             Self::InvalidUsernameLength | Self::InvalidPasswordLength => StatusCode::BAD_REQUEST,
@@ -57,7 +59,9 @@ impl IntoResponse for Error {
             }
             _ => {}
         };
-        (self.status_code(), self.to_string()).into_response()
+        let mut response = (self.status_code(), self.to_string()).into_response();
+        response.extensions_mut().insert(Arc::new(self));
+        response
     }
 }
 

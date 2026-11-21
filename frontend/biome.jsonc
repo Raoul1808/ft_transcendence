@@ -13,6 +13,11 @@
         "indentStyle": "space",
         "indentWidth": 4
     },
+    "css": {
+        "parser": {
+            "tailwindDirectives": true
+        }
+    },
     "linter": {
         "enabled": true,
         "rules": {
