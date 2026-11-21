@@ -23,6 +23,7 @@ use tracing::info;
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
 mod api;
+mod auth;
 mod cache;
 mod db;
 mod error;

@@ -13,7 +13,7 @@ use serde::Deserialize;
 use tokio::sync::broadcast;
 use tower_sessions::Session;
 
-use crate::{AppState, RoomState, api::auth, cache, db};
+use crate::{AppState, RoomState, auth, cache, db};
 
 pub async fn websocket_handler(
     ws: WebSocketUpgrade,

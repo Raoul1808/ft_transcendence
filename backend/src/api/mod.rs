@@ -7,7 +7,6 @@ use axum::{
 
 use crate::AppState;
 
-// TODO: split routes and authentication structures and util code
 pub mod auth;
 mod game;
 
