@@ -107,6 +107,17 @@ func _process(_delta: float) -> void:
 			if (data["type"] == "end_round"):
 				Main.end_round(data["player_point"], false)
 			
+			if (data["type"] == "player_skin_update"):
+				not_client_player_ins.player_palette_id = int(data["pal"])
+				not_client_player_ins.player_skin_id = int(data["skin_id"])
+				not_client_player_ins.update_skin()
+				if (Main.game_state == "lobby"):
+					var tex_rec: TextureRect = get_tree().current_scene.get_node("menu").get_node("CanvasLayer").get_node("not_client_info").get_node("player_connected").get_node("TextureRect")
+					tex_rec.texture.atlas = load(PlayerSkin.player_skin[int(data["skin_id"])][0])
+					tex_rec.material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[int(data["skin_id"])][1][int(data["pal"])][1]))
+					tex_rec.material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[int(data["skin_id"])][1][int(data["pal"])][2]))
+					tex_rec.material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[int(data["skin_id"])][1][int(data["pal"])][3])
+			
 			if (data["type"] == "hitmarker"):
 				var hit = load("res://scene/item/hit_marker.tscn")
 				var hit_ins: Node2D = hit.instantiate()
