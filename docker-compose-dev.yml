@@ -1,9 +1,8 @@
+# TODO: REFINE DOCKER COMPOSE!!!
 
 services:
-  postgres-dev:
+  postgres:
     image: postgres:18
-    ports:
-      - "5432:5432"
     networks:
       - tr-devnet
     environment:
@@ -22,24 +21,22 @@ services:
       start_period: 5s
     restart: unless-stopped
 
-  backend-dev:
+  backend:
     build:
       context: backend
       dockerfile: Dockerfile-dev
     depends_on:
-      postgres-dev:
+      postgres:
         condition: service_healthy
-      redis-dev:
+      redis:
         condition: service_healthy
-    ports:
-      - "8080:8080"
     environment:
       RUST_LOG: debug
-      DB_HOST: postgres-dev
+      DB_HOST: postgres
       DB_USER: transcendence
       DB_NAME: transcendence
       DB_PASSWORD_FILE: /run/secrets/postgres_pass
-      REDIS_URL: redis://redis-dev:6379
+      REDIS_URL: redis://redis:6379
     networks:
       - tr-devnet
     secrets:
@@ -49,19 +46,17 @@ services:
       - cargo-cache:/usr/local/cargo/registry
       - target-cache:/app/target
     restart: unless-stopped
-  frontend-dev:
+  frontend:
     build:
       context: frontend
       dockerfile: Dockerfile-dev
-    ports:
-      - "5173:5173"
     networks:
       - tr-devnet
     volumes:
       - ./frontend:/app
       - node-cache:/app/node_modules
     restart: unless-stopped
-  redis-dev:
+  redis:
     image: redis:8-alpine
     networks:
       - tr-devnet
@@ -70,6 +65,21 @@ services:
       interval: 2s
       timeout: 3s
       retries: 15
+    restart: unless-stopped
+  nginx:
+    image: nginx
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - 8080:8080
+    volumes:
+      - ./nginx-conf.d:/etc/nginx/conf.d:ro
+    secrets:
+      - ssl_cert
+      - ssl_key
+    networks:
+      - tr-devnet
     restart: unless-stopped
 
 networks:
@@ -85,3 +95,7 @@ volumes:
 secrets:
   postgres_pass:
     file: ./secrets/postgres_pass.txt
+  ssl_cert:
+    file: ./secrets/ssl_cert.pem
+  ssl_key:
+    file: ./secrets/ssl_key.pem
