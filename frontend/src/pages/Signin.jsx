@@ -4,44 +4,52 @@ function Form() {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [submitted, setSubmitted] = useState(false)
-    const [error, setError] = useState(false)
+    const [error, setError] = useState("")
 
-    const handleName = (e) => {
-        setName(e.target.value)
-        setSubmitted(false)
-    }
-    const handlePassword = (e) => {
-        setPassword(e.target.value)
-        setSubmitted(false)
-    }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if (name === "" || email === "" || password === "") {
+        if (name === "" || password === "") {
             setSubmitted(false)
-            setError(true)
-        } else {
-            setSubmitted(true)
-            setError(false)
+            setError("Please fill all the fields properly!")
+            return
         }
-    }
+        setError("")
 
-    const SuccessMessage = () => {
-        if (submitted) {
-            return <div>Success!</div>
-        }
-    }
+        try {
+            const response = await fetch("/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: name, password: password }),
+            })
+            console.log(response)
+            if (response.ok) {
+                setSubmitted(true)
+                return
+            }
 
-    const ErrorMessage = () => {
-        if (error) {
-            return <div>Please fill all the fields!</div>
+            if (response.status === 401) {
+                setError("Username or password is wrong :(")
+            } else {
+                const data = await response.json.catch(() => ({}))
+                setError(
+                    data.message ||
+                        data.error ||
+                        `Server error: (${response.status})`,
+                )
+            }
+            setSubmitted(false)
+        } catch (err) {
+            console.log(err)
+            setError("Can't connect to server, check your internet!")
+            setSubmitted(false)
         }
     }
 
     return (
         <>
             <div>
-                <SuccessMessage />
-                <ErrorMessage />
+                {submitted && <div>Success!</div>}
+                {error && <div>{error}</div>}
             </div>
             <form className="grid justify-center items-center">
                 <input
@@ -51,7 +59,10 @@ function Form() {
                     name="name"
                     required
                     autoComplete="username"
-                    onChange={handleName}
+                    onChange={(e) => {
+                        setName(e.target.value)
+                        setSubmitted(false)
+                    }}
                     value={name}
                 />
                 <input
@@ -61,7 +72,10 @@ function Form() {
                     name="password"
                     required
                     autoComplete="current-password"
-                    onChange={handlePassword}
+                    onChange={(e) => {
+                        setPassword(e.target.value)
+                        setSubmitted(false)
+                    }}
                     value={password}
                 />
                 <button

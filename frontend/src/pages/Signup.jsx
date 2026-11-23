@@ -5,7 +5,7 @@ function Form() {
     const [password, setPassword] = useState("")
     const [passcheckstr, setPassCheckStr] = useState("")
     const [submitted, setSubmitted] = useState(false)
-    const [error, setError] = useState(false)
+    const [error, setError] = useState("")
 
     const passwordTooShort = password.length > 0 && password.length < 8
     const passwordsDoNotMatch =
@@ -22,10 +22,10 @@ function Form() {
         ) {
             setSubmitted(false)
             setPassCheck(password === passcheckstr)
-            setError(true)
+            setError("Please fill all the fields properly!")
             return
         }
-        setError(false)
+        setError("")
 
         try {
             const response = await fetch("/api/register", {
@@ -35,17 +35,27 @@ function Form() {
             })
 
             console.log(response)
-            const _data = await response.json()
             if (response.ok) {
-                alert("success!")
                 setSubmitted(true)
-            } else {
-                alert("oh oh :(")
-                setSubmitted(false)
+                return
             }
-        } catch (error) {
-            console.log(error)
-            alert("couldn't send")
+
+            if (response.status === 400) {
+                setError("Invalid registration request, check your inputs!")
+            } else if (response.status === 409) {
+                setError("Username already taken!")
+            } else {
+                const data = await response.json().catch(() => ({}))
+                setError(
+                    data.message ||
+                        data.error ||
+                        `Server error: (${response.status})`,
+                )
+            }
+            setSubmitted(false)
+        } catch (err) {
+            console.log(err)
+            setError("Can't connect to server, check your internet!")
             setSubmitted(false)
         }
     }
@@ -54,7 +64,7 @@ function Form() {
         <>
             <div>
                 {submitted && <div>Success!</div>}
-                {error && <div>Please fill all the fields!</div>}
+                {error && <div>{error}</div>}
                 {passwordTooShort && (
                     <div>Password must be at least 8 characters...</div>
                 )}
