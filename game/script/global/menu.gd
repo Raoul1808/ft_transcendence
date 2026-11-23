@@ -85,6 +85,14 @@ func _on_map_2_mouse_exited() -> void:
 	$CanvasLayer/game_leader/map_select/map2/AnimatedSprite2D.play("in")
 	$CanvasLayer/game_leader/map_select/map2/AnimatedSprite2D.frame = 0
 
+func _on_forest_2_mouse_entered() -> void:
+	$CanvasLayer/game_leader/map_select/forest2/AnimatedSprite2D.play("out")
+	$CanvasLayer/game_leader/map_select/forest2/AnimatedSprite2D.frame = 0
+	
+func _on_forest_2_mouse_exited() -> void:
+	$CanvasLayer/game_leader/map_select/forest2/AnimatedSprite2D.play("in")
+	$CanvasLayer/game_leader/map_select/forest2/AnimatedSprite2D.frame = 0
+
 
 func _on_next_pal_pressed() -> void:
 	player_palette_id += 1

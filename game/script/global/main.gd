@@ -52,6 +52,8 @@ func end_round(point: int, b: bool):
 
 func start_game(b: bool):
 	game_state = "in_game"
+	for child in get_tree().current_scene.get_node("body").get_children():
+		child.free()
 	round = 1
 	if (b):
 		Network.send_text(JSON.stringify(
@@ -64,6 +66,9 @@ func start_game(b: bool):
 	start_round(b)
 
 func start_round(b: bool):
+	Network.client_player_ins.show()
+	if (not Network.not_client_player_ins == null):
+		Network.not_client_player_ins.show()
 	#load map
 	var map_ins = map.instantiate()
 	get_tree().current_scene.get_node("map_container").add_child(map_ins)
