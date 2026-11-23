@@ -6,15 +6,29 @@ var player_palette_id : int = 0;
 func display_map_prev():
 	var cell;
 	var i = 2
+	var id_property = 0;
+	var id_node = 0;
 	for clear in get_tree().current_scene.get_node("menu").get_node("CanvasLayer").get_node("game_leader").get_node("map_select").get_node("map_preview").get_children():
 		clear.free()
-	for t in range(2, Main.map.get_state().get_node_property_value(2, i).size(), 12):
+	for id in Main.map.get_state().get_node_count():
+		id_node = id
+		if (Main.map.get_state().get_node_name(id_node) == "Wall"):
+				break
+	for id in Main.map.get_state().get_node_property_count(id_node):
+		id_property = id
+		if (Main.map.get_state().get_node_property_name(id_node, id_property) == "tile_map_data"):
+				break
+	#print(Main.map.get_state().get_node_property_name(id_node, id_property), " hey ", Main.map.get_state().get_node_property_value(id_node, id_property))
+	##//Main.map.get_state().get_node
+	
+	
+	for t in range(2, Main.map.get_state().get_node_property_value(id_node, id_property).size(), 12):
 		cell = ColorRect.new()
 		cell.size = Vector2(10, 10)
 		cell.color = Color(0.155, 0.377, 0.092, 1.0)
-		if (Main.map.get_state().get_node_property_value(2, i)[t + 4] == 0):
+		if (Main.map.get_state().get_node_property_value(id_node, id_property)[t + 4] == 0):
 			cell.color = Color(0.04, 0.054, 0.022, 1.0)
-		cell.position = Vector2(10 * Main.map.get_state().get_node_property_value(2, i)[t], 10 * Main.map.get_state().get_node_property_value(2, i)[t + 2])
+		cell.position = Vector2(10 * Main.map.get_state().get_node_property_value(id_node, id_property)[t], 10 * Main.map.get_state().get_node_property_value(id_node, id_property)[t + 2])
 		get_tree().current_scene.get_node("menu").get_node("CanvasLayer").get_node("game_leader").get_node("map_select").get_node("map_preview").add_child(cell)
 
 # Called when the node enters the scene tree for the first time.

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bdhf3giuh3ys0"]
 
 [ext_resource type="Script" uid="uid://cbp20bsxwbdb6" path="res://script/player/player.gd" id="1_cm2cf"]
+[ext_resource type="Texture2D" uid="uid://xblgitniscvw" path="res://assets/img/playerlight.png" id="2_1wtbu"]
 [ext_resource type="Texture2D" uid="uid://iqmyals4g0lj" path="res://assets/img/wizard.png" id="2_cm2cf"]
 [ext_resource type="Material" uid="uid://chswoisor8c3c" path="res://assets/shader/player_palettes.tres" id="2_qjg4s"]
 [ext_resource type="Texture2D" uid="uid://bgh74xiwh7jdg" path="res://assets/img/saruman.png" id="4_oypl4"]
@@ -185,6 +186,11 @@ script = ExtResource("1_cm2cf")
 energy = 0.34
 texture = SubResource("GradientTexture2D_6skho")
 texture_scale = 1.92
+
+[node name="PointLight2D" type="PointLight2D" parent="PointLight2D" unique_id=315979277]
+shadow_enabled = true
+shadow_item_cull_mask = 5
+texture = ExtResource("2_1wtbu")
 
 [node name="hand" type="Marker2D" parent="." unique_id=512112398]
 position = Vector2(6, 17.5)
