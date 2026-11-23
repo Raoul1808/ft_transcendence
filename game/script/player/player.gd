@@ -307,6 +307,11 @@ func get_hit(dmg: int, b: bool):
 	healt -= dmg
 	if (healt <= 0):
 		healt = 0
+		hide()
+		var body: PackedScene = load("res://scene/player/dead_body.tscn")
+		var body_ins: Node2D = body.instantiate()
+		body_ins.global_position = global_position
+		get_tree().current_scene.get_node("body").add_child(body_ins)
 	$healthbar/Sprite2D.scale.x = healt / 100
 	$healthbar/Sprite2D2.position.x = -192 + (healt * 192 * 2)/100
 	$healthbar/Label.text = type_convert(type_convert(healt, TYPE_INT), TYPE_STRING) + "%"

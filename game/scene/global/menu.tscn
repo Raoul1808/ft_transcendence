@@ -40,7 +40,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t8b78")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"in",
 "speed": 5.0
 }, {
@@ -54,7 +54,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_u82at")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"out",
 "speed": 5.0
 }]
@@ -243,7 +243,7 @@ flat = true
 z_index = -1
 material = SubResource("ShaderMaterial_u82at")
 sprite_frames = SubResource("SpriteFrames_2m5q5")
-animation = &"out"
+animation = &"in"
 centered = false
 offset = Vector2(-10, -16)
 
@@ -533,6 +533,8 @@ vertical_alignment = 1
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/game_leader/map_select/forest2" to="." method="_on_forest_2_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/game_leader/map_select/forest2" to="." method="_on_forest_2_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/map_select/forest2" to="." method="_on_forest_2_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_exited"]
