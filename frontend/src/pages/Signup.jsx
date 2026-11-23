@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Form() {
     const [name, setName] = useState("")
@@ -10,6 +11,7 @@ function Form() {
     const passwordTooShort = password.length > 0 && password.length < 8
     const passwordsDoNotMatch =
         passcheckstr.length > 0 && password !== passcheckstr
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -37,6 +39,7 @@ function Form() {
             console.log(response)
             if (response.ok) {
                 setSubmitted(true)
+                navigate("/signin")
                 return
             }
 

@@ -1,10 +1,13 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Form() {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [submitted, setSubmitted] = useState(false)
     const [error, setError] = useState("")
+
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -24,6 +27,7 @@ function Form() {
             console.log(response)
             if (response.ok) {
                 setSubmitted(true)
+                navigate("/Profile")
                 return
             }
 

@@ -1,6 +1,39 @@
+import { useState, useEffect } from "react"
 import { FriendApiFetch } from "./Friends"
 
 const Profile = () => {
+
+    const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState("")
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const response = await fetch("/api/me", {
+                    method: "GET",
+                    cretendials: "include",
+                });
+
+                if (response.ok){
+                    const data = await response.json();
+                    setUser(data);
+                } else {
+                    setError ("Please sign-in to see your profile!")
+                }
+            } catch (err) {
+                console.log(err)
+                setError("Profile couldn't loaad, try again later :(")
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchProfile();
+    },[]);
+
+    if (loading) return (<div>Please wait...</div>)
+    if (error) return (<div>{error}</div>)
+
     return (
         <div className="self-center mx-auto max-w-5xl w-1/1 h-92/100 flex-[0_0_auto] bg-[rgba(0,0,0,0.5)]">
             <div className="h-full relative flex flex-col w-1/1">
@@ -28,7 +61,7 @@ const Profile = () => {
                     </div>
                     <div className="items-start flex flex-1 flex-col ml-5 min-w-0 shadow">
                         <h1 className="object-contain items-center font-medium relative text-3xl m-[-5px_0_0] max-w-1/1 p-0">
-                            Wizard
+                            {user.username}
                         </h1>
                     </div>
                 </div>
