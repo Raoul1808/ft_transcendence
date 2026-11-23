@@ -23,7 +23,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             <ul className="flex items-center">
                 <li className="py-2 pl-2">
                     <Link to="/">
-                        <img src="./src/assets/wizard.svg" alt="" />
+                        <img src="./src/assets/Wizard.png" alt="" />
                     </Link>
                 </li>
                 <li className="p-[8px_30px] font-kiwi-soda text-white hover:text-gray-300">

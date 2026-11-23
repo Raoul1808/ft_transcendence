@@ -32,8 +32,8 @@ export const FriendApiFetch = () => {
                         href="/Profile"
                     >
                         <img
-                            className="opacity-70 rounded-lg h-auto object-contain max-w-1/1"
-                            src="https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg"
+                            className="opacity-70 rounded-lg h-auto object-contain max-w-1/1 [image-rendering:pixelated]"
+                            src="./src/assets/ducking_wizard.png"
                             alt=""
                         ></img>
                     </a>

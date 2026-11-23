@@ -36,7 +36,7 @@ const Profile = () => {
     return (
         <div className="self-center mx-auto max-w-5xl w-1/1 h-92/100 flex-[0_0_auto] bg-[rgba(0,0,0,0.5)]">
             <div className="h-full relative flex flex-col w-1/1">
-                <div className="ppBackground rounded-2xl bg-[url(https://i.pinimg.com/736x/61/18/63/61186384137b2dcc3cc4b3445c7aea25.jpg)] relative bg-cover h-62.5 bg-position-[50%_center]">
+                <div className="ppBackground rounded-2xl bg-[url(./src/assets/ducking_wizard.png)] [image-rendering:pixelated] relative bg-cover h-62.5 bg-position-[50%_center]">
                     <div className="bottom-2.5 grid justify-center absolute right-2.5 gap-2.5">
                         <button
                             type="button"
