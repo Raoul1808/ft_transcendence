@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://pxi5l7suca2e"]
+
+[ext_resource type="Shader" uid="uid://cfmlxhltmv21j" path="res://assets/shader/palette_normal_map_multiside.tres" id="1_nyty2"]
+[ext_resource type="Texture2D" uid="uid://0frn174aqjr8" path="res://assets/palette/map/palette_plant_rev2.png" id="2_pf6h2"]
+[ext_resource type="Texture2D" uid="uid://l53dgjtb8j54" path="res://assets/palette/map/palette_plant.png" id="3_mr7on"]
+
+[resource]
+shader = ExtResource("1_nyty2")
+shader_parameter/original_palettes = ExtResource("3_mr7on")
+shader_parameter/new_palettes = ExtResource("3_mr7on")
+shader_parameter/colors_counts = 17
+shader_parameter/normalmap = ExtResource("2_pf6h2")
+shader_parameter/side = Vector4(0, 0, 0, 0)
+shader_parameter/size = Vector2(96, 192)
+shader_parameter/rotate = Vector3(0, 0, 0)
