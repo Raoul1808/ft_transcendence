@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function Form() {
+function Form({ onLoginSuccess }) {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [passcheckstr, setPassCheckStr] = useState("")
@@ -11,7 +11,7 @@ function Form() {
     const passwordTooShort = password.length > 0 && password.length < 8
     const passwordsDoNotMatch =
         passcheckstr.length > 0 && password !== passcheckstr
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -39,6 +39,7 @@ function Form() {
             console.log(response)
             if (response.ok) {
                 setSubmitted(true)
+                if (onLoginSuccess) onLoginSuccess()
                 navigate("/signin")
                 return
             }
@@ -127,13 +128,13 @@ function Form() {
     )
 }
 
-function Signup() {
+function Signup({ onLoginSuccess }) {
     return (
         <div className="grid justify-center items-center">
             <div>
                 <h1 className="text-5xl">User Sign-up</h1>
             </div>
-            <Form />
+            <Form onLoginSuccess={onLoginSuccess} />
         </div>
     )
 }

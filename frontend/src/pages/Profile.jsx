@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import { FriendApiFetch } from "./Friends"
 
 const Profile = () => {
-
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
@@ -13,13 +12,13 @@ const Profile = () => {
                 const response = await fetch("/api/me", {
                     method: "GET",
                     cretendials: "include",
-                });
+                })
 
-                if (response.ok){
-                    const data = await response.json();
-                    setUser(data);
+                if (response.ok) {
+                    const data = await response.json()
+                    setUser(data)
                 } else {
-                    setError ("Please sign-in to see your profile!")
+                    setError("Please sign-in to see your profile!")
                 }
             } catch (err) {
                 console.log(err)
@@ -28,11 +27,11 @@ const Profile = () => {
                 setLoading(false)
             }
         }
-        fetchProfile();
-    },[]);
+        fetchProfile()
+    }, [])
 
-    if (loading) return (<div>Please wait...</div>)
-    if (error) return (<div>{error}</div>)
+    if (loading) return <div>Please wait...</div>
+    if (error) return <div>{error}</div>
 
     return (
         <div className="self-center mx-auto max-w-5xl w-1/1 h-92/100 flex-[0_0_auto] bg-[rgba(0,0,0,0.5)]">

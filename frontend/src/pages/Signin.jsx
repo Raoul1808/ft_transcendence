@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function Form() {
+function Form({ onLoginSuccess }) {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [submitted, setSubmitted] = useState(false)
@@ -27,6 +27,7 @@ function Form() {
             console.log(response)
             if (response.ok) {
                 setSubmitted(true)
+                if (onLoginSuccess) onLoginSuccess()
                 navigate("/Profile")
                 return
             }
@@ -94,13 +95,13 @@ function Form() {
     )
 }
 
-function Signin() {
+function Signin({ onLoginSuccess }) {
     return (
         <div className="grid justify-center items-center">
             <div>
                 <h1 className="text-5xl">User Sign-in</h1>
             </div>
-            <Form />
+            <Form onLoginSuccess={onLoginSuccess} />
         </div>
     )
 }
