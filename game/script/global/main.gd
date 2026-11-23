@@ -10,6 +10,13 @@ var infinit_time = 0
 
 var map: PackedScene = load("res://scene/map/map.tscn")
 
+var timer: Timer
+var timer_label
+var can_move = false
+
+func _ready() -> void:
+	timer = get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").get_node("timer").get_node("Timer")
+	timer_label = get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").get_node("timer")
 
 func end_game(b: bool):
 	game_state = "lobby"
@@ -20,8 +27,6 @@ func end_game(b: bool):
 
 func end_round(point: int, b: bool):
 	#del map
-	get_tree().current_scene.get_node("map_container").get_node("map").free()
-	
 	#check point
 	if (point == 1):
 		p1_point += 1
@@ -34,6 +39,12 @@ func end_round(point: int, b: bool):
 				"player_point": point
 			}
 		))
+	can_move = false
+	timer.start()
+	timer_label.show()
+	await timer.timeout
+	timer_label.hide()
+	get_tree().current_scene.get_node("map_container").get_node("map").free()
 	if (p1_point == 2 || p2_point == 2):
 		end_game(b)
 	else:
@@ -69,3 +80,8 @@ func start_round(b: bool):
 		Network.not_client_player_ins.healt = 100.0
 		Network.not_client_player_ins.get_node("healthbar").get_node("Sprite2D").scale.x = 1
 		Network.not_client_player_ins.unequip_weapon()
+	timer.start()
+	timer_label.show()
+	await timer.timeout
+	timer_label.hide()
+	can_move = true

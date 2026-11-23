@@ -197,18 +197,19 @@ func client_physic_proc(_delta):
 	#======================================================================================
 	if not Input.is_action_pressed("move"):
 		$AnimatedSprite2D.play(str(1 + player_skin_id * 2))
-	if Input.is_action_pressed("up"):
-		vel.y -= 1
-		$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
-	if Input.is_action_pressed("down"):
-		vel.y += 1
-		$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
-	if Input.is_action_pressed("right"):
-		vel.x += 1
-		$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
-	if Input.is_action_pressed("left"):
-		vel.x -= 1
-		$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
+	if (Main.can_move == true):
+		if Input.is_action_pressed("up"):
+			vel.y -= 1
+			$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
+		if Input.is_action_pressed("down"):
+			vel.y += 1
+			$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
+		if Input.is_action_pressed("right"):
+			vel.x += 1
+			$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
+		if Input.is_action_pressed("left"):
+			vel.x -= 1
+			$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
 	
 	if vel.length() >= 1:
 		vel = vel.normalized()
@@ -243,14 +244,15 @@ func client_proc(delta):
 	#======================================================================================
 	#ACTION
 	#======================================================================================
-	if Input.is_action_just_pressed("shoot"):
-		use_weapon()
-	if Input.is_action_just_pressed("loot"):
-		GlobalEvent.map_action.emit(global_position, $".")
-	if (Input.is_action_just_pressed("drop_weapon")):
-		drop_weapon()
-	interact_with_loot()
-	#get_node()
+	if (Main.can_move == true):
+		if Input.is_action_just_pressed("shoot"):
+			use_weapon()
+		if Input.is_action_just_pressed("loot"):
+			GlobalEvent.map_action.emit(global_position, $".")
+		if (Input.is_action_just_pressed("drop_weapon")):
+			drop_weapon()
+		interact_with_loot()
+
 	#======================================================================================
 	#NETWORK REGULAR UPDATE
 	#======================================================================================

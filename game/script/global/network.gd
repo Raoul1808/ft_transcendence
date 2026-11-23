@@ -107,6 +107,14 @@ func _process(_delta: float) -> void:
 			if (data["type"] == "end_round"):
 				Main.end_round(data["player_point"], false)
 			
+			if (data["type"] == "map_change"):
+				if (data["map"] == "map_1"):
+					Main.map = load("res://scene/map/map.tscn")
+				elif (data["map"] == "map_2"):
+					Main.map = load("res://scene/map/map_2.tscn")
+				elif (data["map"] == "forest2"):
+					Main.map = load("res://scene/map/forest_2.tscn")
+			
 			if (data["type"] == "player_skin_update"):
 				not_client_player_ins.player_palette_id = int(data["pal"])
 				not_client_player_ins.player_skin_id = int(data["skin_id"])

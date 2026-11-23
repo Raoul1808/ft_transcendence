@@ -213,13 +213,25 @@ func _on_prev_mouse_exited() -> void:
 
 func _on_map_1_pressed() -> void:
 	Main.map = load("res://scene/map/map.tscn")
+	Network.send_text(JSON.stringify(
+		{"type": "map_change",
+		"map": "map_1"}
+	))
 	display_map_prev()
 
 func _on_map_2_pressed() -> void:
 	Main.map = load("res://scene/map/map_2.tscn")
+	Network.send_text(JSON.stringify(
+		{"type": "map_change",
+		"map": "map_2"}
+	))
 	display_map_prev()
 
 
 func _on_forest_2_pressed() -> void:
 	Main.map = load("res://scene/map/forest_2.tscn")
+	Network.send_text(JSON.stringify(
+		{"type": "map_change",
+		"map": "forest2"}
+	))
 	display_map_prev()

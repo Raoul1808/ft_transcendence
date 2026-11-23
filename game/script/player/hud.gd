@@ -20,6 +20,7 @@ func _process(_delta: float) -> void:
 	$CanvasLayer/Control2/healthbar/Sprite2D2.scale.x = $CanvasLayer/Control2/healthbar/Timer.time_left * health_to_remove / 100
 	health_to_remove *= $CanvasLayer/Control2/healthbar/Timer.time_left
 	#print(Network.client_player_ins.healt)
+	$CanvasLayer/timer.text = str(int(floor($CanvasLayer/timer/Timer.time_left)))
 
 
 func healthbar_(dmg: int):
