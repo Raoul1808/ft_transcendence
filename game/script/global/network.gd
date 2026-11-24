@@ -101,6 +101,10 @@ func _process(_delta: float) -> void:
 				get_tree().current_scene.get_node("menu").get_node("CanvasLayer").hide()
 				get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").show()
 			
+			if (data["type"] == "door_open"):
+				print("rcv door open")
+				get_tree().current_scene.get_node("map_container").get_node("map").interact_map(Vector2(float(data["pos"][0]), float(data["pos"][1])), Network.not_client_player_ins, false)
+			
 			#if (data["type"] == "start_round"):
 			#	Main.start_round(false)
 			

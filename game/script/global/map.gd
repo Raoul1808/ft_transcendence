@@ -29,11 +29,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func interact_map(pos: Vector2, sender : Node2D):
+func interact_map(pos: Vector2, sender : Node2D, b: bool):
 	#======================================================================================
 	#DOOR Interaction
 	#======================================================================================
-
 	if ($Wall.get_cell_source_id(pos/64) == 0 && sender.name == "RayBullet"):
 		if ($Wall.get_cell_tile_data(pos/64).get_custom_data("door")):
 			if ($Wall.get_cell_tile_data(pos/64).get_custom_data("open")):
@@ -47,8 +46,17 @@ func interact_map(pos: Vector2, sender : Node2D):
 			if ($Wall.get_cell_source_id(i) == 0):
 				if ($Wall.get_cell_tile_data(i).get_custom_data("door")):
 					if ($Wall.get_cell_tile_data(i).get_custom_data("open")):
+						print("map interations 1")
 						$Wall.set_cell(i, 0, Vector2i(1, 0), $Wall.get_cell_alternative_tile(i))
 						$Wall.set_cells_terrain_connect([i], 0, 1, true)
 					else:
+						print("map interations 2")
 						$Wall.set_cell(i, 0, Vector2i(1, 1), $Wall.get_cell_alternative_tile(i))
 						$Wall.set_cells_terrain_connect([i], 0, 2, true)
+	if (b):
+		Network.send_text(JSON.stringify(
+			{
+				"type": "door_open",
+				"pos": [pos.x, pos.y]
+			}
+		))

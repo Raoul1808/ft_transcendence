@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://iqmyals4g0lj" path="res://assets/img/wizard.png" id="2_cm2cf"]
 [ext_resource type="Material" uid="uid://chswoisor8c3c" path="res://assets/shader/player_palettes.tres" id="2_qjg4s"]
 [ext_resource type="Texture2D" uid="uid://bgh74xiwh7jdg" path="res://assets/img/saruman.png" id="4_oypl4"]
-[ext_resource type="Texture2D" uid="uid://bnmsyd1c53hse" path="res://assets/img/radagast.png" id="5_qjg4s"]
+[ext_resource type="Texture2D" uid="uid://ilt30h05yggp" path="res://assets/img/mage.png" id="6_1wtbu"]
 [ext_resource type="Texture2D" uid="uid://bcihvvby2amxw" path="res://assets/img/heathbar-1.png" id="8_oypl4"]
 [ext_resource type="Texture2D" uid="uid://cmqi0xnubjtp1" path="res://assets/img/heathbar-2.png" id="9_pisg7"]
 [ext_resource type="FontFile" uid="uid://btrepff1y83ma" path="res://assets/font/KiwiSoda.ttf" id="10_oypl4"]
@@ -48,16 +48,24 @@ atlas = ExtResource("4_oypl4")
 region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5g408"]
-atlas = ExtResource("5_qjg4s")
+atlas = ExtResource("6_1wtbu")
 region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sc4n2"]
-atlas = ExtResource("5_qjg4s")
-region = Rect2(0, 0, 64, 64)
+atlas = ExtResource("6_1wtbu")
+region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lrcci"]
-atlas = ExtResource("5_qjg4s")
-region = Rect2(64, 0, 64, 64)
+atlas = ExtResource("6_1wtbu")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fspl2"]
+atlas = ExtResource("6_1wtbu")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eeiom"]
+atlas = ExtResource("6_1wtbu")
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6skho"]
 animations = [{
@@ -113,6 +121,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lrcci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fspl2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eeiom")
 }],
 "loop": 1,
 "name": &"6",
@@ -206,6 +220,8 @@ material = ExtResource("2_qjg4s")
 rotation = 1.5707964
 sprite_frames = SubResource("SpriteFrames_6skho")
 animation = &"6"
+frame = 3
+frame_progress = 0.7456304
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1968293382]
 scale = Vector2(2, 2)
