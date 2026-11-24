@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cl4s0msqfud6k"]
+
+[ext_resource type="Shader" uid="uid://cvkasoxh3nfx8" path="res://assets/shader/map_plant_bush.gdshader" id="1_xjlba"]
+[ext_resource type="Texture2D" uid="uid://davp2m57rllro" path="res://assets/palette/map/plant_hight_map.png" id="2_k427m"]
+[ext_resource type="Texture2D" uid="uid://d3dlklhw5e6qd" path="res://assets/palette/map/palette_plant.png" id="3_nonyd"]
+
+[resource]
+shader = ExtResource("1_xjlba")
+shader_parameter/original_palettes = ExtResource("3_nonyd")
+shader_parameter/new_palettes = ExtResource("3_nonyd")
+shader_parameter/colors_counts = 34
+shader_parameter/high_map = ExtResource("2_k427m")
+shader_parameter/side = Vector4(0, 0, 0, 0)
+shader_parameter/size = Vector2(128, 192)
+shader_parameter/rotate = Vector3(0, 1, 0)

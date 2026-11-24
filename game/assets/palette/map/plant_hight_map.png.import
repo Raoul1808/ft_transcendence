@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgvswy83k1bbd"
-path="res://.godot/imported/palette_plant_red.png-36e4788fcb21873c65ddf19ee2e65636.ctex"
+uid="uid://davp2m57rllro"
+path="res://.godot/imported/plant_hight_map.png-0814b5662827c13da8fc8505ee5ee11a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/palette/map/palette_plant_red.png"
-dest_files=["res://.godot/imported/palette_plant_red.png-36e4788fcb21873c65ddf19ee2e65636.ctex"]
+source_file="res://assets/palette/map/plant_hight_map.png"
+dest_files=["res://.godot/imported/plant_hight_map.png-0814b5662827c13da8fc8505ee5ee11a.ctex"]
 
 [params]
 

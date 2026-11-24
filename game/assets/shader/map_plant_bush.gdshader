@@ -1,8 +1,13 @@
 shader_type canvas_item;
 #include "palette_inc.gdshaderinc"
+#include "normal_map_inc.gdshaderinc"
 uniform sampler2D original_palettes;
 uniform sampler2D new_palettes;
 uniform int colors_counts;
+uniform sampler2D high_map;
+uniform vec4 side;
+uniform vec2 size;
+uniform vec3 rotate;
 
 void vertex() {
 	// Called for every vertex the material is visible on.
@@ -18,7 +23,9 @@ void vertex() {
 
 void fragment() {
 	// Called for every pixel the material is visible on.
-	COLOR = sawp(original_palettes, new_palettes, colors_counts, COLOR);
+	//COLOR = vec4(normal_map(original_palettes, high_map, colors_counts, COLOR, UV, side, size, rotate), COLOR[3]);
+	COLOR = swap(original_palettes, new_palettes, colors_counts, COLOR);
+	NORMAL_MAP = normal_map(original_palettes, high_map, colors_counts, COLOR, UV, side, size, rotate);
 }
 
 //void light() {
