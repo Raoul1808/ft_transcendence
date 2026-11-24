@@ -198,13 +198,31 @@ script = ExtResource("1_cm2cf")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1202083955]
 energy = 0.34
+shadow_enabled = true
+shadow_item_cull_mask = 13
 texture = SubResource("GradientTexture2D_6skho")
 texture_scale = 1.92
 
-[node name="PointLight2D" type="PointLight2D" parent="PointLight2D" unique_id=315979277]
+[node name="PointLight2D" type="PointLight2D" parent="PointLight2D" unique_id=1751405461]
+energy = 0.34
+range_item_cull_mask = 8
+shadow_enabled = true
+shadow_item_cull_mask = 13
+texture = SubResource("GradientTexture2D_6skho")
+texture_scale = 1.92
+height = 512.0
+
+[node name="playerlight" type="PointLight2D" parent="PointLight2D" unique_id=315979277]
 shadow_enabled = true
 shadow_item_cull_mask = 5
 texture = ExtResource("2_1wtbu")
+
+[node name="bushlight" type="PointLight2D" parent="PointLight2D" unique_id=2079888482]
+range_item_cull_mask = 8
+shadow_enabled = true
+shadow_item_cull_mask = 13
+texture = ExtResource("2_1wtbu")
+height = 512.0
 
 [node name="hand" type="Marker2D" parent="." unique_id=512112398]
 position = Vector2(6, 17.5)

@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cpk2gr0imfslw"]
+
+[ext_resource type="Shader" uid="uid://bfh1qujb0gdn5" path="res://assets/shader/map_plant_grass.gdshader" id="1_kn0qa"]
+[ext_resource type="Texture2D" uid="uid://davp2m57rllro" path="res://assets/palette/map/plant_hight_map.png" id="2_1mxmq"]
+[ext_resource type="Texture2D" uid="uid://d3dlklhw5e6qd" path="res://assets/palette/map/palette_plant.png" id="3_yytkw"]
+
+[resource]
+shader = ExtResource("1_kn0qa")
+shader_parameter/original_palettes = ExtResource("3_yytkw")
+shader_parameter/new_palettes = ExtResource("3_yytkw")
+shader_parameter/colors_counts = 34
+shader_parameter/high_map = ExtResource("2_1mxmq")
+shader_parameter/side = Vector4(0, 0, 0, 0)
+shader_parameter/size = Vector2(128, 192)
+shader_parameter/rotate = Vector3(0, 1, 0)

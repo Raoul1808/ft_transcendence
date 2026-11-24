@@ -12,7 +12,7 @@ void vertex() {
 void fragment() {
 	// Called for every pixel the material is visible on.
 	if (health / 100.0 < UV.x)
-		COLOR = sawp(original_palettes, new_palettes, colors_counts, COLOR);
+		COLOR = swap(original_palettes, new_palettes, colors_counts, COLOR);
 }
 
 //void light() {
