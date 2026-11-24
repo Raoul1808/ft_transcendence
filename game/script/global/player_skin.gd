@@ -11,10 +11,9 @@ var wizard_palette = [
 	["Blue Wizard", "res://assets/palette/player/wizard_palette.png", "res://assets/palette/player/wizard_palette_blue.png", 8]
 ]
 
-var radagast_palette = [
-	["radagast the brown", "res://assets/palette/player/wizard_palette.png", "res://assets/palette/player/radagast_palette.png", 8],
-	["radagast the green", "res://assets/palette/player/wizard_palette.png", "res://assets/palette/player/radagast_palette_alt1.png", 8],
-	["radagast the crimson", "res://assets/palette/player/wizard_palette.png", "res://assets/palette/player/radagast_palette_alt2.png", 8]
+var mage_palette = [
+	["blue mage", "res://assets/palette/player/mage_palette.png", "res://assets/palette/player/mage_palette.png", 14],
+	["green mage", "res://assets/palette/player/mage_palette.png", "res://assets/palette/player/green_mage_palette.png", 14]
 ]
 
 var saruman_palette = [
@@ -29,7 +28,7 @@ var saruman_palette = [
 var player_skin = [
 	["res://assets/img/wizard.png", wizard_palette],
 	["res://assets/img/saruman.png", saruman_palette],
-	["res://assets/img/radagast.png", radagast_palette]
+	["res://assets/img/mage.png", mage_palette]
 ]
 
 

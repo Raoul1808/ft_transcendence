@@ -151,6 +151,7 @@ script = ExtResource("1_4n3up")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=657974449]
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=90994875]
+z_index = -1
 material = SubResource("CanvasItemMaterial_b5xf3")
 anchors_preset = 15
 anchor_right = 1.0
