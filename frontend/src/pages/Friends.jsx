@@ -35,12 +35,12 @@ export const FriendApiFetch = () => {
                             className="opacity-70 rounded-lg h-auto object-contain max-w-1/1 [image-rendering:pixelated]"
                             src="./src/assets/ducking_wizard.png"
                             alt=""
-                        ></img>
+                        />
                     </a>
                     <div className="flex flex-col h-1/1 justify-between pointer-events-none relative no-underline">
                         <div className="grid grid-cols-[minmax(min-content,auto)_1fr]">
                             <div className="items-center flex h-(--avatar-size)">
-                                <img src="./src/assets/Wizard.png" alt=""></img>
+                                <img src="./src/assets/Wizard.png" alt="" />
                             </div>
                         </div>
                         <div className="flex items-center justify-center h-(--avatar-size) bg-[rgba(0,0,0,0.5)]">

@@ -38,7 +38,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
                         <button
                             type="button"
                             onClick={handleLogout}
-                            className="text-[16px]"
+                            className="text-lg"
                         >
                             Log out
                         </button>

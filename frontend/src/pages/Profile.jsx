@@ -46,7 +46,7 @@ const Profile = () => {
                                 className="w-5 h-5 object-contain"
                                 src="../src/assets/pencil.png"
                                 alt=""
-                            ></img>
+                            />
                         </button>
                     </div>
                 </div>
@@ -56,7 +56,7 @@ const Profile = () => {
                             className="w-full h-full object-cover"
                             src="./src/assets/Wizard.png"
                             alt=""
-                        ></img>
+                        />
                     </div>
                     <div className="items-start flex flex-1 flex-col ml-5 min-w-0 shadow">
                         <h1 className="object-contain items-center font-medium relative text-3xl m-[-5px_0_0] max-w-1/1 p-0">
