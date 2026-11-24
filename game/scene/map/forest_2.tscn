@@ -36,6 +36,7 @@
 [ext_resource type="Shader" uid="uid://cfmlxhltmv21j" path="res://assets/shader/palette_normal_map_multiside.tres" id="36_d8knu"]
 [ext_resource type="Texture2D" uid="uid://d3dlklhw5e6qd" path="res://assets/palette/map/palette_plant.png" id="37_ylsa7"]
 [ext_resource type="Texture2D" uid="uid://davp2m57rllro" path="res://assets/palette/map/plant_hight_map.png" id="38_41dyr"]
+[ext_resource type="PackedScene" uid="uid://4jfsayoov75b" path="res://scene/map/sun.tscn" id="39_ohl4c"]
 [ext_resource type="Material" uid="uid://cl4s0msqfud6k" path="res://assets/shader/rev_map_plant_bush.tres" id="39_wm8o2"]
 [ext_resource type="Material" uid="uid://cpk2gr0imfslw" path="res://assets/shader/rev_map_plant_grass.tres" id="40_uvj68"]
 
@@ -2259,13 +2260,17 @@ tile_set = SubResource("TileSet_rdy1j")
 
 [node name="weapons" type="Node" parent="." unique_id=1069073597]
 
-[node name="sun" type="DirectionalLight2D" parent="." unique_id=1237708509]
+[node name="sun2" type="DirectionalLight2D" parent="." unique_id=272513641]
 visible = false
 scale = Vector2(100, 99.99999)
 color = Color(0.7946505, 0.4440636, 7.70092e-07, 1)
+range_z_max = 1023
+height = 0.1
+
+[node name="sun" parent="." unique_id=150553822 instance=ExtResource("39_ohl4c")]
+visible = false
 
 [node name="mapcenter" type="Node2D" parent="." unique_id=1172676557]
-visible = false
 position = Vector2(1216, 1600)
 
 [node name="lightwall" type="PointLight2D" parent="mapcenter" unique_id=83550175]
