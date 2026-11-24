@@ -189,10 +189,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -527.0
-offset_top = 24.0
-offset_right = -227.0
-offset_bottom = 124.0
+offset_left = -459.0
+offset_top = 39.0
+offset_right = -159.0
+offset_bottom = 139.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_flhli")
 theme_override_font_sizes/font_size = 40
@@ -213,10 +213,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -528.0
-offset_top = 146.0
-offset_right = -228.0
-offset_bottom = 246.0
+offset_left = -460.0
+offset_top = 161.0
+offset_right = -160.0
+offset_bottom = 261.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_flhli")
 theme_override_font_sizes/font_size = 40
@@ -236,10 +236,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 559.0
-offset_top = 53.0
-offset_right = -47.0
-offset_bottom = -50.0
+offset_left = 501.0
+offset_top = 50.0
+offset_right = -105.0
+offset_bottom = -53.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_b5xf3")
@@ -254,10 +254,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -527.0
-offset_top = 267.0
-offset_right = -227.0
-offset_bottom = 367.0
+offset_left = -459.0
+offset_top = 282.0
+offset_right = -159.0
+offset_bottom = 382.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_flhli")
 theme_override_font_sizes/font_size = 40
@@ -384,18 +384,23 @@ offset = Vector2(-10, -16)
 layout_mode = 3
 anchor_right = 0.21200001
 anchor_bottom = 0.282
-offset_right = -0.2000122
-offset_bottom = 0.6000061
+offset_right = 34.71997
+offset_bottom = 6.3519897
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/client_info" unique_id=808981726]
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/client_info" unique_id=1963762758]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.10164913, 0.00014107123, 0.19816965, 0.53333336)
+texture = ExtResource("3_b5xf3")
+region_rect = Rect2(0, 0, 96, 96)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
 
 [node name="player_name" type="Label" parent="CanvasLayer/client_info" unique_id=144303835]
 layout_mode = 1
@@ -526,19 +531,26 @@ layout_mode = 3
 anchor_left = 0.78800005
 anchor_right = 1.0
 anchor_bottom = 0.282
-offset_left = 0.19995117
-offset_bottom = 0.6000061
+offset_left = -36.720093
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 8.35199
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/not_client_info" unique_id=1452979867]
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/not_client_info" unique_id=1655510117]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.10164913, 0.00014107123, 0.19816965, 0.53333336)
+texture = ExtResource("3_b5xf3")
+region_rect = Rect2(0, 0, 96, 96)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
 
 [node name="player_connected" type="Control" parent="CanvasLayer/not_client_info" unique_id=1640124288]
 visible = false
@@ -646,15 +658,15 @@ vertical_alignment = 1
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/start" to="." method="_on_start_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/game_leader/night" to="." method="_on_start_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/game_leader/night" to="." method="_on_start_mouse_exited"]
-[connection signal="pressed" from="CanvasLayer/game_leader/night" to="." method="_on_start_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/game_leader/mode" to="." method="_on_start_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/game_leader/mode" to="." method="_on_start_mouse_exited"]
-[connection signal="pressed" from="CanvasLayer/game_leader/mode" to="." method="_on_start_pressed"]
-[connection signal="mouse_entered" from="CanvasLayer/game_leader/theme" to="." method="_on_start_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/game_leader/theme" to="." method="_on_start_mouse_exited"]
-[connection signal="pressed" from="CanvasLayer/game_leader/theme" to="." method="_on_start_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/game_leader/night" to="." method="_on_night_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/game_leader/night" to="." method="_on_night_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/game_leader/night" to="." method="_on_night_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/game_leader/mode" to="." method="_on_mode_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/game_leader/mode" to="." method="_on_mode_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/game_leader/mode" to="." method="_on_mode_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/game_leader/theme" to="." method="_on_theme_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/game_leader/theme" to="." method="_on_theme_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/game_leader/theme" to="." method="_on_theme_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/client_info/prev" to="." method="_on_prev_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/client_info/prev" to="." method="_on_prev_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/client_info/prev" to="." method="_on_prev_pressed"]

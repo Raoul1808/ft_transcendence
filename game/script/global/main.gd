@@ -2,6 +2,8 @@ extends Node
 
 var game_state = "lobby"
 var game_mode = "bo3"
+var night_mode: bool = false
+var theme: String = "spring"
 var p1_point = 0
 var p2_point = 0
 var round = 0
@@ -13,6 +15,20 @@ var map: PackedScene = load("res://scene/map/map.tscn")
 var timer: Timer
 var timer_label
 var can_move = false
+
+func change_theme(b: bool, theme: String):
+	if (b):
+		Network.send_text(JSON.stringify({"type":"change_theme", "theme": theme}))
+
+func change_mode(b: bool, mode: String):
+	game_mode = mode
+	if (b):
+		Network.send_text(JSON.stringify({"type":"change_mode", "mode": mode}))
+
+func change_night(b: bool, night: bool):
+	night_mode = night
+	if (b):
+		Network.send_text(JSON.stringify({"type":"change_night", "night": night}))
 
 func _ready() -> void:
 	timer = get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").get_node("timer").get_node("Timer")

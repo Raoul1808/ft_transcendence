@@ -77,6 +77,28 @@ func _on_start_pressed() -> void:
 	$CanvasLayer.hide()
 	get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").show()
 
+func _on_night_pressed() -> void:
+	Main.change_night(true, not Main.night_mode)
+	if (Main.night_mode):
+		$CanvasLayer/game_leader/night.text = "night: on"
+	else:
+		$CanvasLayer/game_leader/night.text = "night: off"
+
+
+func _on_mode_pressed() -> void:
+	var mode = "bo3"
+	if (Main.game_mode == "bo3"):
+		mode = "inf"
+	else:
+		mode = "bo3"
+	Main.change_mode(true, mode)
+	$CanvasLayer/game_leader/mode.text = "mode: "+Main.game_mode
+
+
+func _on_theme_pressed() -> void:
+	Main.change_theme(true, "spring")
+
+#map setting animation
 func _on_start_mouse_entered() -> void:
 	$CanvasLayer/game_leader/start/AnimatedSprite2D.play("out")
 	$CanvasLayer/game_leader/start/AnimatedSprite2D.frame = 0
@@ -85,6 +107,36 @@ func _on_start_mouse_exited() -> void:
 	$CanvasLayer/game_leader/start/AnimatedSprite2D.play("in")
 	$CanvasLayer/game_leader/start/AnimatedSprite2D.frame = 0
 
+func _on_night_mouse_entered() -> void:
+	$CanvasLayer/game_leader/night/AnimatedSprite2D.play("out")
+	$CanvasLayer/game_leader/night/AnimatedSprite2D.frame = 0
+
+
+func _on_night_mouse_exited() -> void:
+	$CanvasLayer/game_leader/night/AnimatedSprite2D.play("in")
+	$CanvasLayer/game_leader/night/AnimatedSprite2D.frame = 0
+
+
+func _on_mode_mouse_entered() -> void:
+	$CanvasLayer/game_leader/mode/AnimatedSprite2D.play("out")
+	$CanvasLayer/game_leader/mode/AnimatedSprite2D.frame = 0
+
+
+func _on_mode_mouse_exited() -> void:
+	$CanvasLayer/game_leader/mode/AnimatedSprite2D.play("in")
+	$CanvasLayer/game_leader/mode/AnimatedSprite2D.frame = 0
+
+
+func _on_theme_mouse_entered() -> void:
+	$CanvasLayer/game_leader/theme/AnimatedSprite2D.play("out")
+	$CanvasLayer/game_leader/theme/AnimatedSprite2D.frame = 0
+
+
+func _on_theme_mouse_exited() -> void:
+	$CanvasLayer/game_leader/theme/AnimatedSprite2D.play("in")
+	$CanvasLayer/game_leader/theme/AnimatedSprite2D.frame = 0
+
+#map animation
 func _on_map_1_mouse_entered() -> void:
 	$CanvasLayer/game_leader/map_select/map1/AnimatedSprite2D.play("out")
 	$CanvasLayer/game_leader/map_select/map1/AnimatedSprite2D.frame = 0
