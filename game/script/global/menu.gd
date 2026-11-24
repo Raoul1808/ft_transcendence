@@ -29,6 +29,8 @@ func display_map_prev():
 		if (Main.map.get_state().get_node_property_value(id_node, id_property)[t + 4] == 0):
 			cell.color = Color(0.04, 0.054, 0.022, 1.0)
 		cell.position = Vector2(10 * Main.map.get_state().get_node_property_value(id_node, id_property)[t], 10 * Main.map.get_state().get_node_property_value(id_node, id_property)[t + 2])
+		cell.position.x += 50
+		cell.position.y += 50
 		get_tree().current_scene.get_node("menu").get_node("CanvasLayer").get_node("game_leader").get_node("map_select").get_node("map_preview").add_child(cell)
 
 # Called when the node enters the scene tree for the first time.
