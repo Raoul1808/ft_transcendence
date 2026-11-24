@@ -40,6 +40,7 @@
 [ext_resource type="Material" uid="uid://cl4s0msqfud6k" path="res://assets/shader/rev_map_plant_bush.tres" id="32_p45lx"]
 [ext_resource type="Shader" uid="uid://cfmlxhltmv21j" path="res://assets/shader/palette_normal_map_multiside.tres" id="34_hfds5"]
 [ext_resource type="Material" uid="uid://cpk2gr0imfslw" path="res://assets/shader/rev_map_plant_grass.tres" id="34_tubdv"]
+[ext_resource type="PackedScene" uid="uid://4jfsayoov75b" path="res://scene/map/sun.tscn" id="41_7arbw"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_7e1d4"]
 tile_data = PackedInt32Array(0, 65537, 196609, 65536, 1, 1, 1, 65537, 65537, 65537, 131073, 131073)
@@ -2283,12 +2284,17 @@ scale = Vector2(79.99999, 76.73)
 blend_mode = 1
 texture = SubResource("GradientTexture2D_pqh06")
 
-[node name="sun" type="DirectionalLight2D" parent="." unique_id=1274362206]
+[node name="sun2" type="DirectionalLight2D" parent="." unique_id=1274362206]
 visible = false
 scale = Vector2(100, 99.99999)
 color = Color(0.7946505, 0.4440636, 7.70092e-07, 1)
+range_z_max = 1023
+height = 0.1
+
+[node name="sun" parent="." unique_id=150553822 instance=ExtResource("41_7arbw")]
 
 [node name="mapcenter" type="Node2D" parent="." unique_id=2127930691]
+visible = false
 position = Vector2(1248, 736)
 
 [node name="lightwall" type="PointLight2D" parent="mapcenter" unique_id=1120864655]
