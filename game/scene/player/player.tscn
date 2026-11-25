@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://cbp20bsxwbdb6" path="res://script/player/player.gd" id="1_cm2cf"]
 [ext_resource type="Texture2D" uid="uid://xblgitniscvw" path="res://assets/img/playerlight.png" id="2_1wtbu"]
 [ext_resource type="Texture2D" uid="uid://iqmyals4g0lj" path="res://assets/img/wizard.png" id="2_cm2cf"]
-[ext_resource type="Material" uid="uid://chswoisor8c3c" path="res://assets/shader/player_palettes.tres" id="2_qjg4s"]
+[ext_resource type="Shader" uid="uid://itjx4j1w02ls" path="res://assets/shader/palette_normal_map_player.tres" id="3_p3aiu"]
+[ext_resource type="Texture2D" uid="uid://dwsiktkipyu5m" path="res://assets/palette/player/wizard_palette.png" id="4_f5r2w"]
+[ext_resource type="Texture2D" uid="uid://dlt3741p3fts7" path="res://assets/img/wizard_hight_map.png" id="4_oen5c"]
 [ext_resource type="Texture2D" uid="uid://bgh74xiwh7jdg" path="res://assets/img/saruman.png" id="4_oypl4"]
 [ext_resource type="Texture2D" uid="uid://ilt30h05yggp" path="res://assets/img/mage.png" id="6_1wtbu"]
 [ext_resource type="Texture2D" uid="uid://bcihvvby2amxw" path="res://assets/img/heathbar-1.png" id="8_oypl4"]
@@ -22,6 +24,15 @@ gradient = SubResource("Gradient_oypl4")
 fill = 1
 fill_from = Vector2(0.52421653, 0.4985755)
 fill_to = Vector2(0.991453, 0.5940171)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_utu6x"]
+shader = ExtResource("3_p3aiu")
+shader_parameter/original_palettes = ExtResource("4_f5r2w")
+shader_parameter/new_palettes = ExtResource("4_f5r2w")
+shader_parameter/colors_counts = 8
+shader_parameter/normalmap = ExtResource("4_oen5c")
+shader_parameter/size = Vector2(96, 32)
+shader_parameter/tilesize = Vector2(32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p3aiu"]
 atlas = ExtResource("2_cm2cf")
@@ -213,11 +224,13 @@ texture_scale = 1.92
 height = 512.0
 
 [node name="playerlight" type="PointLight2D" parent="PointLight2D" unique_id=315979277]
+visible = false
 shadow_enabled = true
 shadow_item_cull_mask = 5
 texture = ExtResource("2_1wtbu")
 
 [node name="bushlight" type="PointLight2D" parent="PointLight2D" unique_id=2079888482]
+visible = false
 range_item_cull_mask = 8
 shadow_enabled = true
 shadow_item_cull_mask = 13
@@ -234,12 +247,10 @@ rotation = 1.5707964
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=607882729]
 light_mask = 2
 z_index = 2
-material = ExtResource("2_qjg4s")
+material = SubResource("ShaderMaterial_utu6x")
 rotation = 1.5707964
 sprite_frames = SubResource("SpriteFrames_6skho")
-animation = &"6"
-frame = 3
-frame_progress = 0.7456304
+animation = &"1"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1968293382]
 scale = Vector2(2, 2)

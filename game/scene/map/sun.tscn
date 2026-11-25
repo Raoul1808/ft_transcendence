@@ -4,7 +4,7 @@
 
 [node name="sun" type="DirectionalLight2D" unique_id=150553822]
 scale = Vector2(1e-05, 1e-05)
-color = Color(0.7019763, 0.55862314, 3.85046e-07, 1)
+color = Color(0.8974603, 0.3455805, 0, 1)
 range_z_max = 1023
 height = 0.1
 script = ExtResource("1_mkggt")

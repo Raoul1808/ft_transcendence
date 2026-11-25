@@ -1,0 +1,174 @@
+[gd_resource type="VisualShader" format=3 uid="uid://itjx4j1w02ls"]
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_ouxnr"]
+parameter_name = "normalmap"
+
+[sub_resource type="VisualShaderNodeReroute" id="VisualShaderNodeReroute_5vcp2"]
+port_type = 1
+
+[sub_resource type="VisualShaderNodeReroute" id="VisualShaderNodeReroute_p37ob"]
+default_input_values = [0, Vector4(0, 0, 0, 0)]
+port_type = 5
+
+[sub_resource type="VisualShaderNodeReroute" id="VisualShaderNodeReroute_0ufud"]
+port_type = 8
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_5vcp2"]
+expanded_output_ports = [0]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_0jbo5"]
+input_name = "texture"
+
+[sub_resource type="VisualShaderNodeReroute" id="VisualShaderNodeReroute_o2es2"]
+default_input_values = [0, Vector4(0, 0, 0, 0)]
+port_type = 5
+
+[sub_resource type="VisualShaderNodeReroute" id="VisualShaderNodeReroute_7m0co"]
+default_input_values = [0, Vector4(0, 0, 0, 0)]
+port_type = 5
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_7m0co"]
+parameter_name = "size"
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_2fvqp"]
+source = 5
+
+[sub_resource type="VisualShaderNodeReroute" id="VisualShaderNodeReroute_m6wul"]
+port_type = 8
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_bbvbh"]
+parameter_name = "original_palettes"
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_o2es2"]
+parameter_name = "tilesize"
+default_value_enabled = true
+default_value = Vector2(32, 32)
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_utu6x"]
+source = 5
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_3s8ir"]
+parameter_name = "new_palettes"
+
+[sub_resource type="VisualShaderNodeIntParameter" id="VisualShaderNodeIntParameter_6ac8x"]
+parameter_name = "colors_counts"
+
+[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_8xahp"]
+size = Vector2(720, 600)
+expression = "vec2 new_uv = vec2(0, 0);
+float dist;
+
+for (int i = 0; i < colors_count; i++) {
+	float u = (float(i) + 0.5) / float(colors_count);
+	float v = 0.5;
+	vec2 uv = vec2(u, v);
+	vec4 original_palette_color = texture(original_palette, uv);
+	dist = distance(color, original_palette_color);
+	
+	if (dist == 0.0) {
+		new_uv = uv;
+		break;
+	}
+}
+
+if (dist == 0.0) {
+	new_color = texture(new_palette, new_uv);
+}
+else {
+	new_color = color;
+}
+
+;"
+
+[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_k0qfg"]
+size = Vector2(1040, 1540)
+expression = "vec2 new_uv = vec2(0, 0);
+
+new_uv[0] = float(int((tuv.x * size.x)) % int(tilesize.x)) / tilesize.x;
+new_uv[1] = float(int((tuv.y * size.y)) % int(tilesize.y)) / tilesize.y;
+
+new_color = vec4(new_uv[0], 1.0 - new_uv[1], 0.5 + hight_mapcolor[0] / 2.0, 1.0);
+
+;"
+
+[resource]
+mode = 1
+flags/light_only = false
+nodes/vertex/0/position = Vector2(400, 160)
+nodes/fragment/0/position = Vector2(2000, 1540)
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_0jbo5")
+nodes/fragment/2/position = Vector2(-1300, 0)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_2fvqp")
+nodes/fragment/3/position = Vector2(60, -40)
+nodes/fragment/4/node = SubResource("VisualShaderNodeTexture2DParameter_bbvbh")
+nodes/fragment/4/position = Vector2(-380, 240)
+nodes/fragment/5/node = SubResource("VisualShaderNodeTexture2DParameter_3s8ir")
+nodes/fragment/5/position = Vector2(-380, 660)
+nodes/fragment/6/node = SubResource("VisualShaderNodeIntParameter_6ac8x")
+nodes/fragment/6/position = Vector2(-380, 1060)
+nodes/fragment/7/node = SubResource("VisualShaderNodeExpression_8xahp")
+nodes/fragment/7/position = Vector2(700, 640)
+nodes/fragment/7/size = Vector2(720, 600)
+nodes/fragment/7/input_ports = "0,5,color;1,8,original_palette;2,8,new_palette;3,1,colors_count;"
+nodes/fragment/7/output_ports = "0,5,new_color;"
+nodes/fragment/7/expression = "vec2 new_uv = vec2(0, 0);
+float dist;
+
+for (int i = 0; i < colors_count; i++) {
+	float u = (float(i) + 0.5) / float(colors_count);
+	float v = 0.5;
+	vec2 uv = vec2(u, v);
+	vec4 original_palette_color = texture(original_palette, uv);
+	dist = distance(color, original_palette_color);
+	
+	if (dist == 0.0) {
+		new_uv = uv;
+		break;
+	}
+}
+
+if (dist == 0.0) {
+	new_color = texture(new_palette, new_uv);
+}
+else {
+	new_color = color;
+}
+
+;"
+nodes/fragment/8/node = SubResource("VisualShaderNodeExpression_k0qfg")
+nodes/fragment/8/position = Vector2(540, 1820)
+nodes/fragment/8/size = Vector2(1040, 1540)
+nodes/fragment/8/input_ports = "0,8,original_palette;1,5,hight_mapcolor;2,3,tuv;3,3,size;4,3,tilesize;"
+nodes/fragment/8/output_ports = "0,5,new_color;"
+nodes/fragment/8/expression = "vec2 new_uv = vec2(0, 0);
+
+new_uv[0] = float(int((tuv.x * size.x)) % int(tilesize.x)) / tilesize.x;
+new_uv[1] = float(int((tuv.y * size.y)) % int(tilesize.y)) / tilesize.y;
+
+new_color = vec4(new_uv[0], 1.0 - new_uv[1], 0.5 + hight_mapcolor[0] / 2.0, 1.0);
+
+;"
+nodes/fragment/12/node = SubResource("VisualShaderNodeTexture2DParameter_ouxnr")
+nodes/fragment/12/position = Vector2(-960, 1260)
+nodes/fragment/14/node = SubResource("VisualShaderNodeReroute_5vcp2")
+nodes/fragment/14/position = Vector2(260, 1080)
+nodes/fragment/15/node = SubResource("VisualShaderNodeReroute_p37ob")
+nodes/fragment/15/position = Vector2(420, 1340)
+nodes/fragment/16/node = SubResource("VisualShaderNodeReroute_0ufud")
+nodes/fragment/16/position = Vector2(260, 1240)
+nodes/fragment/18/node = SubResource("VisualShaderNodeInput_5vcp2")
+nodes/fragment/18/position = Vector2(-160, 1860)
+nodes/fragment/23/node = SubResource("VisualShaderNodeReroute_o2es2")
+nodes/fragment/23/position = Vector2(1720, 1740)
+nodes/fragment/24/node = SubResource("VisualShaderNodeReroute_7m0co")
+nodes/fragment/24/position = Vector2(1660, 1440)
+nodes/fragment/27/node = SubResource("VisualShaderNodeVec2Parameter_7m0co")
+nodes/fragment/27/position = Vector2(-380, 2460)
+nodes/fragment/39/node = SubResource("VisualShaderNodeReroute_m6wul")
+nodes/fragment/39/position = Vector2(-804.98816, 17.063854)
+nodes/fragment/44/node = SubResource("VisualShaderNodeVec2Parameter_o2es2")
+nodes/fragment/44/position = Vector2(-380, 2980)
+nodes/fragment/45/node = SubResource("VisualShaderNodeTexture_utu6x")
+nodes/fragment/45/position = Vector2(-389.96802, 1471.3264)
+nodes/fragment/connections = PackedInt32Array(5, 0, 7, 2, 6, 0, 14, 0, 14, 0, 7, 3, 3, 0, 15, 0, 15, 0, 7, 0, 4, 0, 16, 0, 16, 0, 7, 1, 8, 0, 23, 0, 7, 0, 24, 0, 23, 0, 0, 3, 2, 0, 39, 0, 39, 0, 3, 2, 12, 0, 45, 2, 24, 0, 0, 0, 16, 0, 8, 0, 45, 0, 8, 1, 18, 0, 8, 2, 27, 0, 8, 3, 44, 0, 8, 4)

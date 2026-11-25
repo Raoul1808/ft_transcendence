@@ -17,10 +17,6 @@ port_type = 8
 expanded_output_ports = [0]
 input_name = "uv"
 
-[sub_resource type="VisualShaderNodeReroute" id="VisualShaderNodeReroute_ouxnr"]
-default_input_values = [0, Vector2(0, 0)]
-port_type = 3
-
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_0jbo5"]
 input_name = "texture"
 
@@ -45,13 +41,35 @@ parameter_name = "rotate"
 source = 5
 
 [sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_o2es2"]
-parameter_name = "no_hight"
+parameter_name = "screenUV"
 
 [sub_resource type="VisualShaderNodeReroute" id="VisualShaderNodeReroute_m6wul"]
 port_type = 8
 
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_bbvbh"]
 parameter_name = "original_palettes"
+
+[sub_resource type="VisualShaderNodeSwitch" id="VisualShaderNodeSwitch_o2es2"]
+output_port_for_preview = 0
+default_input_values = [0, false, 1, Vector2(1, 1), 2, Vector2(0, 0)]
+op_type = 3
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_7m0co"]
+expanded_output_ports = [0]
+input_name = "screen_uv"
+
+[sub_resource type="VisualShaderNodeReroute" id="VisualShaderNodeReroute_6m85q"]
+port_type = 6
+
+[sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_o2es2"]
+output_port_for_preview = 0
+default_input_values = [1, Vector2(0.2, 0.2), 2, Vector2(0.5, 0.5)]
+function = 1
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_o2es2"]
+parameter_name = "tilesize"
+default_value_enabled = true
+default_value = Vector2(32, 32)
 
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_3s8ir"]
 parameter_name = "new_palettes"
@@ -104,9 +122,12 @@ for (int i = 0; i < colors_count; i++) {
 	}
 }
 vec2 new_uv2 = vec2(0, 0);
-new_uv2[0] = float(int((tuv.x * size.x)) % 32) / 32.0;
-new_uv2[1] = float(int((tuv.y * size.y)) % 32) / 32.0;
-//new_uv2 = tuv;
+new_uv2[0] = float(int((tuv.x * size.x)) % int(tilesize.x)) / tilesize.x;
+new_uv2[1] = float(int((tuv.y * size.y)) % int(tilesize.y)) / tilesize.y;
+if (screenUV) {
+	new_uv2 = tuv;
+}
+
 if (rotate[0] == 1.0) {
 	float tmp = new_uv2[0];
 	new_uv2[0] = new_uv2[1];
@@ -147,12 +168,9 @@ if (dist == 0.0) {
 	if (rotate[2] == 1.0) {
 		new_uv2[1] = -new_uv2[1];
 	}
-	if (no_hight) {
-		new_color = vec4(0.5 + texture(new_palette, new_uv)[0] / 2.0, 0.5 + texture(new_palette, new_uv)[0] / 2.0, 0.5 + texture(new_palette, new_uv)[0] / 2.0, 1.0);
-	}
-	else {
-		new_color = vec4(new_uv2[0] + rotate[1], 1.0 - new_uv2[1] - rotate[2], 0.5 + texture(new_palette, new_uv)[0] / 2.0, 1.0);
-	}
+	
+	new_color = vec4(new_uv2[0] + rotate[1], 1.0 - new_uv2[1] - rotate[2], 0.5 + texture(new_palette, new_uv)[0] / 2.0, 1.0);
+	
 	
 }
 else {
@@ -209,7 +227,7 @@ else {
 nodes/fragment/8/node = SubResource("VisualShaderNodeExpression_k0qfg")
 nodes/fragment/8/position = Vector2(540, 1820)
 nodes/fragment/8/size = Vector2(1040, 1540)
-nodes/fragment/8/input_ports = "0,5,color;1,8,original_palette;2,8,new_palette;3,1,colors_count;4,3,tuv;5,5,side4;6,3,size;7,4,rotate;8,6,no_hight;"
+nodes/fragment/8/input_ports = "0,5,color;1,8,original_palette;2,8,new_palette;3,1,colors_count;4,3,tuv;5,5,side4;6,3,size;7,4,rotate;8,6,screenUV;9,3,tilesize;"
 nodes/fragment/8/output_ports = "0,5,new_color;"
 nodes/fragment/8/expression = "vec2 new_uv = vec2(0, 0);
 float dist;
@@ -227,9 +245,12 @@ for (int i = 0; i < colors_count; i++) {
 	}
 }
 vec2 new_uv2 = vec2(0, 0);
-new_uv2[0] = float(int((tuv.x * size.x)) % 32) / 32.0;
-new_uv2[1] = float(int((tuv.y * size.y)) % 32) / 32.0;
-//new_uv2 = tuv;
+new_uv2[0] = float(int((tuv.x * size.x)) % int(tilesize.x)) / tilesize.x;
+new_uv2[1] = float(int((tuv.y * size.y)) % int(tilesize.y)) / tilesize.y;
+if (screenUV) {
+	new_uv2 = tuv;
+}
+
 if (rotate[0] == 1.0) {
 	float tmp = new_uv2[0];
 	new_uv2[0] = new_uv2[1];
@@ -270,12 +291,9 @@ if (dist == 0.0) {
 	if (rotate[2] == 1.0) {
 		new_uv2[1] = -new_uv2[1];
 	}
-	if (no_hight) {
-		new_color = vec4(0.5 + texture(new_palette, new_uv)[0] / 2.0, 0.5 + texture(new_palette, new_uv)[0] / 2.0, 0.5 + texture(new_palette, new_uv)[0] / 2.0, 1.0);
-	}
-	else {
-		new_color = vec4(new_uv2[0] + rotate[1], 1.0 - new_uv2[1] - rotate[2], 0.5 + texture(new_palette, new_uv)[0] / 2.0, 1.0);
-	}
+	
+	new_color = vec4(new_uv2[0] + rotate[1], 1.0 - new_uv2[1] - rotate[2], 0.5 + texture(new_palette, new_uv)[0] / 2.0, 1.0);
+	
 	
 }
 else {
@@ -293,9 +311,7 @@ nodes/fragment/15/position = Vector2(420, 1340)
 nodes/fragment/16/node = SubResource("VisualShaderNodeReroute_0ufud")
 nodes/fragment/16/position = Vector2(260, 1240)
 nodes/fragment/18/node = SubResource("VisualShaderNodeInput_5vcp2")
-nodes/fragment/18/position = Vector2(-380, 1760)
-nodes/fragment/19/node = SubResource("VisualShaderNodeReroute_ouxnr")
-nodes/fragment/19/position = Vector2(260, 1760)
+nodes/fragment/18/position = Vector2(-1220, 1800)
 nodes/fragment/23/node = SubResource("VisualShaderNodeReroute_o2es2")
 nodes/fragment/23/position = Vector2(1720, 1740)
 nodes/fragment/24/node = SubResource("VisualShaderNodeReroute_7m0co")
@@ -307,7 +323,17 @@ nodes/fragment/27/position = Vector2(-380, 2460)
 nodes/fragment/29/node = SubResource("VisualShaderNodeVec3Parameter_o2es2")
 nodes/fragment/29/position = Vector2(-380, 2740)
 nodes/fragment/30/node = SubResource("VisualShaderNodeBooleanParameter_o2es2")
-nodes/fragment/30/position = Vector2(-380, 2960)
+nodes/fragment/30/position = Vector2(-1160, 2060)
 nodes/fragment/39/node = SubResource("VisualShaderNodeReroute_m6wul")
 nodes/fragment/39/position = Vector2(-804.98816, 17.063854)
-nodes/fragment/connections = PackedInt32Array(5, 0, 7, 2, 6, 0, 14, 0, 14, 0, 7, 3, 14, 0, 8, 3, 3, 0, 15, 0, 15, 0, 7, 0, 15, 0, 8, 0, 4, 0, 16, 0, 16, 0, 7, 1, 16, 0, 8, 1, 12, 0, 8, 2, 8, 0, 23, 0, 7, 0, 24, 0, 23, 0, 0, 3, 18, 0, 19, 0, 27, 0, 8, 6, 29, 0, 8, 7, 30, 0, 8, 8, 25, 0, 8, 5, 2, 0, 39, 0, 39, 0, 3, 2, 19, 0, 8, 4, 24, 0, 0, 0)
+nodes/fragment/40/node = SubResource("VisualShaderNodeSwitch_o2es2")
+nodes/fragment/40/position = Vector2(-280, 1720)
+nodes/fragment/41/node = SubResource("VisualShaderNodeInput_7m0co")
+nodes/fragment/41/position = Vector2(-1200, 1500)
+nodes/fragment/42/node = SubResource("VisualShaderNodeReroute_6m85q")
+nodes/fragment/42/position = Vector2(-460, 2040)
+nodes/fragment/43/node = SubResource("VisualShaderNodeUVFunc_o2es2")
+nodes/fragment/43/position = Vector2(-700, 1460)
+nodes/fragment/44/node = SubResource("VisualShaderNodeVec2Parameter_o2es2")
+nodes/fragment/44/position = Vector2(-380, 2980)
+nodes/fragment/connections = PackedInt32Array(5, 0, 7, 2, 6, 0, 14, 0, 14, 0, 7, 3, 14, 0, 8, 3, 3, 0, 15, 0, 15, 0, 7, 0, 15, 0, 8, 0, 4, 0, 16, 0, 16, 0, 7, 1, 16, 0, 8, 1, 12, 0, 8, 2, 8, 0, 23, 0, 7, 0, 24, 0, 23, 0, 0, 3, 27, 0, 8, 6, 29, 0, 8, 7, 25, 0, 8, 5, 2, 0, 39, 0, 39, 0, 3, 2, 30, 0, 42, 0, 42, 0, 8, 8, 42, 0, 40, 0, 40, 0, 8, 4, 41, 0, 43, 0, 43, 0, 40, 1, 18, 0, 40, 2, 44, 0, 8, 9, 24, 0, 0, 0)
