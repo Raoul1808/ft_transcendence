@@ -2272,13 +2272,14 @@ tile_set = SubResource("TileSet_rnf5r")
 [node name="weapons" type="Node" parent="." unique_id=1069073597]
 
 [node name="sun2" type="DirectionalLight2D" parent="." unique_id=272513641]
-visible = false
+rotation = -0.7853982
 scale = Vector2(100, 99.99999)
 color = Color(0.7946505, 0.4440636, 7.70092e-07, 1)
 range_z_max = 1023
 height = 0.1
 
 [node name="sun" parent="." unique_id=150553822 instance=ExtResource("39_ohl4c")]
+visible = false
 
 [node name="mapcenter" type="Node2D" parent="." unique_id=1172676557]
 visible = false

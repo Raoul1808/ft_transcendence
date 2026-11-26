@@ -19,9 +19,10 @@ func _process(delta: float) -> void:
 		energy = ($Timer.wait_time - $Timer.time_left) / ($Timer.wait_time / 8)
 	else:
 		energy = 1.0
-	energy *= 1
+	#energy *= 10
 func _on_timer_timeout() -> void:
-	if (blend_mode == Light2D.BLEND_MODE_SUB):
-		blend_mode = Light2D.BLEND_MODE_ADD
-	else :
-		blend_mode = Light2D.BLEND_MODE_SUB
+	#if (blend_mode == Light2D.BLEND_MODE_SUB):
+		#blend_mode = Light2D.BLEND_MODE_ADD
+	#else :
+		#blend_mode = Light2D.BLEND_MODE_SUB
+	pass

@@ -10,6 +10,6 @@ height = 0.1
 script = ExtResource("1_mkggt")
 
 [node name="Timer" type="Timer" parent="." unique_id=46607755]
-wait_time = 60.0
+wait_time = 5.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
