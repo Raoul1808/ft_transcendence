@@ -25,6 +25,7 @@ const Game = () => {
         fetchUser()
     }, [])
 
+    // biome-ignore lint: `messages` needed for auto-scroll
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" })
     }, [messages])
