@@ -58,6 +58,18 @@ func interact_with_loot_not_client():
 		
 
 #============================================================================
+#light update
+#============================================================================
+
+func toggle_light():
+	if ($PointLight2D/playerlight.visible == false):
+		$PointLight2D/playerlight.visible = true
+		$PointLight2D/bushlight.visible = true
+	else:
+		$PointLight2D/playerlight.visible = false
+		$PointLight2D/bushlight.visible = false
+
+#============================================================================
 #skin update
 #============================================================================
 
