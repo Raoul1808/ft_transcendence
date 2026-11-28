@@ -12,6 +12,8 @@ player_id = 1
 
 [node name="map_container" type="Node" parent="." unique_id=720718623]
 
+[node name="body" type="Node" parent="." unique_id=1311303537]
+
 [node name="not_client_player" type="Node" parent="." unique_id=1609857846]
 
 [node name="HUD" parent="." unique_id=888772131 instance=ExtResource("4_l7ffl")]

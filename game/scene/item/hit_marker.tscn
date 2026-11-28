@@ -28,7 +28,7 @@ point_count = 4
 curve = SubResource("Curve_p3aiu")
 
 [sub_resource type="Curve" id="Curve_c1l17"]
-_data = [Vector2(0, 0.49438208), 0.0, 0.0, 0, 0, Vector2(0.49999997, 0.8988764), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5036232, 0.6213591), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_aqc60"]

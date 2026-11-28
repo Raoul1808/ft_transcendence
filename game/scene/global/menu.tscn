@@ -3,12 +3,16 @@
 [ext_resource type="Script" uid="uid://dp81q4olovdg7" path="res://script/global/menu.gd" id="1_4n3up"]
 [ext_resource type="FontFile" uid="uid://btrepff1y83ma" path="res://assets/font/KiwiSoda.ttf" id="1_flhli"]
 [ext_resource type="Texture2D" uid="uid://iqmyals4g0lj" path="res://assets/img/wizard.png" id="2_vyxmg"]
+[ext_resource type="Texture2D" uid="uid://ckrd3u6suhkmc" path="res://assets/img/New Piskel (2).png" id="2_wiykp"]
+[ext_resource type="Texture2D" uid="uid://d10d4qlmoi7qs" path="res://assets/img/panel.png" id="3_b5xf3"]
 [ext_resource type="Shader" uid="uid://1w2uplbawwk0" path="res://assets/shader/player_palette.tres" id="3_t8b78"]
 [ext_resource type="Texture2D" uid="uid://dsky86ep17jm7" path="res://assets/img/button.png" id="3_u82at"]
 [ext_resource type="Texture2D" uid="uid://bjv6akd1mcnil" path="res://assets/palette/UI/palette_button.png" id="4_frf2m"]
 [ext_resource type="Texture2D" uid="uid://bvgnq1603bey8" path="res://assets/palette/UI/palette_button_2.png" id="4_pdutf"]
 [ext_resource type="Texture2D" uid="uid://dwsiktkipyu5m" path="res://assets/palette/player/wizard_palette.png" id="7_pdutf"]
 [ext_resource type="Texture2D" uid="uid://b1jhhmd85otsd" path="res://assets/img/arrow_button.png" id="9_tp5ri"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_b5xf3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u82at"]
 shader = ExtResource("3_t8b78")
@@ -40,7 +44,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t8b78")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"in",
 "speed": 5.0
 }, {
@@ -54,7 +58,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_u82at")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"out",
 "speed": 5.0
 }]
@@ -147,28 +151,16 @@ script = ExtResource("1_4n3up")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=657974449]
 
-[node name="not_game_leader" type="Control" parent="CanvasLayer" unique_id=906950895]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 347.0
-offset_right = -322.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/not_game_leader" unique_id=2070293500]
-layout_mode = 1
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=90994875]
+z_index = -1
+material = SubResource("CanvasItemMaterial_b5xf3")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("1_flhli")
-theme_override_font_sizes/font_size = 50
-text = "game start soon..."
-horizontal_alignment = 1
-vertical_alignment = 1
+texture = ExtResource("2_wiykp")
+stretch_mode = 1
 
 [node name="game_leader" type="Control" parent="CanvasLayer" unique_id=2124292821]
 layout_mode = 3
@@ -178,11 +170,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="map_select" type="Panel" parent="CanvasLayer/game_leader" unique_id=693699736]
+[node name="map_select" type="NinePatchRect" parent="CanvasLayer/game_leader" unique_id=1813144566]
 layout_mode = 0
-offset_top = 344.0
-offset_right = 1268.0
-offset_bottom = 1205.0
+offset_left = 6.0
+offset_top = 250.0
+offset_right = 1104.0
+offset_bottom = 860.0
+texture = ExtResource("3_b5xf3")
+region_rect = Rect2(0, 0, 96, 96)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
 
 [node name="map1" type="Button" parent="CanvasLayer/game_leader/map_select" unique_id=1137024177]
 z_index = 1
@@ -190,10 +189,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -592.0
-offset_top = 26.0
-offset_right = -292.0
-offset_bottom = 126.0
+offset_left = -459.0
+offset_top = 39.0
+offset_right = -159.0
+offset_bottom = 139.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_flhli")
 theme_override_font_sizes/font_size = 40
@@ -214,10 +213,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -593.0
-offset_top = 148.0
-offset_right = -293.0
-offset_bottom = 248.0
+offset_left = -460.0
+offset_top = 161.0
+offset_right = -160.0
+offset_bottom = 261.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_flhli")
 theme_override_font_sizes/font_size = 40
@@ -232,18 +231,22 @@ animation = &"out"
 centered = false
 offset = Vector2(-10, -16)
 
-[node name="map_preview" type="Control" parent="CanvasLayer/game_leader/map_select" unique_id=344871620]
+[node name="map_preview" type="NinePatchRect" parent="CanvasLayer/game_leader/map_select" unique_id=156640626]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -500.0
-offset_top = -250.0
-offset_bottom = 250.0
-grow_horizontal = 0
+anchor_bottom = 1.0
+offset_left = 501.0
+offset_top = 50.0
+offset_right = -105.0
+offset_bottom = -53.0
+grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("3_b5xf3")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
 
 [node name="forest2" type="Button" parent="CanvasLayer/game_leader/map_select" unique_id=1282396308]
 z_index = 1
@@ -251,10 +254,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -592.0
-offset_top = 269.0
-offset_right = -292.0
-offset_bottom = 369.0
+offset_left = -459.0
+offset_top = 282.0
+offset_right = -159.0
+offset_bottom = 382.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_flhli")
 theme_override_font_sizes/font_size = 40
@@ -265,7 +268,7 @@ flat = true
 z_index = -1
 material = SubResource("ShaderMaterial_u82at")
 sprite_frames = SubResource("SpriteFrames_2m5q5")
-animation = &"out"
+animation = &"in"
 centered = false
 offset = Vector2(-10, -16)
 
@@ -276,9 +279,10 @@ anchor_left = 0.80100006
 anchor_top = 0.90700006
 anchor_right = 0.98800004
 anchor_bottom = 0.99000007
-offset_top = -0.4000244
-offset_right = 0.8000488
-offset_bottom = -0.00012207031
+offset_left = -33.440063
+offset_top = -33.64807
+offset_right = -2.7200928
+offset_bottom = -5.3600464
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("1_flhli")
@@ -289,6 +293,88 @@ flat = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/game_leader/start" unique_id=744116978]
 z_index = -1
 material = SubResource("ShaderMaterial_tp5ri")
+position = Vector2(0.36999893, 1.048996)
+sprite_frames = SubResource("SpriteFrames_2m5q5")
+animation = &"out"
+centered = false
+offset = Vector2(-10, -16)
+
+[node name="night" type="Button" parent="CanvasLayer/game_leader" unique_id=603734438]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.80100006
+anchor_top = 0.90700006
+anchor_right = 0.98800004
+anchor_bottom = 0.99000007
+offset_left = -36.440063
+offset_top = -286.64807
+offset_right = -5.720093
+offset_bottom = -258.36005
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 50
+text = "night: off"
+flat = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/game_leader/night" unique_id=143922274]
+z_index = -1
+material = SubResource("ShaderMaterial_tp5ri")
+position = Vector2(0.36999893, 1.048996)
+sprite_frames = SubResource("SpriteFrames_2m5q5")
+animation = &"out"
+centered = false
+offset = Vector2(-10, -16)
+
+[node name="mode" type="Button" parent="CanvasLayer/game_leader" unique_id=2085325091]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.80100006
+anchor_top = 0.90700006
+anchor_right = 0.98800004
+anchor_bottom = 0.99000007
+offset_left = -39.440063
+offset_top = -406.64807
+offset_right = -8.720093
+offset_bottom = -378.36005
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 50
+text = "mode: bo3"
+flat = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/game_leader/mode" unique_id=547379069]
+z_index = -1
+material = SubResource("ShaderMaterial_tp5ri")
+position = Vector2(0.36999893, 1.048996)
+sprite_frames = SubResource("SpriteFrames_2m5q5")
+animation = &"out"
+centered = false
+offset = Vector2(-10, -16)
+
+[node name="theme" type="Button" parent="CanvasLayer/game_leader" unique_id=1845324643]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.80100006
+anchor_top = 0.90700006
+anchor_right = 0.98800004
+anchor_bottom = 0.99000007
+offset_left = -37.440063
+offset_top = -519.6481
+offset_right = -6.720093
+offset_bottom = -491.36005
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 50
+text = "theme: spring"
+flat = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/game_leader/theme" unique_id=2127246331]
+z_index = -1
+material = SubResource("ShaderMaterial_tp5ri")
+position = Vector2(0.36999893, 1.048996)
 sprite_frames = SubResource("SpriteFrames_2m5q5")
 animation = &"out"
 centered = false
@@ -298,18 +384,23 @@ offset = Vector2(-10, -16)
 layout_mode = 3
 anchor_right = 0.21200001
 anchor_bottom = 0.282
-offset_right = -0.2000122
-offset_bottom = 0.6000061
+offset_right = 34.71997
+offset_bottom = 6.3519897
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/client_info" unique_id=808981726]
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/client_info" unique_id=1963762758]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.10164913, 0.00014107123, 0.19816965, 0.53333336)
+texture = ExtResource("3_b5xf3")
+region_rect = Rect2(0, 0, 96, 96)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
 
 [node name="player_name" type="Label" parent="CanvasLayer/client_info" unique_id=144303835]
 layout_mode = 1
@@ -440,19 +531,26 @@ layout_mode = 3
 anchor_left = 0.78800005
 anchor_right = 1.0
 anchor_bottom = 0.282
-offset_left = 0.19995117
-offset_bottom = 0.6000061
+offset_left = -36.720093
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 8.35199
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/not_client_info" unique_id=1452979867]
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/not_client_info" unique_id=1655510117]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.10164913, 0.00014107123, 0.19816965, 0.53333336)
+texture = ExtResource("3_b5xf3")
+region_rect = Rect2(0, 0, 96, 96)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
 
 [node name="player_connected" type="Control" parent="CanvasLayer/not_client_info" unique_id=1640124288]
 visible = false
@@ -474,7 +572,8 @@ theme_override_font_sizes/font_size = 50
 text = "player2"
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/not_client_info/player_connected" unique_id=66725914]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/not_client_info/player_connected" unique_id=1293044120]
+material = SubResource("ShaderMaterial_frf2m")
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -487,7 +586,7 @@ offset_right = 75.0
 offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_vyxmg")
+texture = SubResource("AtlasTexture_txlge")
 
 [node name="waiting_for_player" type="Control" parent="CanvasLayer/not_client_info" unique_id=348637064]
 layout_mode = 1
@@ -514,16 +613,60 @@ theme_override_fonts/font = ExtResource("1_flhli")
 theme_override_font_sizes/font_size = 30
 text = "waiting for player..."
 
+[node name="not_game_leader" type="Control" parent="CanvasLayer" unique_id=906950895]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = 97.0
+offset_right = -125.0
+offset_bottom = 97.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/not_game_leader" unique_id=2070293500]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -181.0
+offset_top = -25.5
+offset_right = 181.0
+offset_bottom = 25.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_flhli")
+theme_override_font_sizes/font_size = 50
+text = "game start soon..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/map_select/map1" to="." method="_on_map_1_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/map_select/map1" to="." method="_on_map_1_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/map_select/map1" to="." method="_on_map_1_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/map_select/map2" to="." method="_on_map_2_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/game_leader/map_select/forest2" to="." method="_on_forest_2_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/game_leader/map_select/forest2" to="." method="_on_forest_2_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/map_select/forest2" to="." method="_on_forest_2_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/game_leader/start" to="." method="_on_start_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/game_leader/start" to="." method="_on_start_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/game_leader/night" to="." method="_on_night_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/game_leader/night" to="." method="_on_night_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/game_leader/night" to="." method="_on_night_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/game_leader/mode" to="." method="_on_mode_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/game_leader/mode" to="." method="_on_mode_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/game_leader/mode" to="." method="_on_mode_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/game_leader/theme" to="." method="_on_theme_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/game_leader/theme" to="." method="_on_theme_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/game_leader/theme" to="." method="_on_theme_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/client_info/prev" to="." method="_on_prev_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/client_info/prev" to="." method="_on_prev_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/client_info/prev" to="." method="_on_prev_pressed"]

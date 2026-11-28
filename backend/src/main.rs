@@ -6,10 +6,10 @@ use std::{
 
 use axum::{
     Router,
-    extract::{Path, State, ws::Message},
-    http::{Method, StatusCode, header},
+    extract::ws::Message,
+    http::Method,
     response::{Html, IntoResponse},
-    routing::{get, post},
+    routing::get,
 };
 use sqlx::PgPool;
 use tokio::sync::broadcast;
@@ -22,6 +22,7 @@ use tower_sessions_redis_store::{RedisStore, fred::prelude::Pool as RedisPool};
 use tracing::info;
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
+mod api;
 mod auth;
 mod cache;
 mod db;
@@ -30,31 +31,8 @@ mod ws;
 
 pub use error::Error;
 
-async fn index() -> impl IntoResponse {
+async fn test_ws() -> impl IntoResponse {
     Html(include_str!("../static/wstest.html"))
-}
-
-async fn echo(Path(str): Path<String>) -> impl IntoResponse {
-    Html(str)
-}
-
-async fn matches(State(state): State<Arc<AppState>>) -> Result<impl IntoResponse, StatusCode> {
-    if let Some(json) = cache::get(&state.redis, cache::MATCHES_KEY).await {
-        tracing::debug!("matches: cache hit");
-        return Ok(([(header::CONTENT_TYPE, "application/json")], json));
-    }
-
-    let rows = db::list_matches(&state.db).await.map_err(|e| {
-        tracing::error!("list_matches: {e}");
-        StatusCode::INTERNAL_SERVER_ERROR
-    })?;
-    let json = serde_json::to_string(&rows).map_err(|e| {
-        tracing::error!("serialize matches: {e}");
-        StatusCode::INTERNAL_SERVER_ERROR
-    })?;
-
-    cache::set(&state.redis, cache::MATCHES_KEY, &json).await;
-    Ok(([(header::CONTENT_TYPE, "application/json")], json))
 }
 
 pub struct AppState {
@@ -118,15 +96,10 @@ async fn main() -> io::Result<()> {
         .allow_methods(vec![Method::GET]);
 
     let app = Router::new()
-        .route("/", get(index))
-        .route("/matches", get(matches))
-        .route("/register", post(auth::register))
-        .route("/login", post(auth::login))
-        .route("/logout", post(auth::logout))
-        .route("/me", get(auth::me))
-        .route("/{str}", get(echo))
+        .route("/test-ws", get(test_ws))
         .route("/ws", get(ws::websocket_handler))
-        .nest_service("/public", ServeDir::new("static"))
+        .nest("/api", api::build_router())
+        .fallback_service(ServeDir::new("static"))
         .with_state(state)
         .layer(session_layer)
         .layer(cors)

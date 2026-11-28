@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://dnklidr8hmt2u"]
+
+[ext_resource type="Texture2D" uid="uid://1v8m86jogmfp" path="res://assets/img/blood.png" id="1_4m361"]
+[ext_resource type="Script" uid="uid://ccw7np885avtf" path="res://scene/player/dead_body.gd" id="1_dwqe4"]
+[ext_resource type="Texture2D" uid="uid://h73br7gmjpmi" path="res://assets/img/blood_part.png" id="2_dwqe4"]
+
+[sub_resource type="Curve" id="Curve_aqc60"]
+_data = [Vector2(0, 0.48314613), 0.0, 0.0, 0, 0, Vector2(0.5203252, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_c1l17"]
+curve = SubResource("Curve_aqc60")
+
+[sub_resource type="Curve" id="Curve_c1l17"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7634731, 0.9307692), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_aqc60"]
+curve = SubResource("Curve_c1l17")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j1h08"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 2.0
+spread = 180.0
+initial_velocity_min = 20.0
+initial_velocity_max = 80.0
+angular_velocity_min = -505.26
+angular_velocity_max = 366.96997
+gravity = Vector3(0, 0, 0)
+scale_min = 0.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_aqc60")
+alpha_curve = SubResource("CurveTexture_c1l17")
+
+[node name="dead_body" type="Node2D" unique_id=2040292540]
+visibility_layer = 17
+scale = Vector2(2, 2)
+script = ExtResource("1_dwqe4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1326978655]
+texture = ExtResource("1_4m361")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=292289460]
+emitting = false
+amount = 50
+texture = ExtResource("2_dwqe4")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_j1h08")

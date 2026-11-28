@@ -1,52 +1,24 @@
 use std::sync::Arc;
 
-use argon2::{
-    Argon2, PasswordHash, PasswordHasher, PasswordVerifier,
-    password_hash::{SaltString, rand_core::OsRng},
-};
 use axum::{
     Json,
     extract::State,
     http::StatusCode,
     response::{IntoResponse, Response},
 };
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use tower_sessions::Session;
 
-use crate::{AppState, db};
-
-const SESSION_USER_KEY: &str = "user";
-
-#[derive(Serialize, Deserialize, Clone)]
-pub struct SessionUser {
-    pub id: i64,
-    pub username: String,
-}
+use crate::{
+    AppState,
+    auth::{SESSION_USER_KEY, SessionUser, current_user, hash_password, verify_password},
+    db,
+};
 
 #[derive(Deserialize)]
 pub struct Credentials {
     username: String,
     password: String,
-}
-
-fn hash_password(password: &str) -> Result<String, argon2::password_hash::Error> {
-    let salt = SaltString::generate(&mut OsRng);
-    Ok(Argon2::default()
-        .hash_password(password.as_bytes(), &salt)?
-        .to_string())
-}
-
-fn verify_password(password: &str, stored_hash: &str) -> bool {
-    match PasswordHash::new(stored_hash) {
-        Ok(parsed) => Argon2::default()
-            .verify_password(password.as_bytes(), &parsed)
-            .is_ok(),
-        Err(_) => false,
-    }
-}
-
-pub async fn current_user(session: &Session) -> Option<SessionUser> {
-    session.get(SESSION_USER_KEY).await.ok().flatten()
 }
 
 pub async fn register(

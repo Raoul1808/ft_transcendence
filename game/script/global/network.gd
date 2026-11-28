@@ -39,7 +39,14 @@ func send_text(text: String):
 	if (state == WebSocketPeer.STATE_OPEN):
 		socket.send(text.to_utf8_buffer())
 
+func init_react_bridge():
+	ReactBridge.on_react_event.connect(_on_react_event)
+	ReactBridge.emit_to_react("ready", {})
+
 func _ready():
+	
+	init_react_bridge()
+	
 	var err = socket.connect_to_url(websocket_url)
 	if err == OK:
 		print("connecting to %s..." % websocket_url)
@@ -52,8 +59,13 @@ func _ready():
 		print("failed to connect :(")
 		set_process(false)
 
+func _on_react_event(event: String, data: Dictionary):
+	if (event == "user-info"):
+		client_player_ins.username = data["username"]
+		get_tree().current_scene.get_node("menu").update_player_info()
+
 func _process(_delta: float) -> void:
-	
+	#WEBSOCKET
 	socket.poll()
 	
 	var state = socket.get_ready_state()
@@ -101,11 +113,38 @@ func _process(_delta: float) -> void:
 				get_tree().current_scene.get_node("menu").get_node("CanvasLayer").hide()
 				get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").show()
 			
+			if (data["type"] == "door_open"):
+				if (data["sender"] == "player"):
+					get_tree().current_scene.get_node("map_container").get_node("map").interact_map(Vector2(float(data["pos"][0]), float(data["pos"][1])), Network.not_client_player_ins, false)
+				else:
+					var lie: Node = Node.new()
+					lie.name = "RayBullet"
+					get_tree().current_scene.get_node("map_container").get_node("map").interact_map(Vector2(float(data["pos"][0]), float(data["pos"][1])), lie, false)
+			
 			#if (data["type"] == "start_round"):
 			#	Main.start_round(false)
 			
 			if (data["type"] == "end_round"):
 				Main.end_round(data["player_point"], false)
+			
+			if (data["type"] == "map_change"):
+				if (data["map"] == "map_1"):
+					Main.map = load("res://scene/map/map.tscn")
+				elif (data["map"] == "map_2"):
+					Main.map = load("res://scene/map/map_2.tscn")
+				elif (data["map"] == "forest2"):
+					Main.map = load("res://scene/map/forest_2.tscn")
+			
+			if (data["type"] == "player_skin_update"):
+				not_client_player_ins.player_palette_id = int(data["pal"])
+				not_client_player_ins.player_skin_id = int(data["skin_id"])
+				not_client_player_ins.update_skin()
+				if (Main.game_state == "lobby"):
+					var tex_rec: TextureRect = get_tree().current_scene.get_node("menu").get_node("CanvasLayer").get_node("not_client_info").get_node("player_connected").get_node("TextureRect")
+					tex_rec.texture.atlas = load(PlayerSkin.player_skin[int(data["skin_id"])][0])
+					tex_rec.material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[int(data["skin_id"])][1][int(data["pal"])][1]))
+					tex_rec.material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[int(data["skin_id"])][1][int(data["pal"])][2]))
+					tex_rec.material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[int(data["skin_id"])][1][int(data["pal"])][3])
 			
 			if (data["type"] == "hitmarker"):
 				var hit = load("res://scene/item/hit_marker.tscn")

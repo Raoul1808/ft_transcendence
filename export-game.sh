@@ -41,6 +41,7 @@ mkdir game/game-export
 echo "Exporting"
 $GDDIR/godot --headless --export-release "index.html" game/project.godot
 rm -rf game-export/*
+mkdir game-export
 mv game/game-export/* game-export
 echo "Removing symlink"
 rm -f $templates_dir/4.7.2.stable
@@ -49,3 +50,11 @@ if [ $dir_exists = true ]; then
     mv $templates_dir/4.7.2.stable.bak $templates_dir/4.7.2.stable
 fi
 echo "Export done!"
+
+echo "Moving export to frontend directory"
+
+mv game-export/index.html game-export/game.html
+rm -rf frontend/public/game-export
+mv game-export frontend/public/
+
+echo "All done!"

@@ -2,6 +2,8 @@ extends Node
 
 var game_state = "lobby"
 var game_mode = "bo3"
+var night_mode: bool = false
+var theme: String = "spring"
 var p1_point = 0
 var p2_point = 0
 var round = 0
@@ -10,9 +12,30 @@ var infinit_time = 0
 
 var map: PackedScene = load("res://scene/map/map.tscn")
 
+var timer: Timer
+var timer_label
+var can_move = false
+
+func change_theme(b: bool, theme: String):
+	if (b):
+		Network.send_text(JSON.stringify({"type":"change_theme", "theme": theme}))
+
+func change_mode(b: bool, mode: String):
+	game_mode = mode
+	if (b):
+		Network.send_text(JSON.stringify({"type":"change_mode", "mode": mode}))
+
+func change_night(b: bool, night: bool):
+	night_mode = night
+	if (b):
+		Network.send_text(JSON.stringify({"type":"change_night", "night": night}))
+
+func _ready() -> void:
+	timer = get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").get_node("timer").get_node("Timer")
+	timer_label = get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").get_node("timer")
 
 func end_game(b: bool):
-	print("pute")
+	game_state = "lobby"
 	p1_point = 0
 	p2_point = 0
 	get_tree().current_scene.get_node("HUD").get_node("CanvasLayer").hide()
@@ -20,8 +43,6 @@ func end_game(b: bool):
 
 func end_round(point: int, b: bool):
 	#del map
-	get_tree().current_scene.get_node("map_container").get_node("map").free()
-	
 	#check point
 	if (point == 1):
 		p1_point += 1
@@ -34,6 +55,12 @@ func end_round(point: int, b: bool):
 				"player_point": point
 			}
 		))
+	can_move = false
+	timer.start()
+	timer_label.show()
+	await timer.timeout
+	timer_label.hide()
+	get_tree().current_scene.get_node("map_container").get_node("map").free()
 	if (p1_point == 2 || p2_point == 2):
 		end_game(b)
 	else:
@@ -41,6 +68,8 @@ func end_round(point: int, b: bool):
 
 func start_game(b: bool):
 	game_state = "in_game"
+	for child in get_tree().current_scene.get_node("body").get_children():
+		child.free()
 	round = 1
 	if (b):
 		Network.send_text(JSON.stringify(
@@ -53,6 +82,9 @@ func start_game(b: bool):
 	start_round(b)
 
 func start_round(b: bool):
+	Network.client_player_ins.show()
+	if (not Network.not_client_player_ins == null):
+		Network.not_client_player_ins.show()
 	#load map
 	var map_ins = map.instantiate()
 	get_tree().current_scene.get_node("map_container").add_child(map_ins)
@@ -69,3 +101,8 @@ func start_round(b: bool):
 		Network.not_client_player_ins.healt = 100.0
 		Network.not_client_player_ins.get_node("healthbar").get_node("Sprite2D").scale.x = 1
 		Network.not_client_player_ins.unequip_weapon()
+	timer.start()
+	timer_label.show()
+	await timer.timeout
+	timer_label.hide()
+	can_move = true

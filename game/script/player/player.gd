@@ -7,6 +7,10 @@ extends CharacterBody2D
 @export var client_player : bool = true
 @export var bot : bool = false
 @export var player_id: int = 0
+@export var username: String = "player"
+
+var player_skin_id : int = 0
+var player_palette_id : int = 0
 
 #=======================================================================
 #weapon loot
@@ -52,6 +56,30 @@ func interact_with_loot_not_client():
 		
 		var loot_ins = instance_from_id(loot_id)
 		loot_ins.free()
+		
+
+#============================================================================
+#light update
+#============================================================================
+
+func toggle_light():
+	if ($PointLight2D/playerlight.visible == false):
+		$PointLight2D/playerlight.visible = true
+		$PointLight2D/bushlight.visible = true
+	else:
+		$PointLight2D/playerlight.visible = false
+		$PointLight2D/bushlight.visible = false
+
+#============================================================================
+#skin update
+#============================================================================
+
+func update_skin():
+	print("update_skin")
+	#Network.client_player_ins.get_node("AnimatedSprite2D").
+	self.get_node("AnimatedSprite2D").material.set_shader_parameter("original_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][1]))
+	self.get_node("AnimatedSprite2D").material.set_shader_parameter("new_palettes", load(PlayerSkin.player_skin[player_skin_id][1][player_palette_id][2]))
+	self.get_node("AnimatedSprite2D").material.set_shader_parameter("colors_counts", PlayerSkin.player_skin[player_skin_id][1][player_palette_id][3])
 
 #============================================================================
 #weapon management
@@ -158,6 +186,8 @@ func _ready() -> void:
 	else:
 		Network.set_client_player(self)
 		#player_id = Network.socket.
+	$AnimatedSprite2D.material = $AnimatedSprite2D.material.duplicate()
+	update_skin()
 
 #===========================================================================
 #network function
@@ -179,19 +209,20 @@ func client_physic_proc(_delta):
 	#MOVEMENT
 	#======================================================================================
 	if not Input.is_action_pressed("move"):
-		$AnimatedSprite2D.play("idle")
-	if Input.is_action_pressed("up"):
-		vel.y -= 1
-		$AnimatedSprite2D.play("walk")
-	if Input.is_action_pressed("down"):
-		vel.y += 1
-		$AnimatedSprite2D.play("walk")
-	if Input.is_action_pressed("right"):
-		vel.x += 1
-		$AnimatedSprite2D.play("walk")
-	if Input.is_action_pressed("left"):
-		vel.x -= 1
-		$AnimatedSprite2D.play("walk")
+		$AnimatedSprite2D.play(str(1 + player_skin_id * 2))
+	if (Main.can_move == true):
+		if Input.is_action_pressed("up"):
+			vel.y -= 1
+			$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
+		if Input.is_action_pressed("down"):
+			vel.y += 1
+			$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
+		if Input.is_action_pressed("right"):
+			vel.x += 1
+			$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
+		if Input.is_action_pressed("left"):
+			vel.x -= 1
+			$AnimatedSprite2D.play(str(2 + player_skin_id * 2))
 	
 	if vel.length() >= 1:
 		vel = vel.normalized()
@@ -226,14 +257,15 @@ func client_proc(delta):
 	#======================================================================================
 	#ACTION
 	#======================================================================================
-	if Input.is_action_just_pressed("shoot"):
-		use_weapon()
-	if Input.is_action_just_pressed("loot"):
-		GlobalEvent.map_action.emit(global_position, $".")
-	if (Input.is_action_just_pressed("drop_weapon")):
-		drop_weapon()
-	interact_with_loot()
-	#get_node()
+	if (Main.can_move == true):
+		if Input.is_action_just_pressed("shoot"):
+			use_weapon()
+		if Input.is_action_just_pressed("loot"):
+			GlobalEvent.map_action.emit(global_position, $".", true)
+		if (Input.is_action_just_pressed("drop_weapon")):
+			drop_weapon()
+		interact_with_loot()
+
 	#======================================================================================
 	#NETWORK REGULAR UPDATE
 	#======================================================================================
@@ -259,7 +291,7 @@ func bot_proc(_delta: float):
 	use_weapon()
 	
 func not_client_proc(_delta):
-	pass
+	$AnimatedSprite2D.play(str(1 + player_skin_id * 2))
 	
 func _physics_process(delta: float) -> void:
 	if client_player == true:
@@ -288,6 +320,11 @@ func get_hit(dmg: int, b: bool):
 	healt -= dmg
 	if (healt <= 0):
 		healt = 0
+		hide()
+		var body: PackedScene = load("res://scene/player/dead_body.tscn")
+		var body_ins: Node2D = body.instantiate()
+		body_ins.global_position = global_position
+		get_tree().current_scene.get_node("body").add_child(body_ins)
 	$healthbar/Sprite2D.scale.x = healt / 100
 	$healthbar/Sprite2D2.position.x = -192 + (healt * 192 * 2)/100
 	$healthbar/Label.text = type_convert(type_convert(healt, TYPE_INT), TYPE_STRING) + "%"
