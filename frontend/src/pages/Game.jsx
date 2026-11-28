@@ -1,32 +1,32 @@
 import { useEffect, useRef, useState } from "react"
-import { GodotBridgeProvider, GodotFrame, useGodot } from 'react-godot-bridge'
+import { GodotBridgeProvider, GodotFrame, useGodot } from "react-godot-bridge"
 
-function Controls ({username}) {
-    const {emit, on} = useGodot();
+function Controls({ username }) {
+    const { emit, on } = useGodot()
 
-    useEffect(() =>
-        on("test", (payload) => {
-            console.log("test reveived", payload.test)
-            emit('test', {test: 5})
-            emit('user-info', {"username": username})
-        })
-    , [on])
-   
+    useEffect(
+        () =>
+            on("test", (payload) => {
+                console.log("test reveived", payload.test)
+                emit("test", { test: 5 })
+                emit("user-info", { username: username })
+            }),
+        [on, username],
+    )
 }
 
-const GameFrame = ({username}) => {
+const GameFrame = ({ username }) => {
     return (
-        <GodotBridgeProvider appKey=''>
+        <GodotBridgeProvider appKey="">
             <GodotFrame
                 className=" h-full w-3/4"
                 src="game-export/game.html"
                 title="game"
             />
-            <Controls username={username}/>
+            <Controls username={username} />
         </GodotBridgeProvider>
     )
 }
-
 
 const Game = () => {
     const [messages, setMessages] = useState([
