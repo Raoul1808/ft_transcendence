@@ -1,4 +1,32 @@
 import { useEffect, useRef, useState } from "react"
+import { GodotBridgeProvider, GodotFrame, useGodot } from 'react-godot-bridge'
+
+function Controls ({username}) {
+    const {emit, on} = useGodot();
+
+    useEffect(() =>
+        on("test", (payload) => {
+            console.log("test reveived", payload.test)
+            emit('test', {test: 5})
+            emit('user-info', {"username": username})
+        })
+    , [on])
+   
+}
+
+const GameFrame = ({username}) => {
+    return (
+        <GodotBridgeProvider appKey=''>
+            <GodotFrame
+                className=" h-full w-3/4"
+                src="game-export/game.html"
+                title="game"
+            />
+            <Controls username={username}/>
+        </GodotBridgeProvider>
+    )
+}
+
 
 const Game = () => {
     const [messages, setMessages] = useState([
@@ -45,11 +73,7 @@ const Game = () => {
 
     return (
         <div className="flex w-full h-[92svh]">
-            <iframe
-                className=" h-full w-3/4"
-                src="game-export/game.html"
-                title="game"
-            />
+            <GameFrame username={username} />
             <div className="flex flex-col h-1/1 w-1/4 bg-[rgba(0,0,0,0.75)] rounded border border-amber-300 text-white">
                 <div className="p-3 text-center text-2xl"> Chat </div>
 
