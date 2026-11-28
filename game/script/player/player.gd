@@ -7,6 +7,7 @@ extends CharacterBody2D
 @export var client_player : bool = true
 @export var bot : bool = false
 @export var player_id: int = 0
+@export var username: String = "player"
 
 var player_skin_id : int = 0
 var player_palette_id : int = 0

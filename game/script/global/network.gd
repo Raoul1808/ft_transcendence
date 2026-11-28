@@ -39,7 +39,14 @@ func send_text(text: String):
 	if (state == WebSocketPeer.STATE_OPEN):
 		socket.send(text.to_utf8_buffer())
 
+func init_react_bridge():
+	ReactBridge.on_react_event.connect(_on_react_event)
+	ReactBridge.emit_to_react("ready", {})
+
 func _ready():
+	
+	init_react_bridge()
+	
 	var err = socket.connect_to_url(websocket_url)
 	if err == OK:
 		print("connecting to %s..." % websocket_url)
@@ -52,8 +59,13 @@ func _ready():
 		print("failed to connect :(")
 		set_process(false)
 
+func _on_react_event(event: String, data: Dictionary):
+	if (event == "user-info"):
+		client_player_ins.username = data["username"]
+		get_tree().current_scene.get_node("menu").update_player_info()
+
 func _process(_delta: float) -> void:
-	
+	#WEBSOCKET
 	socket.poll()
 	
 	var state = socket.get_ready_state()

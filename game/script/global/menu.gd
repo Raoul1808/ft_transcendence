@@ -2,7 +2,11 @@ extends Control
 
 var player_skin_id : int = 0;
 var player_palette_id : int = 0;
-	
+
+func update_player_info():
+	$CanvasLayer/client_info/player_name.text = Network.client_player_ins.username
+	$CanvasLayer/not_client_info/player_connected/player_name.text = Network.not_client_player_ins.username
+
 func display_map_prev():
 	var cell;
 	var i = 2
