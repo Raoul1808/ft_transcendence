@@ -11,7 +11,7 @@ function Controls({ username }) {
                 emit("test", { test: 5 })
                 emit("user-info", { username: username })
             }),
-        [on, username],
+        [on, username, emit],
     )
 }
 
